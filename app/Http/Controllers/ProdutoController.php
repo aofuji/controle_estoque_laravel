@@ -19,11 +19,13 @@ class ProdutoController extends Controller
             ->leftJoin('categorias', 'categorias.id', '=', 'produtos.categoria_id')
             ->leftJoin('entrada_produtos', 'produtos.id', '=', 'entrada_produtos.produto_id')
             ->leftJoin('saida_produtos', 'produtos.id', '=', 'saida_produtos.produto_id')
-            //->where('produtos.id', '=', 'entrada_produtos.produto_id')
+            
             ->select('produtos.id','nome_produto','categorias.categoria', 
+            
                 DB::raw('SUM(entrada_produtos.qtd_entrada) as quantidade_entrada'), 
-                DB::raw('SUM(saida_produtos.qtd_saida) as quantidade_saida'),
-                DB::raw('SUM(entrada_produtos.qtd_entrada ) - SUM(saida_produtos.qtd_saida)  as total'))
+                DB::raw('COALESCE(SUM(saida_produtos.qtd_saida),0) as quantidade_saida'),
+                DB::raw('COALESCE(SUM(entrada_produtos.qtd_entrada),0) - COALESCE(SUM(saida_produtos.qtd_saida),0)  as total'))
+                
             ->groupBy('produtos.id','nome_produto','categorias.categoria')
             ->get();
             
