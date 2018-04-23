@@ -4,32 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Models\Produto;
-use App\Models\Entrada;
 use App\Models\Saida;
-use App\Models\Categoria;
-use Illuminate\Support\Facades\DB;
 
-class ProdutoController extends Controller
+class SaidaController extends Controller
 {
-    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $list = DB::table('produtos')
-            ->leftJoin('categorias', 'categorias.id', '=', 'produtos.categoria_id')
-            ->leftJoin('entrada_produtos', 'produtos.id', '=', 'entrada_produtos.produto_id')
-            ->leftJoin('saida_produtos', 'produtos.id', '=', 'saida_produtos.produto_id')
-            ->select('produtos.id','produtos.status','nome_produto','categorias.categoria', 
-                DB::raw('count(entrada_produtos.produto_id) as qtd_registro_entrada '),
-                DB::raw('count(saida_produtos.produto_id) as qtd_registro_saida '),
-                DB::raw('COALESCE(SUM(entrada_produtos.qtd_entrada),0) as quantidade_entrada'), 
-                DB::raw('COALESCE(SUM(saida_produtos.qtd_saida),0) as quantidade_saida'),
-                DB::raw('COALESCE(SUM(entrada_produtos.qtd_entrada),0) - COALESCE(SUM(saida_produtos.qtd_saida),0)  as total'))    
-            ->groupBy('produtos.id','produtos.status','nome_produto','categorias.categoria')
-            ->get();
-            
-           
-        return response()->json($list, 200);
+        $list_saida = Saida::all();
+
+        return response()->json($list_saida,200);
     }
 
     /**

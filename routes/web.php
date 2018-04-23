@@ -14,4 +14,7 @@
 ;
 Route::get('/','ProdutoController@index');
 
-Route::get('/produto','ProdutoController@index');
+Route::get('/entrada','EntradaController@index');
+Route::post('/entrada','EntradaController@store');
+
+Route::get('/saida','SaidaController@index');
