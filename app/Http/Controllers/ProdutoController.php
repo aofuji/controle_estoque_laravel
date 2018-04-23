@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Models\Produto;
 use App\Models\Entrada;
 use App\Models\Saida;
+use App\Models\Categoria;
 use Illuminate\Support\Facades\DB;
 
 class ProdutoController extends Controller
@@ -15,10 +16,15 @@ class ProdutoController extends Controller
     public function index()
     {
         $list= DB::table('produtos')
+            ->leftJoin('categorias', 'categorias.id', '=', 'produtos.categoria_id')
             ->leftJoin('entrada_produtos', 'produtos.id', '=', 'entrada_produtos.produto_id')
+            ->leftJoin('saida_produtos', 'produtos.id', '=', 'saida_produtos.produto_id')
             //->where('produtos.id', '=', 'entrada_produtos.produto_id')
-            ->select('produtos.id','nome_produto', DB::raw('SUM(entrada_produtos.qtd_entrada) as quantidade'))
-            ->groupBy('produtos.id','nome_produto')
+            ->select('produtos.id','nome_produto','categorias.categoria', 
+                DB::raw('SUM(entrada_produtos.qtd_entrada) as quantidade_entrada'), 
+                DB::raw('SUM(saida_produtos.qtd_saida) as quantidade_saida'),
+                DB::raw('SUM(entrada_produtos.qtd_entrada ) - SUM(saida_produtos.qtd_saida)  as total'))
+            ->groupBy('produtos.id','nome_produto','categorias.categoria')
             ->get();
             
            // $list = DB::table('produtos')
