@@ -4,7 +4,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Estoque</h1>
+            <h1 class="page-header">Saida</h1>
         </div>
     </div>
 </div>

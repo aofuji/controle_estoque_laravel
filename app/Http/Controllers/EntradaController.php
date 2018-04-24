@@ -11,9 +11,7 @@ class EntradaController extends Controller
     
     public function index()
     {
-        $list_entrada = Entrada::all();
-
-        return response()->json($list_entrada, 200);
+        return view('entrada');
     }
 
     

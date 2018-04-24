@@ -96,10 +96,10 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Entrada</a>
+                                    <a href="{{ route('entrada') }}">Entrada</a>
                                 </li>
                                 <li>
-                                    <a href="#">Saida</a>
+                                    <a href="{{ route('saida') }}">Saida</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

@@ -15,9 +15,7 @@ class SaidaController extends Controller
      */
     public function index()
     {
-        $list_saida = Saida::all();
-
-        return response()->json($list_saida,200);
+       return view('saida');
     }
 
     /**

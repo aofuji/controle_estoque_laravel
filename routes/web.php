@@ -18,13 +18,21 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function(){
     Route::get('','HomeController@index')->name('home');
-    
-    Route::get('estoque','EstoqueController@index')->name('estoque');
 
-    Route::get('/lista','ProdutoController@ListaProdutos');
+        Route::prefix('estoque')->group(function () {
+            Route::get('','EstoqueController@index')->name('estoque');
+        });
+        
+        Route::prefix('entrada')->group(function () {
+            Route::get('','EntradaController@index')->name('entrada');
+            Route::post('','EntradaController@store')->name('entrada.store');
+        });
 
-    Route::get('/entrada','EntradaController@index');
-    Route::post('/entrada','EntradaController@store');
+        Route::prefix('saida')->group(function () {
+            Route::get('','SaidaController@index')->name('saida');
+        });
 
-    Route::get('/saida','SaidaController@index');
+        Route::prefix('produto')->group(function () {
+            Route::get('','ProdutoController@ListaProdutos');
+        });
 });
