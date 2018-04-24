@@ -67,21 +67,32 @@
 
             <div class="navbar-default sidebar" role="navigation">
 
-                <menu-left></menu-left>
+                <menu-left>
+                    <li>
+                        <a href="{{ route('home') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Cadastro<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="#">Entrada</a>
+                                </li>
+                                <li>
+                                    <a href="#">Saida</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="{{ route('estoque') }}"><i class="fa fa-table fa-fw"></i> Estoque</a>
+                        </li>
+                </menu-left>
                 
             </div>
            
         </nav>
-
-        <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Dashboard</h1>
-                </div>
-                @yield('content')
-               
-            </div>
-        </div>
+        @yield('content')
+       
         <!-- /#page-wrapper -->
 
      </div>

@@ -1,27 +1,7 @@
 <template>
     <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                       
-                        <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Cadastro<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="#">Entrada</a>
-                                </li>
-                                <li>
-                                    <a href="#">Saida</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Estoque</a>
-                        </li>
-                       
-                     
+                    <ul class="nav" id="side-menu">                    
+                      <slot></slot>
                     </ul>
                 </div>
 </template>

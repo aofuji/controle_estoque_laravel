@@ -43518,26 +43518,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -43594,46 +43574,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "sidebar-nav navbar-collapse" }, [
+    _c(
+      "ul",
+      { staticClass: "nav", attrs: { id: "side-menu" } },
+      [_vm._t("default")],
+      2
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "sidebar-nav navbar-collapse" }, [
-      _c("ul", { staticClass: "nav", attrs: { id: "side-menu" } }, [
-        _c("li", [
-          _c("a", { attrs: { href: "index.html" } }, [
-            _c("i", { staticClass: "fa fa-dashboard fa-fw" }),
-            _vm._v(" Dashboard")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fa fa-bar-chart-o fa-fw" }),
-            _vm._v(" Cadastro"),
-            _c("span", { staticClass: "fa arrow" })
-          ]),
-          _vm._v(" "),
-          _c("ul", { staticClass: "nav nav-second-level" }, [
-            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Entrada")])]),
-            _vm._v(" "),
-            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Saida")])])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "tables.html" } }, [
-            _c("i", { staticClass: "fa fa-table fa-fw" }),
-            _vm._v(" Estoque")
-          ])
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

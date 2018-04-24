@@ -15,6 +15,10 @@ class ProdutoController extends Controller
     
     public function index()
     {
+        return view('estoque');
+    }
+
+    public function listaProdutos(){
         $list = DB::table('produtos')
             ->leftJoin('categorias', 'categorias.id', '=', 'produtos.categoria_id')
             ->leftJoin('entrada_produtos', 'produtos.id', '=', 'entrada_produtos.produto_id')
