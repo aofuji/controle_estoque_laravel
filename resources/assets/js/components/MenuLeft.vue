@@ -1,9 +1,9 @@
 <template>
     <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">                    
-                      <slot></slot>
-                    </ul>
-                </div>
+        <ul class="nav" id="side-menu">                    
+            <slot></slot>
+        </ul>
+    </div>
 </template>
 
 <script>

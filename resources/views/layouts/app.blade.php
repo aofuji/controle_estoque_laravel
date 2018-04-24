@@ -49,25 +49,46 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-               
-                <menu-topo>
-                 <a href="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                 <a href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                     document.getElementById('logout-form').submit();">
-                            Logout
-                        </a> 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
+                <menu-topo >
+                @guest
+                @else
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    {{ Auth::user()->name }} <i class="fa fa-user fa-fw"></i>
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); 
+                                document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out fa-fw"></i>
+                                Logout
+                            </a> 
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                            
+                        </li>
+                    </ul>
+                    @endguest
+                    <!-- /.dropdown-user -->
                 </menu-topo>
-                
             </ul>
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
 
                 <menu-left>
+                @guest
+                @else
                     <li>
                         <a href="{{ route('home') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
@@ -86,15 +107,14 @@
                         <li>
                             <a href="{{ route('estoque') }}"><i class="fa fa-table fa-fw"></i> Estoque</a>
                         </li>
+                 @endguest
                 </menu-left>
-                
+        
             </div>
-           
         </nav>
+
         @yield('content')
        
-        <!-- /#page-wrapper -->
-
      </div>
     </div>
     
