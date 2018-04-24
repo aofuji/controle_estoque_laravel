@@ -18,3 +18,6 @@ Route::get('/entrada','EntradaController@index');
 Route::post('/entrada','EntradaController@store');
 
 Route::get('/saida','SaidaController@index');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
