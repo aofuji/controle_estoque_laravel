@@ -33,7 +33,7 @@
 </head>
 
 <body>
-  <div id="app">
+  <div id="app" style="display:none">
     <div id="wrapper">
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">

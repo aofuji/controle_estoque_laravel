@@ -8,8 +8,6 @@
 <script>
     export default {
         props:['UserAuth'],
-        mounted() {
-            console.log('Component mounted.')
-        }
+       
     }
 </script>
