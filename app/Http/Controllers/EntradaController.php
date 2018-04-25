@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Entrada;
+use Illuminate\Support\Facades\DB;
 
 class EntradaController extends Controller
 {
@@ -14,6 +15,14 @@ class EntradaController extends Controller
         return view('entrada');
     }
 
+    public function listaEntrada(){
+        $list = DB::table('entrada_produtos')
+            ->leftJoin('produtos', 'produtos.id', '=', 'entrada_produtos.produto_id')
+            ->select('entrada_produtos.*', 'produtos.nome_produto')
+            ->get();
+
+        return response()->json($list, 200);
+    }
     
     public function create()
     {

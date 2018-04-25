@@ -1,5 +1,5 @@
 <template>
-     <div class="col-lg-12">
+     <div v-bind:class="csstamanho || 'col-lg-12'">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                          {{titulo}}
@@ -10,21 +10,17 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Nome Produto</th>
-                                    <th>Categoria</th>
-                                    <th>Qtd Rg Entrada</th>
-                                    <th>Qtd Rg Saida</th>
-                                    <th>Qtd Entrada</th>
-                                    <th>Qtd Saida</th>
-                                    <th>Total</th>
+                                    <th v-for="(titulo,index) in titulotabela" :key="index">{{titulo}}</th>
+                                    
                                 </tr>
                             </thead>
                         <tbody>
+                             <div  v-if="loading">Loading...</div>
                             <tr v-for="(i, index) in items" :key="index">
                                 <td>{{i.id}}</td>
                                 <td>{{i.nome_produto}}</td>
                                 <td>{{i.categoria}}</td>
+                                <td>{{i.status == 1? 'Ativo':'Inativo'}}</td>
                                 <td>{{i.qtd_registro_entrada}}</td>
                                 <td>{{i.qtd_registro_saida}}</td>
                                 <td>{{i.quantidade_entrada}}</td>
@@ -45,17 +41,17 @@
 
 <script>
     export default {
-      props:['titulo', 'url'],
+      props:['titulo', 'url', 'csstamanho','titulotabela'],
       data(){
         return {
-            items:null
+            items:null,
+            loading:true
         }
       },
       mounted(){
           axios.get(this.url)
-          .then(res => (this.items = res.data));
-          
-          
+          .then(res => (this.items = res.data))
+          .finally(() => this.loading = false)
       }
     }
 </script>

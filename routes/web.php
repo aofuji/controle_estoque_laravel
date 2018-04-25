@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function(){
         
         Route::prefix('entrada')->group(function () {
             Route::get('','EntradaController@index')->name('entrada');
+            Route::get('lista','EntradaController@listaEntrada');
             Route::post('','EntradaController@store')->name('entrada.store');
         });
 

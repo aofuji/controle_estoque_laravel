@@ -1072,7 +1072,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(58);
+module.exports = __webpack_require__(61);
 
 
 /***/ }),
@@ -1117,7 +1117,7 @@ Vue.component('menu-left', __webpack_require__(46));
 Vue.component('modal', __webpack_require__(49));
 Vue.component('modal-link', __webpack_require__(52));
 Vue.component('painel', __webpack_require__(55));
-Vue.component('tabela', __webpack_require__(69));
+Vue.component('tabela', __webpack_require__(58));
 
 var app = new Vue({
     el: '#app',
@@ -44805,30 +44805,14 @@ if (false) {
 
 /***/ }),
 /* 58 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(70)
+var __vue_script__ = __webpack_require__(59)
 /* template */
-var __vue_template__ = __webpack_require__(71)
+var __vue_template__ = __webpack_require__(60)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -44867,7 +44851,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 70 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -44913,16 +44897,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['titulo', 'url'],
+    props: ['titulo', 'url', 'csstamanho', 'titulotabela'],
     data: function data() {
         return {
-            items: null
+            items: null,
+            loading: true
         };
     },
     mounted: function mounted() {
@@ -44930,19 +44911,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         axios.get(this.url).then(function (res) {
             return _this.items = res.data;
+        }).finally(function () {
+            return _this.loading = false;
         });
     }
 });
 
 /***/ }),
-/* 71 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-lg-12" }, [
+  return _c("div", { class: _vm.csstamanho || "col-lg-12" }, [
     _c("div", { staticClass: "panel panel-default" }, [
       _c("div", { staticClass: "panel-heading" }, [
         _vm._v(
@@ -44953,29 +44936,45 @@ var render = function() {
       _c("div", { staticClass: "panel-body" }, [
         _c("div", { staticClass: "table-responsive" }, [
           _c("table", { staticClass: "table table-striped" }, [
-            _vm._m(0),
+            _c("thead", [
+              _c(
+                "tr",
+                _vm._l(_vm.titulotabela, function(titulo, index) {
+                  return _c("th", { key: index }, [_vm._v(_vm._s(titulo))])
+                })
+              )
+            ]),
             _vm._v(" "),
             _c(
               "tbody",
-              _vm._l(_vm.items, function(i, index) {
-                return _c("tr", { key: index }, [
-                  _c("td", [_vm._v(_vm._s(i.id))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(i.nome_produto))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(i.categoria))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(i.qtd_registro_entrada))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(i.qtd_registro_saida))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(i.quantidade_entrada))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(i.quantidade_saida))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(i.total))])
-                ])
-              })
+              [
+                _vm.loading ? _c("div", [_vm._v("Loading...")]) : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.items, function(i, index) {
+                  return _c("tr", { key: index }, [
+                    _c("td", [_vm._v(_vm._s(i.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.nome_produto))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.categoria))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(i.status == 1 ? "Ativo" : "Inativo"))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.qtd_registro_entrada))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.qtd_registro_saida))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.quantidade_entrada))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.quantidade_saida))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.total))])
+                  ])
+                })
+              ],
+              2
             )
           ])
         ])
@@ -44983,32 +44982,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Nome Produto")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Categoria")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Qtd Rg Entrada")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Qtd Rg Saida")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Qtd Entrada")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Qtd Saida")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Total")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -45017,6 +44991,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-342c86c8", module.exports)
   }
 }
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
