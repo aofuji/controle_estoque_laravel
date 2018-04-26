@@ -34,6 +34,8 @@ Vue.component('modal', require('./components/modal/Modal.vue'));
 Vue.component('modal-link', require('./components/modal/ModalLink.vue'));
 Vue.component('painel', require('./components/Painel.vue'));
 Vue.component('tabela', require('./components/Tabela.vue'));
+Vue.component('tabela-entrada', require('./components/TabelaEntrada.vue'));
+Vue.component('tabela-saida', require('./components/TabelaSaida.vue'));
 
 const app = new Vue({
     el: '#app',

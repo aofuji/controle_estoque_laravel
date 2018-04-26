@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function(){
 
         Route::prefix('saida')->group(function () {
             Route::get('','SaidaController@index')->name('saida');
+            Route::get('lista','SaidaController@listaSaida');
         });
 
         Route::prefix('produto')->group(function () {

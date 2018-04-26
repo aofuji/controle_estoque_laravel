@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Saida;
+use Illuminate\Support\Facades\DB;
 
 class SaidaController extends Controller
 {
@@ -15,7 +16,19 @@ class SaidaController extends Controller
      */
     public function index()
     {
+        
+
+       
+    
        return view('saida');
+    }
+
+    public function listaSaida(){
+        $list = DB::table('saida_produtos')
+        ->leftJoin('produtos', 'produtos.id', '=', 'saida_produtos.produto_id')
+        ->select('saida_produtos.*', 'produtos.nome_produto')
+        ->get();
+        return response()->json($list, 200);
     }
 
     /**
