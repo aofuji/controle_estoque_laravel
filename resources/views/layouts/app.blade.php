@@ -90,22 +90,28 @@
                 @guest
                 @else
                     <li>
-                        <a href="{{ route('home') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        <a href="{{ route('home') }}"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>
                     </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Cadastro<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-file-text-o" aria-hidden="true"></i> Cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{{ route('entrada') }}">Entrada</a>
+                                    <a href="#">Produto</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('saida') }}">Saida</a>
+                                    <a href="#">Categorias</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href="{{ route('estoque') }}"><i class="fa fa-table fa-fw"></i> Estoque</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('entrada') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Entrada</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('saida') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Saida</a>
                         </li>
                  @endguest
                 </menu-left>
