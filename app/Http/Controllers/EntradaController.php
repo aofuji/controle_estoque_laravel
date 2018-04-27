@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Models\Entrada;
 use App\Models\Categoria;
 use App\Models\Produto;
+use App\Models\Saida;
 use Illuminate\Support\Facades\DB;
 
 class EntradaController extends Controller
@@ -39,13 +40,12 @@ class EntradaController extends Controller
      */
     public function store(Request $request, Entrada $entrada)
     {
-        
         $entrada->qtd_entrada = $request->qtd_entrada;
         $entrada->valor = $request->valor;
         $entrada->produto_id = $request->produto_id;
 
         $data = $entrada->save();
-       
+        
         if($data)
             return response()->json('Cadastro Efetuado com sucesso', 201);
     

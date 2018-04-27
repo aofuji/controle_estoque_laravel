@@ -18,6 +18,10 @@ class Produto extends Model
         return $this->hasMany(Saida::class, 'produto_id');
     }
 
+    public function estoque(){
+        return $this->hasMany(Estoque::class, 'produto_id');
+    }
+
     public function categoria(){
         return $this->belongsTo(Categoria::class, 'categoria_id');
     }
