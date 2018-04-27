@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function(){
             Route::get('','EntradaController@index')->name('entrada');
             Route::get('lista','EntradaController@listaEntrada');
             Route::post('','EntradaController@store')->name('entrada.store');
+            Route::get('show/{id}','EntradaController@show')->name('entrada.show');
         });
 
         Route::prefix('saida')->group(function () {

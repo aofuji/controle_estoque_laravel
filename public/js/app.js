@@ -45161,7 +45161,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addItem: function addItem() {
             var _this3 = this;
 
-            var url = 'entrada';
             axios.post('entrada', this.item).then(function (res) {
                 _this3.atualiza();
                 console.log(res);

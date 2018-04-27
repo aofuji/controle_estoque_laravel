@@ -92,7 +92,7 @@
             .then(res => (this.items = res.data))
           },
           addItem(){
-            let url = 'entrada';
+           
             axios.post('entrada', this.item)
             .then(res =>{
                 this.atualiza();

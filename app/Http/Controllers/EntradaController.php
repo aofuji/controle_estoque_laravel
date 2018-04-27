@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Entrada;
+use App\Models\Categoria;
+use App\Models\Produto;
 use Illuminate\Support\Facades\DB;
 
 class EntradaController extends Controller
@@ -58,7 +60,10 @@ class EntradaController extends Controller
      */
     public function show($id)
     {
-        //
+        $list = Categoria::find($id)->produto;
+
+        echo json_encode($list);
+        
     }
 
     /**
