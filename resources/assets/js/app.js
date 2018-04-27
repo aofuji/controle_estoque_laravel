@@ -9,6 +9,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import Vuex from 'Vuex';
+
 Vue.use(Vuex);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -36,6 +37,7 @@ Vue.component('painel', require('./components/Painel.vue'));
 Vue.component('tabela', require('./components/Tabela.vue'));
 Vue.component('tabela-entrada', require('./components/TabelaEntrada.vue'));
 Vue.component('tabela-saida', require('./components/TabelaSaida.vue'));
+Vue.component('formulario', require('./components/Form.vue'));
 
 const app = new Vue({
     el: '#app',

@@ -35,9 +35,19 @@ class EntradaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Entrada $entrada)
     {
-        dd($request);
+        
+        $entrada->qtd_entrada = $request->qtd_entrada;
+        $entrada->valor = $request->valor;
+        $entrada->produto_id = $request->produto_id;
+
+        $data = $entrada->save();
+       
+        if($data)
+            return response()->json('Cadastro Efetuado com sucesso', 201);
+    
+            return response()->json('Erro',500);
     }
 
     /**
