@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function(){
 
         Route::prefix('estoque')->group(function () {
             Route::get('','EstoqueController@index')->name('estoque');
+            Route::get('lista','EstoqueController@ListaProdutos');
         });
         
         Route::prefix('entrada')->group(function () {
@@ -36,6 +37,10 @@ Route::middleware(['auth'])->group(function(){
         });
 
         Route::prefix('produto')->group(function () {
-            Route::get('','ProdutoController@ListaProdutos');
+            Route::get('','ProdutoController@index')->name('produto');
+        });
+
+        Route::prefix('categoria')->group(function () {
+            Route::get('','CategoriaController@index')->name('categoria');
         });
 });

@@ -96,10 +96,10 @@
                             <a href="#"><i class="fa fa-file-text-o" aria-hidden="true"></i> Cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Produto</a>
+                                    <a href="{{ route('produto') }}">Produto</a>
                                 </li>
                                 <li>
-                                    <a href="#">Categorias</a>
+                                    <a href="{{ route('categoria') }}">Categorias</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

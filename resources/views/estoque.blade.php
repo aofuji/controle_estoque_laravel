@@ -17,7 +17,7 @@
 
     </div>
     <div class="row">
-        <tabela url="produto" titulo="Estoque produtos" csstamanho="col-lg-12" 
+        <tabela url="estoque/lista" titulo="Estoque produtos" csstamanho="col-lg-12" 
         v-bind:titulotabela = "['#','Nome Produto', 'Categoria','Status', 'Qtd Rg Entrada','Qtd Rg Saida', 'Qtd Entrada', 'Qtd Saida', 'Total']">
         
         </tabela>
