@@ -9,6 +9,7 @@ use App\Models\Categoria;
 use App\Models\Produto;
 use App\Models\Saida;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class EntradaController extends Controller
 {
@@ -40,10 +41,14 @@ class EntradaController extends Controller
      */
     public function store(Request $request, Entrada $entrada)
     {
+
+        $dt = Carbon::now();
+        $dt->timezone = 'America/Sao_Paulo';
+
         $entrada->qtd_entrada = $request->qtd_entrada;
         $entrada->valor = $request->valor;
         $entrada->produto_id = $request->produto_id;
-
+        $entrada->created_at = $dt;
         $data = $entrada->save();
         
         if($data)
@@ -88,11 +93,16 @@ class EntradaController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $dt = Carbon::now();
+        $dt->timezone = 'America/Sao_Paulo';
+
         $update = Entrada::find($id);
 
         $update->qtd_entrada = $request->qtd_entrada;
         $update->valor = $request->valor;
         $update->produto_id = $request->produto_id;
+        $update->updated_at = $dt;
         $update->save();
 
         return response()->json('Atualizado com sucesso');
