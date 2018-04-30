@@ -1,10 +1,12 @@
 <template>
-   
      <div v-bind:class="csstamanho || 'col-lg-12'">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <modal-link  nome="modalEntrada" titulo="Cadastrar" css=""></modal-link>
-                          
+                        
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCadastrar">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+
                     </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -16,34 +18,29 @@
                                     
                                 </tr>
                             </thead>
-                        <tbody>
-                             <div  v-if="loading">Loading...</div>
-                            <tr v-for="(i, index) in items" :key="index">
-                                <td>{{i.id}}</td>
-                                <td>{{i.nome_produto}}</td>
-                                <td>{{i.created_at | moment("DD/MM/YYYY, h:mm:ss")}}</td>
-                                <td>{{i.updated_at | moment("DD/MM/YYYY, h:mm:ss") }}</td>
-                                <td>{{i.valor}}</td>    
-                                <td>{{i.qtd_entrada}}</td>
-                                <td>
-                                       
-                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalEdit" v-on:click="getItem(i.id)" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                                
-                                    <button class="btn btn-danger btn-sm" v-on:click="removeItem(i.id)" ><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        
-                                </td>
- 
-                            </tr>
-                            
-                        </tbody>
+                            <tbody>
+                                <div  v-if="loading">Loading...</div>
+                                <tr v-for="(i, index) in items" :key="index">
+                                    <td>{{i.id}}</td>
+                                    <td>{{i.nome_produto}}</td>
+                                    <td>{{i.created_at | moment("DD/MM/YYYY, h:mm:ss")}}</td>
+                                    <td>{{i.updated_at | moment("DD/MM/YYYY, h:mm:ss") }}</td>
+                                    <td>{{i.valor}}</td>    
+                                    <td>{{i.qtd_entrada}}</td>
+                                    <td>           
+                                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalEdit" v-on:click="getItem(i.id)" ><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                        <button class="btn btn-danger btn-sm" v-on:click="removeItem(i.id)" ><i class="fa fa-trash-o" aria-hidden="true"></i></button>                                
+                                    </td>
+                                </tr>  
+                            </tbody>
                         </table>
-                    </div>
+                       </div>
                 <!-- /.table-responsive -->
                     </div>
                 <!-- /.panel-body -->
-                    </div>
+                </div>
                 <!-- /.panel -->
-                <modal nome="modalEntrada">
+                <modal nome="modalCadastrar">
                     
                       <form v-on:submit.prevent="addItem">
                           <div v-if="message" class="alert alert-success alert-dismissible fade in">
@@ -116,7 +113,7 @@
         }
       },
       mounted(){
-          this.$store.commit('setItens',{hello:'ok'})
+          
           axios.get(this.url)
           .then(res => (this.items = res.data))
           .finally(() => this.loading = false)

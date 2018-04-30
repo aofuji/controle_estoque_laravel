@@ -8,10 +8,10 @@
         </div>
     </div>
     <div class="row">
-        <tabela url="estoque/lista" titulo="Estoque produtos" csstamanho="col-lg-12" 
+        <tabela-estoque url="estoque/lista" titulo="Estoque produtos" csstamanho="col-lg-12" 
         v-bind:titulotabela = "['#','Nome Produto', 'Categoria','Status', 'Qtd Rg Entrada','Qtd Rg Saida', 'Qtd Entrada', 'Qtd Saida', 'Total']">
         
-        </tabela>
+        </tabela-estoque>
     </div>
 
     

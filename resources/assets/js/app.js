@@ -39,12 +39,13 @@ Vue.component('menu-left', require('./components/MenuLeft.vue'));
 Vue.component('modal', require('./components/modal/Modal.vue'));
 Vue.component('modal-link', require('./components/modal/ModalLink.vue'));
 Vue.component('painel', require('./components/Painel.vue'));
-Vue.component('tabela', require('./components/Tabela.vue'));
+Vue.component('tabela-estoque', require('./components/TabelaEstoque.vue'));
 Vue.component('tabela-entrada', require('./components/TabelaEntrada.vue'));
 Vue.component('tabela-saida', require('./components/TabelaSaida.vue'));
 Vue.component('formulario', require('./components/Form.vue'));
 
 const app = new Vue({
+    
     el: '#app',
     data(){
         return{
@@ -55,7 +56,7 @@ const app = new Vue({
     },
     store,
     mounted: function(){
-       
+      
         document.getElementById('app').style.display = "block";
     }
 });

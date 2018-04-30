@@ -8,7 +8,7 @@
         </div>
     </div>
     
-    <div class="row">
+    <div class="row" >
         <tabela-entrada url="entrada/lista"  csstamanho="col-lg-12" 
             v-bind:titulotabela = "['#','Nome Produto','Data criação','Data Atualização', 'Valor','Quantidade', 'Ação']"></tabela-entrada>
     </div>

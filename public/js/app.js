@@ -17508,12 +17508,13 @@ Vue.component('menu-left', __webpack_require__(172));
 Vue.component('modal', __webpack_require__(175));
 Vue.component('modal-link', __webpack_require__(178));
 Vue.component('painel', __webpack_require__(181));
-Vue.component('tabela', __webpack_require__(184));
+Vue.component('tabela-estoque', __webpack_require__(207));
 Vue.component('tabela-entrada', __webpack_require__(187));
 Vue.component('tabela-saida', __webpack_require__(190));
 Vue.component('formulario', __webpack_require__(193));
 
 var app = new Vue({
+
     el: '#app',
     data: function data() {
         return {
@@ -61628,195 +61629,9 @@ if (false) {
 }
 
 /***/ }),
-/* 184 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(185)
-/* template */
-var __vue_template__ = __webpack_require__(186)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\Tabela.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-342c86c8", Component.options)
-  } else {
-    hotAPI.reload("data-v-342c86c8", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 185 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['titulo', 'url', 'csstamanho', 'titulotabela'],
-    data: function data() {
-        return {
-            items: null,
-            loading: true
-        };
-    },
-    mounted: function mounted() {
-        var _this = this;
-
-        axios.get(this.url).then(function (res) {
-            return _this.items = res.data;
-        }).finally(function () {
-            return _this.loading = false;
-        });
-    }
-});
-
-/***/ }),
-/* 186 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { class: _vm.csstamanho || "col-lg-12" }, [
-    _c("div", { staticClass: "panel panel-default" }, [
-      _c("div", { staticClass: "panel-heading" }, [
-        _vm._v(
-          "\n                    " + _vm._s(_vm.titulo) + "\n               "
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "panel-body" }, [
-        _c("div", { staticClass: "table-responsive" }, [
-          _c("table", { staticClass: "table table-striped" }, [
-            _c("thead", [
-              _c(
-                "tr",
-                _vm._l(_vm.titulotabela, function(titulo, index) {
-                  return _c("th", { key: index }, [_vm._v(_vm._s(titulo))])
-                })
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              [
-                _vm.loading ? _c("div", [_vm._v("Loading...")]) : _vm._e(),
-                _vm._v(" "),
-                _vm._l(_vm.items, function(i, index) {
-                  return _c("tr", { key: index }, [
-                    _c("td", [_vm._v(_vm._s(i.id))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(i.nome_produto))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(i.categoria))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(i.status == 1 ? "Ativo" : "Inativo"))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(i.qtd_registro_entrada))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(i.qtd_registro_saida))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(i.quantidade_entrada))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(i.quantidade_saida))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(i.total))])
-                  ])
-                })
-              ],
-              2
-            )
-          ])
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-342c86c8", module.exports)
-  }
-}
-
-/***/ }),
+/* 184 */,
+/* 185 */,
+/* 186 */,
 /* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -61970,9 +61785,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['url', 'csstamanho', 'titulotabela'],
@@ -61989,7 +61801,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
 
-        this.$store.commit('setItens', { hello: 'ok' });
         axios.get(this.url).then(function (res) {
             return _this.items = res.data;
         }).finally(function () {
@@ -62056,16 +61867,7 @@ var render = function() {
     { class: _vm.csstamanho || "col-lg-12" },
     [
       _c("div", { staticClass: "panel panel-default" }, [
-        _c(
-          "div",
-          { staticClass: "panel-heading" },
-          [
-            _c("modal-link", {
-              attrs: { nome: "modalEntrada", titulo: "Cadastrar", css: "" }
-            })
-          ],
-          1
-        ),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "panel-body" }, [
           _c("div", { staticClass: "table-responsive" }, [
@@ -62167,7 +61969,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("modal", { attrs: { nome: "modalEntrada" } }, [
+      _c("modal", { attrs: { nome: "modalCadastrar" } }, [
         _c(
           "form",
           {
@@ -62414,7 +62216,27 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-heading" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#modalCadastrar"
+          }
+        },
+        [_c("span", { staticClass: "glyphicon glyphicon-plus" })]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -62845,6 +62667,205 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(208)
+/* template */
+var __vue_template__ = __webpack_require__(209)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\TabelaEstoque.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-21464a6c", Component.options)
+  } else {
+    hotAPI.reload("data-v-21464a6c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 208 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['titulo', 'url', 'csstamanho', 'titulotabela'],
+    data: function data() {
+        return {
+            items: null,
+            loading: true
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        axios.get(this.url).then(function (res) {
+            return _this.items = res.data;
+        }).finally(function () {
+            return _this.loading = false;
+        });
+    }
+});
+
+/***/ }),
+/* 209 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { class: _vm.csstamanho || "col-lg-12" }, [
+    _c("div", { staticClass: "panel panel-default" }, [
+      _c("div", { staticClass: "panel-heading" }, [
+        _vm._v(
+          "\n                    " + _vm._s(_vm.titulo) + "\n               "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "panel-body" }, [
+        _c("div", { staticClass: "table-responsive" }, [
+          _c("table", { staticClass: "table table-striped" }, [
+            _c("thead", [
+              _c(
+                "tr",
+                _vm._l(_vm.titulotabela, function(titulo, index) {
+                  return _c("th", { key: index }, [_vm._v(_vm._s(titulo))])
+                })
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              [
+                _vm.loading ? _c("div", [_vm._v("Loading...")]) : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.items, function(i, index) {
+                  return _c("tr", { key: index }, [
+                    _c("td", [_vm._v(_vm._s(i.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.nome_produto))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.categoria))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(i.status == 1 ? "Ativo" : "Inativo"))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.qtd_registro_entrada))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.qtd_registro_saida))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.quantidade_entrada))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.quantidade_saida))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(i.total))])
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-21464a6c", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
