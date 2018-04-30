@@ -14,7 +14,7 @@ class CreateSaidaProdutosTable extends Migration
     public function up()
     {
         Schema::create('saida_produtos', function (Blueprint $table) {
-            $table->increments('id_saida');
+            $table->increments('id');
             $table->integer('qtd_saida');
             $table->double('valor');
             $table->integer('produto_id')->unsigned();

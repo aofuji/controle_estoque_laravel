@@ -17,9 +17,14 @@ Vue.use(Vuex);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.use(require('vue-moment'));
+
+ 
 const store = new Vuex.Store({
     state:{
-        itens:{}
+        itens:{
+            teste:'funcionou'
+        }
     },
     mutations:{
         setItens(state, obj){
@@ -41,8 +46,16 @@ Vue.component('formulario', require('./components/Form.vue'));
 
 const app = new Vue({
     el: '#app',
+    data(){
+        return{
+            teste: 0,
+            
+            
+        }
+    },
     store,
     mounted: function(){
+       
         document.getElementById('app').style.display = "block";
     }
 });

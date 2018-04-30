@@ -74,7 +74,9 @@ class EntradaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $edit = Entrada::find($id);
+
+        return response()->json($edit);
     }
 
     /**
@@ -86,7 +88,14 @@ class EntradaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update = Entrada::find($id);
+
+        $update->qtd_entrada = $request->qtd_entrada;
+        $update->valor = $request->valor;
+        $update->produto_id = $request->produto_id;
+        $update->save();
+
+        return response()->json('Atualizado com sucesso');
     }
 
     /**
@@ -97,6 +106,12 @@ class EntradaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $entrada = Entrada::find($id);
+
+        $data = $entrada->delete();
+        
+            return response()->json('Entrada deletado com sucesso');
+    
+           
     }
 }

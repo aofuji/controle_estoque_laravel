@@ -14,7 +14,7 @@ class CreateEntradaProdutosTable extends Migration
     public function up()
     {
         Schema::create('entrada_produtos', function (Blueprint $table) {
-            $table->increments('id_entrada');
+            $table->increments('id');
             $table->integer('qtd_entrada');
             $table->double('valor');
             $table->integer('produto_id')->unsigned();

@@ -29,6 +29,9 @@ Route::middleware(['auth'])->group(function(){
             Route::get('lista','EntradaController@listaEntrada');
             Route::post('','EntradaController@store')->name('entrada.store');
             Route::get('show/{id}','EntradaController@show')->name('entrada.show');
+            Route::get('edit/{id}', 'EntradaController@edit')->name('entrada.edit');
+            Route::post('update/{id}', 'EntradaController@update')->name('entrada.update');
+            Route::get('delete/{id}', 'EntradaController@destroy')->name('entrada.delete');
         });
 
         Route::prefix('saida')->group(function () {

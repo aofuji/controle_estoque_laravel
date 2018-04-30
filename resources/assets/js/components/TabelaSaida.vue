@@ -3,9 +3,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                          {{titulo}}
+                         
                     </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
+                   
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -17,7 +19,7 @@
                         <tbody>
                              <div  v-if="loading">Loading...</div>
                             <tr v-for="(i, index) in items" :key="index">
-                                <td>{{i.id_saida}}</td>
+                                <td>{{i.id}}</td>
                                 <td>{{i.nome_produto}}</td>
                                 <td>{{i.valor}}</td>    
                                 <td>{{i.qtd_saida}}</td>
@@ -47,6 +49,8 @@
         }
       },
       mounted(){
+          
+    
           axios.get(this.url)
           .then(res => (this.items = res.data))
           .finally(() => this.loading = false)
