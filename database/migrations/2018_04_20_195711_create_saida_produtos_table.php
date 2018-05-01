@@ -16,7 +16,7 @@ class CreateSaidaProdutosTable extends Migration
         Schema::create('saida_produtos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('qtd_saida');
-            $table->double('valor');
+            $table->decimal('valor',8,2);
             $table->integer('produto_id')->unsigned();
             $table->foreign('produto_id')->references('id')->on('produtos')->onDelete('cascade');
             $table->timestamps();

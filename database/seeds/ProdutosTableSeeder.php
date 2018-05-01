@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ProdutosTableSeeder extends Seeder
 {
@@ -12,17 +13,36 @@ class ProdutosTableSeeder extends Seeder
      */
     public function run()
     {
+        $dt = Carbon::now();
+        $dt->timezone = 'America/Sao_Paulo';
+
         DB::table('produtos')->insert([
             'status' => 1,
             'nome_produto' => 'Estojo',
-            'created_at' => now(),
-            'updated_at' => now(),
+            'categoria_id' => 1,
+            'created_at' => $dt,
+            'updated_at' => $dt,
         ]);
         DB::table('produtos')->insert([
             'status' => 1,
             'nome_produto' => 'Lapis',
-            'created_at' => now(),
-            'updated_at' => now(),
+            'categoria_id' => 1,
+            'created_at' => $dt,
+            'updated_at' => $dt,
+        ]);
+        DB::table('produtos')->insert([
+            'status' => 1,
+            'nome_produto' => 'Tesoura',
+            'categoria_id' => 1,
+            'created_at' => $dt,
+            'updated_at' => $dt,
+        ]);
+        DB::table('produtos')->insert([
+            'status' => 1,
+            'nome_produto' => 'Caneta',
+            'categoria_id' => 1,
+            'created_at' => $dt,
+            'updated_at' => $dt,
         ]);
     }
 }

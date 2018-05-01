@@ -24,7 +24,6 @@ class EntradaController extends Controller
             ->leftJoin('produtos', 'produtos.id', '=', 'entrada_produtos.produto_id')
             ->select('entrada_produtos.*', 'produtos.nome_produto')
             ->get();
-
         return response()->json($list, 200);
     }
     
@@ -46,9 +45,10 @@ class EntradaController extends Controller
         $dt->timezone = 'America/Sao_Paulo';
 
         $entrada->qtd_entrada = $request->qtd_entrada;
-        $entrada->valor = $request->valor;
+        $entrada->valor = str_replace(",",".", $request->valor);
         $entrada->produto_id = $request->produto_id;
         $entrada->created_at = $dt;
+        $entrada->updated_at = $dt;
         $data = $entrada->save();
         
         if($data)
@@ -93,19 +93,22 @@ class EntradaController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $dt = Carbon::now();
         $dt->timezone = 'America/Sao_Paulo';
 
         $update = Entrada::find($id);
 
         $update->qtd_entrada = $request->qtd_entrada;
-        $update->valor = $request->valor;
+        $update->valor = str_replace(",",".", $request->valor);
         $update->produto_id = $request->produto_id;
         $update->updated_at = $dt;
-        $update->save();
 
-        return response()->json('Atualizado com sucesso');
+        $data = $update->save();
+
+        if($data)
+            return response()->json('Atualizado com sucesso');
+
+           
     }
 
     /**
@@ -122,6 +125,8 @@ class EntradaController extends Controller
         
             return response()->json('Entrada deletado com sucesso');
     
-           
     }
+    
+
+    
 }
