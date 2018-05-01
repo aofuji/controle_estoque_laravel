@@ -2,16 +2,22 @@
      <div v-bind:class="csstamanho || 'col-lg-12'">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCadastrar">
                             <span class="glyphicon glyphicon-plus"></span>
                             </button>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <input type="text" v-model="search" class="form-control" placeholder="Pesquisar.."> 
+                        </div>
+                      </div>
 
                     </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table class="table table-striped" >
                             <thead>
                                 <tr>
                                     <th v-for="(titulo,index) in titulotabela" :key="index">{{titulo}}</th>
@@ -21,7 +27,7 @@
                             <tbody>
                                 <div  v-if="loading">Loading...</div>
                                 <div v-if="items == ''">Nenhum registro</div>
-                                <tr v-for="(i, index) in items" :key="index">
+                                <tr v-for="(i, index) in filtroEntrada" :key="index">
                                     
                                     <td>{{i.id}}</td>
                                     <td>{{i.nome_produto}}</td>
@@ -128,7 +134,7 @@
       props:[ 'url', 'csstamanho','titulotabela'],
       data(){
         return {
-            items:null,
+            items:[],
             message:"",
             loading:true,
             item:{},
@@ -139,14 +145,22 @@
                 precision: 2,
                 masked: false
             },
+            search:""
            
         }
       },
+      
       mounted(){
           
           axios.get(this.url)
           .then(res => (this.items = res.data))
           .finally(() => this.loading = false)
+      },
+      computed:{
+          filtroEntrada: function (){
+              return this.items.filter((entrada) => entrada.nome_produto.includes(this.search)
+              )
+          }
       },
       methods:{
           

@@ -61990,6 +61990,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -61997,7 +62003,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['url', 'csstamanho', 'titulotabela'],
     data: function data() {
         return {
-            items: null,
+            items: [],
             message: "",
             loading: true,
             item: {},
@@ -62007,7 +62013,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 thousands: '.',
                 precision: 2,
                 masked: false
-            }
+            },
+            search: ""
 
         };
     },
@@ -62021,6 +62028,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
     },
 
+    computed: {
+        filtroEntrada: function filtroEntrada() {
+            var _this2 = this;
+
+            return this.items.filter(function (entrada) {
+                return entrada.nome_produto.includes(_this2.search);
+            });
+        }
+    },
     methods: {
 
         teste: function teste(e) {
@@ -62031,10 +62047,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         },
         atualiza: function atualiza() {
-            var _this2 = this;
+            var _this3 = this;
 
             axios.get(this.url).then(function (res) {
-                return _this2.items = res.data;
+                return _this3.items = res.data;
             });
         },
         cleanForm: function cleanForm() {
@@ -62043,34 +62059,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.item.valor = "";
         },
         addItem: function addItem() {
-            var _this3 = this;
+            var _this4 = this;
 
             axios.post('entrada', this.item).then(function (res) {
-                _this3.atualiza();
-                _this3.message = res.data;
-                _this3.cleanForm();
+                _this4.atualiza();
+                _this4.message = res.data;
+                _this4.cleanForm();
             });
         },
         removeItem: function removeItem(id) {
-            var _this4 = this;
+            var _this5 = this;
 
             axios.get('entrada/delete/' + id).then(function (res) {
-                _this4.atualiza();
+                _this5.atualiza();
                 console.log(res);
             });
         },
         getItem: function getItem(id) {
-            var _this5 = this;
+            var _this6 = this;
 
             axios.get('entrada/edit/' + id).then(function (res) {
-                return _this5.edit = res.data;
+                return _this6.edit = res.data;
             });
         },
         updateItem: function updateItem(id) {
-            var _this6 = this;
+            var _this7 = this;
 
             axios.post('entrada/update/' + id, this.edit).then(function (res) {
-                _this6.atualiza();
+                _this7.atualiza();
                 console.log(res.data);
             }).catch(function (res) {
                 return console.log(res.data);
@@ -62099,7 +62115,35 @@ var render = function() {
     { class: _vm.csstamanho || "col-lg-12" },
     [
       _c("div", { staticClass: "panel panel-default" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("div", { staticClass: "row" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-3 col-md-6 col-sm-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Pesquisar.." },
+                domProps: { value: _vm.search },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
+                }
+              })
+            ])
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "panel-body" }, [
           _c("div", { staticClass: "table-responsive" }, [
@@ -62122,7 +62166,7 @@ var render = function() {
                     ? _c("div", [_vm._v("Nenhum registro")])
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm._l(_vm.items, function(i, index) {
+                  _vm._l(_vm.filtroEntrada, function(i, index) {
                     return _c("tr", { key: index }, [
                       _c("td", [_vm._v(_vm._s(i.id))]),
                       _vm._v(" "),
@@ -62484,7 +62528,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel-heading" }, [
+    return _c("div", { staticClass: "col-lg-6 col-md-6 col-sm-6" }, [
       _c(
         "button",
         {
