@@ -42,6 +42,11 @@
                                 </tr>  
                             </tbody>
                         </table>
+
+                        <div class="text-center">
+                            <VPagination v-bind:source="pagination" v-on:navigate="navigate"></VPagination>
+                        </div>
+
                        </div>
                 <!-- /.table-responsive -->
                     </div>
@@ -128,9 +133,13 @@
 
 <script>
  import {VMoney} from 'v-money'
-
+ import VPagination from './Pagination.vue'
 
     export default {
+
+    components: {
+        VPagination
+    },
       props:[ 'url', 'csstamanho','titulotabela'],
       data(){
         return {
@@ -145,7 +154,8 @@
                 precision: 2,
                 masked: false
             },
-            search:""
+            search:"",
+            pagination:{}
            
         }
       },
@@ -153,7 +163,10 @@
       mounted(){
           
           axios.get(this.url)
-          .then(res => (this.items = res.data))
+          .then(req => {
+              this.items = req.data.data
+              this.pagination = req.data
+              })
           .finally(() => this.loading = false)
       },
       computed:{
@@ -163,7 +176,9 @@
           }
       },
       methods:{
-          
+          navigate(page){
+              this.getaNavigate(page);
+          },
           teste: function(e){
               console.log(e)
           },
@@ -174,6 +189,14 @@
           atualiza(){
             axios.get(this.url)
             .then(res => (this.items = res.data))
+          },
+          getaNavigate(page){
+            axios.get('entrada/lista?page='+ page)
+            .then(req => {
+              this.items = req.data.data
+              this.pagination = req.data
+              })
+              .finally(() => this.loading = false)
           },
           cleanForm(){
               this.item.produto_id = "";

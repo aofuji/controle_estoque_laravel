@@ -23,7 +23,8 @@ class EntradaController extends Controller
         $list = DB::table('entrada_produtos')
             ->leftJoin('produtos', 'produtos.id', '=', 'entrada_produtos.produto_id')
             ->select('entrada_produtos.*', 'produtos.nome_produto')
-            ->get();
+            ->paginate(4);
+            
         return response()->json($list, 200);
     }
     
@@ -32,12 +33,7 @@ class EntradaController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request, Entrada $entrada)
     {
 

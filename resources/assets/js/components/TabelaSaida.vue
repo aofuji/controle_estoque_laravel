@@ -44,7 +44,7 @@
       props:['titulo', 'url', 'csstamanho','titulotabela'],
       data(){
         return {
-            items:null,
+            items:[],
             loading:true
         }
       },
