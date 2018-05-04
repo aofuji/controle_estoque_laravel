@@ -41,7 +41,6 @@ Route::middleware(['auth'])->group(function(){
             Route::get('edit/{id}', 'SaidaController@edit')->name('saida.edit');
             Route::post('update/{id}', 'SaidaController@update')->name('saida.update');
             Route::post('delete/{id}', 'SaidaController@destroy')->name('saida.delete');
-            Route::get('lista','SaidaController@listaSaida');
         });
 
         Route::prefix('produto')->group(function () {

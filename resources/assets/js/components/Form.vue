@@ -8,15 +8,14 @@
 <script>
 
     export default {
-        props:['token', 'action', 'method','css', 'teste'],
+        props:['token', 'action', 'method','css'],
         data(){
         return{
           
         }
     },
     mounted(){
-        console.log(this.action)
-        console.log(this.teste)
+        
     },
     methods: {
        

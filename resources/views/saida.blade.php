@@ -64,10 +64,16 @@
     <div>
         <formulario token="{{ csrf_token() }}" class="form" v:bind:action="saida" method="post">
     
-            <div class="form-group">
-                <label>Nome Produto</label>
-                <input name="produto_id"  class="form-control">
-            </div>
+        <div class="form-group">
+            
+            <label for="exampleFormControlSelect2">Selecione Produto</label>
+            <select multiple class="form-control" id="exampleFormControlSelect2" name="nome_produto">
+            @foreach ($produtos as $produto)
+            <option value="{{$produto->id}}">{{$produto->nome_produto}}</option>
+            @endforeach
+            
+            </select>
+        </div>
 
             <div class="form-group">
                 <label>Qtd Saida</label>
@@ -76,7 +82,10 @@
 
             <div class="form-group">
                 <label>Valor</label>
-                <input name="valor" class="form-control">
+                <div class="form-group input-group">
+                    <span class="input-group-addon">R$</span>
+                    <input type="text" name="valor" v-money="money" class="form-control">
+                </div>
             </div>
             
             <div class="form-group">
@@ -87,7 +96,7 @@
 </modal>
 
 <modal nome="saidaEdit" titulo="Editar Saida">
-        <formulario token="{{ csrf_token() }}" v-bind:action="'saida/update/'+ $store.state.item.id" teste="teste" method="post">
+        <formulario token="{{ csrf_token() }}" v-bind:action="'saida/update/'+ $store.state.item.id" method="post">
             <div class="form-group">
                 <label>Nome Produto</label>
 

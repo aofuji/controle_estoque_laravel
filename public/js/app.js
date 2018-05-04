@@ -77360,14 +77360,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['token', 'action', 'method', 'css', 'teste'],
+    props: ['token', 'action', 'method', 'css'],
     data: function data() {
         return {};
     },
-    mounted: function mounted() {
-        console.log(this.action);
-        console.log(this.teste);
-    },
+    mounted: function mounted() {},
 
     methods: {}
 

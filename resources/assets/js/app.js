@@ -32,8 +32,7 @@ Vue.use(require('vue-moment'));
  
 const store = new Vuex.Store({
     state:{
-        item:{
-        }
+        item:{}
     },
     mutations:{
         setItem(state, obj){

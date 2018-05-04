@@ -5,62 +5,43 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Saida;
+use App\Models\Produto;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class SaidaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $totalPage = 7;
     public function index()
     {
+        $produtos = Produto::all();
+
         $list_saida = DB::table('saida_produtos')
         ->leftJoin('produtos', 'produtos.id', '=', 'saida_produtos.produto_id')
         ->select('saida_produtos.*', 'produtos.nome_produto')
         ->orderby('saida_produtos.id','desc')
-        ->paginate(4);
+        ->paginate($this->totalPage);
         
     
-       return view('saida.saida', compact('list_saida'));
+       return view('saida', compact('list_saida','produtos'));
     }
 
-    public function listaSaida(){
-        $list = DB::table('saida_produtos')
-        ->leftJoin('produtos', 'produtos.id', '=', 'saida_produtos.produto_id')
-        ->select('saida_produtos.*', 'produtos.nome_produto')
-        ->paginate(4);
-        
-        return response()->json($list, 200);
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('saida.formCadastro');
+       
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, Saida $saida)
     {
-        
+       
+
         $dt = Carbon::now();
         $dt->timezone = 'America/Sao_Paulo';
 
         $saida->qtd_saida = $request->qtd_saida;
         $saida->valor = str_replace(",",".", $request->valor);
-        $saida->produto_id = $request->produto_id;
+        $saida->produto_id = $request->nome_produto;
         $saida->created_at = $dt;
         $saida->updated_at = $dt;
         $data = $saida->save();
@@ -71,23 +52,12 @@ class SaidaController extends Controller
                         ->with('success',  'Sucesso ao cadastrar');
         }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function edit($id)
     {
         $edit = Saida::find($id);
@@ -95,13 +65,7 @@ class SaidaController extends Controller
         return response()->json($edit);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function update(Request $request, $id)
     {
         
