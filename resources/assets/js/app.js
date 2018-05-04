@@ -8,9 +8,19 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import Vuex from 'Vuex';
+window.moment = require('moment');
 
+import Vuex from 'Vuex';
+import VuePaginate from 'vue-paginate'
+import {VMoney} from 'v-money'
+import daterangepicker from 'daterangepicker';
+
+Vue.use(VuePaginate)
 Vue.use(Vuex);
+
+
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -22,13 +32,12 @@ Vue.use(require('vue-moment'));
  
 const store = new Vuex.Store({
     state:{
-        itens:{
-            teste:'funcionou'
+        item:{
         }
     },
     mutations:{
-        setItens(state, obj){
-            state.itens = obj;
+        setItem(state, obj){
+            state.item = obj;
         }
     } 
 });
@@ -46,21 +55,26 @@ Vue.component('tabela-estoque', require('./components/TabelaEstoque.vue'));
 Vue.component('tabela-entrada', require('./components/TabelaEntrada.vue'));
 Vue.component('tabela-saida', require('./components/TabelaSaida.vue'));
 Vue.component('formulario', require('./components/Form.vue'));
+Vue.component('buttonedit', require('./components/ButtonEdit.vue'));
+Vue.component('buttondelete', require('./components/ButtonDelete.vue'));
 
 const app = new Vue({
-    
+    props:['urlsaida'],
     el: '#app',
+    store,
     data(){
         return{
-            teste: 0,
-            
-            
+            money: {
+                decimal: ',',
+                thousands: '.',
+                precision: 2,
+                masked: false
+            },
         }
     },
-    store,
     mounted: function(){
       
         document.getElementById('app').style.display = "block";
-    }
-    
+    },
+      directives: {money: VMoney}
 });

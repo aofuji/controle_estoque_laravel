@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Saida;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class SaidaController extends Controller
 {
@@ -16,18 +17,22 @@ class SaidaController extends Controller
      */
     public function index()
     {
+        $list_saida = DB::table('saida_produtos')
+        ->leftJoin('produtos', 'produtos.id', '=', 'saida_produtos.produto_id')
+        ->select('saida_produtos.*', 'produtos.nome_produto')
+        ->orderby('saida_produtos.id','desc')
+        ->paginate(4);
         
-
-       
     
-       return view('saida');
+       return view('saida.saida', compact('list_saida'));
     }
 
     public function listaSaida(){
         $list = DB::table('saida_produtos')
         ->leftJoin('produtos', 'produtos.id', '=', 'saida_produtos.produto_id')
         ->select('saida_produtos.*', 'produtos.nome_produto')
-        ->get();
+        ->paginate(4);
+        
         return response()->json($list, 200);
     }
 
@@ -38,7 +43,7 @@ class SaidaController extends Controller
      */
     public function create()
     {
-        //
+        return view('saida.formCadastro');
     }
 
     /**
@@ -47,10 +52,24 @@ class SaidaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Saida $saida)
     {
-        //
-    }
+        
+        $dt = Carbon::now();
+        $dt->timezone = 'America/Sao_Paulo';
+
+        $saida->qtd_saida = $request->qtd_saida;
+        $saida->valor = str_replace(",",".", $request->valor);
+        $saida->produto_id = $request->produto_id;
+        $saida->created_at = $dt;
+        $saida->updated_at = $dt;
+        $data = $saida->save();
+
+        if($data)
+            return redirect()
+                        ->back()
+                        ->with('success',  'Sucesso ao cadastrar');
+        }
 
     /**
      * Display the specified resource.
@@ -71,7 +90,9 @@ class SaidaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $edit = Saida::find($id);
+
+        return response()->json($edit);
     }
 
     /**
@@ -83,17 +104,31 @@ class SaidaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $dt = Carbon::now();
+        $dt->timezone = 'America/Sao_Paulo';
+
+        $update = Saida::find($id);
+
+        $update->qtd_saida = $request->qtd_saida;
+        $update->valor = str_replace(",",".", $request->valor);
+        $update->produto_id = $request->produto_id;
+        $update->updated_at = $dt;
+
+        $data = $update->save();
+        if($data)
+            return redirect()
+                        ->back()
+                        ->with('success',  'Sucesso ao Atualizar');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy($id)
     {
-        //
+        $saida = Saida::find($id);
+        $data = $saida->delete();
+        return redirect()
+                        ->back()
+                        ->with('success',  'Sucesso ao Deletar');
     }
 }

@@ -1,42 +1,26 @@
 <template>
-    <form v-on:submit.prevent="addItem">
-    
-        <div class="form-group">
-            <label>Nome Produto</label>
-            <input v-model="item.produto_id"  class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label>Qtd entrada</label>
-            <input v-model="item.qtd_entrada" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label>Valor</label>
-            <input v-model="item.valor" class="form-control">
-        </div>
-        
-        <div class="form-group">
-            <button  class="btn btn-primary">Enviar</button>
-        </div>
+    <form v-bind:action="action" v-bind:method="method">
+        <input  v-if="token" type="hidden" name="_token" v-bind:value="token">
+        <slot></slot>
     </form>
 </template>
 
 <script>
 
     export default {
+        props:['token', 'action', 'method','css', 'teste'],
         data(){
         return{
-          item:{}
+          
         }
     },
+    mounted(){
+        console.log(this.action)
+        console.log(this.teste)
+    },
     methods: {
-        addItem(){
-            let url = 'entrada';
-            axios.post('entrada', this.item)
-            .then(res => console.log(res))
-        }
-    }
+       
+    },
     
     }
 </script>

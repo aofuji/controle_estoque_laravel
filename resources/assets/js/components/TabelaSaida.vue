@@ -1,59 +1,41 @@
 <template>
-     <div v-bind:class="csstamanho || 'col-lg-12'">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                         {{titulo}}
-                         
-                    </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                   
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th v-for="(titulo,index) in titulotabela" :key="index">{{titulo}}</th>
-                                    
-                                </tr>
-                            </thead>
-                        <tbody>
-                             <div  v-if="loading">Loading...</div>
-                            <tr v-for="(i, index) in items" :key="index">
-                                <td>{{i.id}}</td>
-                                <td>{{i.nome_produto}}</td>
-                                <td>{{i.valor}}</td>    
-                                <td>{{i.qtd_saida}}</td>
-                                <td>
-                                    <a class="btn btn-warning btn-sm" href="" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    <a class="btn btn-danger btn-sm" href="" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </div>
-                <!-- /.table-responsive -->
-                    </div>
-                <!-- /.panel-body -->
-                    </div>
-                <!-- /.panel -->
+     <div >
+  
+       <v-client-table :data="tableData" :columns="columns" ></v-client-table>
+       
         </div>
 </template>
 
 <script>
+import {ServerTable, ClientTable, Event} from 'vue-tables-2';
+Vue.use(ClientTable);
+
     export default {
-      props:['titulo', 'url', 'csstamanho','titulotabela'],
+      props:['url'],
+     
       data(){
         return {
             items:[],
-            loading:true
+            columns: ['id', 'nome_produto', 'created_at','updated_at', 'valor', 'qtd_saida'],
+            tableData: [],
+            options: {
+               headings: {
+                nome_produto: 'Nome',
+                created_at: 'Criado em',
+                updated_at: 'Atualizado',
+                valor: 'Valor', 
+                qtd_saida: 'Quantidade'
+            },
+        }
         }
       },
       mounted(){
-          
-    
-          axios.get(this.url)
-          .then(res => (this.items = res.data))
-          .finally(() => this.loading = false)
+          axios.get('saida/lista')
+          .then(req => {
+              this.tableData = req.data.data
+              this.items = req.data.data
+              })
+
       }
     }
 </script>

@@ -8,7 +8,7 @@
                             <span class="glyphicon glyphicon-plus"></span>
                             </button>
                         </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
                             <input type="text" v-model="search" class="form-control" placeholder="Pesquisar.."> 
                         </div>
                       </div>
@@ -17,6 +17,10 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="table-responsive">
+                        <paginate
+                            name="items"
+                            :list="filtroEntrada"
+                            :per="6">
                         <table class="table table-striped" >
                             <thead>
                                 <tr>
@@ -27,7 +31,7 @@
                             <tbody>
                                 <div  v-if="loading">Loading...</div>
                                 <div v-if="items == ''">Nenhum registro</div>
-                                <tr v-for="(i, index) in filtroEntrada" :key="index">
+                                <tr v-for="(i, index) in paginated('items')" :key="index">
                                     
                                     <td>{{i.id}}</td>
                                     <td>{{i.nome_produto}}</td>
@@ -42,9 +46,15 @@
                                 </tr>  
                             </tbody>
                         </table>
-
+                    </paginate>
                         <div class="text-center">
-                            <VPagination v-bind:source="pagination" v-on:navigate="navigate"></VPagination>
+                            <paginate-links class="pagination" for="items"
+                                :show-step-links="true"
+                                :step-links="{
+                                    next: '>>',
+                                    prev: '<<'
+                                }"
+                                ></paginate-links>
                         </div>
 
                        </div>
@@ -55,13 +65,26 @@
                 <!-- /.panel -->
                 <modal nome="modalCadastrar" titulo="Cadastrar">
                     <div class="container">
-                         <div v-if="message" class="alert alert-success alert-dismissible fade in">
+                         
+                      <form v-on:submit.prevent="addItem" class="form">
+                          <div class="row">
+                              <div v-if="message" class="alert alert-success alert-dismissible fade in">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             <strong>Successo!</strong> {{message}}.
                           </div>
-                      <form v-on:submit.prevent="addItem" class="form">
-                          <div class="row">
-                              <div class="col-lg-8 col-md-8 col-sm-8">
+                               <div class="col-lg-2 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Categoria</label>
+                                        <select class="form-control" id="exampleFormControlSelect1">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                </div>
+                            </div>
+                              <div class="col-lg-4 col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <label>Nome Produto</label>
                                     <input v-model="item.produto_id"  class="form-control">
@@ -70,7 +93,7 @@
                           </div>
 
                         <div class="row">
-                           <div class="col-lg-4 col-md-4 col-sm-4">
+                           <div class="col-lg-2 col-md-4 col-sm-4">
                             <div class="form-group">
                                 <label>Qtd entrada</label>
                                 <input v-model="item.qtd_entrada" class="form-control">
@@ -131,7 +154,10 @@
         
 </template>
 
+
+
 <script>
+
  import {VMoney} from 'v-money'
  import VPagination from './Pagination.vue'
 
@@ -143,6 +169,7 @@
       props:[ 'url', 'csstamanho','titulotabela'],
       data(){
         return {
+            paginate: ['items'],
             items:[],
             message:"",
             loading:true,
@@ -155,7 +182,8 @@
                 masked: false
             },
             search:"",
-            pagination:{}
+            
+            
            
         }
       },
@@ -164,16 +192,18 @@
           
           axios.get(this.url)
           .then(req => {
-              this.items = req.data.data
-              this.pagination = req.data
+              this.items = req.data
+              //this.pagination = req.data
               })
           .finally(() => this.loading = false)
       },
       computed:{
           filtroEntrada: function (){
-              return this.items.filter((entrada) => entrada.nome_produto.includes(this.search)
+              const re = new RegExp(this.search, 'i')
+              return this.items.filter(entrada => entrada.nome_produto.match(re)
               )
-          }
+          },
+          
       },
       methods:{
           navigate(page){
@@ -182,6 +212,7 @@
           teste: function(e){
               console.log(e)
           },
+          
           formatPrice(value) {
             let val = (value/1).toFixed(2).replace('.', ',')
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
@@ -193,10 +224,10 @@
           getaNavigate(page){
             axios.get('entrada/lista?page='+ page)
             .then(req => {
-              this.items = req.data.data
-              this.pagination = req.data
+                    this.items = req.data.data
+                    this.pagination = req.data
               })
-              .finally(() => this.loading = false)
+              
           },
           cleanForm(){
               this.item.produto_id = "";
@@ -207,6 +238,7 @@
             axios.post('entrada', this.item)
             .then(res =>{
                 this.atualiza();
+                
                 this.message = res.data;
                 this.cleanForm();
             })
@@ -231,6 +263,9 @@
              .catch(res =>
              console.log(res.data)
              )
+         },
+         getCategoria(){
+            
          }
       },
       directives: {money: VMoney}

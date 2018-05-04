@@ -23,11 +23,27 @@ class EntradaController extends Controller
         $list = DB::table('entrada_produtos')
             ->leftJoin('produtos', 'produtos.id', '=', 'entrada_produtos.produto_id')
             ->select('entrada_produtos.*', 'produtos.nome_produto')
-            ->paginate(4);
+            ->orderby('entrada_produtos.id','desc')
+            ->get();
+            
             
         return response()->json($list, 200);
     }
     
+    public function searchEntrada(Request $request, Entrada $entrada){
+        $search = $request->nome_produto;
+        
+        
+
+        $lista_entrada =  DB::table('entrada_produtos')
+                        ->leftJoin('produtos', 'produtos.id', '=', 'entrada_produtos.produto_id')
+                        ->select('entrada_produtos.*', 'produtos.nome_produto')
+                        ->where('produtos.nome_produto', 'LIKE', "%$search%")
+                        ->paginate(4);
+
+        return response()->json($lista_entrada, 200);
+    }
+
     public function create()
     {
         //
@@ -48,6 +64,7 @@ class EntradaController extends Controller
         $data = $entrada->save();
         
         if($data)
+        
             return response()->json('Cadastro Efetuado com sucesso', 201);
     
             return response()->json('Erro',500);

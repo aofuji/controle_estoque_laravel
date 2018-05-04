@@ -32,10 +32,15 @@ Route::middleware(['auth'])->group(function(){
             Route::get('edit/{id}', 'EntradaController@edit')->name('entrada.edit');
             Route::post('update/{id}', 'EntradaController@update')->name('entrada.update');
             Route::get('delete/{id}', 'EntradaController@destroy')->name('entrada.delete');
+            Route::any('search','EntradaController@searchEntrada');
         });
 
         Route::prefix('saida')->group(function () {
             Route::get('','SaidaController@index')->name('saida');
+            Route::post('','SaidaController@store')->name('saida.store');
+            Route::get('edit/{id}', 'SaidaController@edit')->name('saida.edit');
+            Route::post('update/{id}', 'SaidaController@update')->name('saida.update');
+            Route::post('delete/{id}', 'SaidaController@destroy')->name('saida.delete');
             Route::get('lista','SaidaController@listaSaida');
         });
 
