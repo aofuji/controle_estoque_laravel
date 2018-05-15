@@ -24,7 +24,7 @@ class EntradaController extends Controller
             ->leftJoin('produtos', 'produtos.id', '=', 'entrada_produtos.produto_id')
             ->select('entrada_produtos.*', 'produtos.nome_produto')
             ->orderby('entrada_produtos.id','desc')
-            ->get();
+            ->paginate(4);
             
             
         return response()->json($list, 200);

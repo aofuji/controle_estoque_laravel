@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Saida;
 use App\Models\Produto;
+use App\Models\Estoque;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -26,13 +27,24 @@ class SaidaController extends Controller
        return view('saida', compact('list_saida','produtos'));
     }
 
+    public function searchSaida(Request $request, Saida $saida){
+
+        $produtos = Produto::all();
+        
+        $dataForm = $request->except('_token');
+
+        
+        $list_saida = $saida->search($dataForm, $this->totalPage);
+        
+        return view('saida', compact('list_saida','produtos','dataForm'));
+    }
 
     public function create()
     {
        
     }
 
-    public function store(Request $request, Saida $saida)
+    public function store(Request $request, Saida $saida, Estoque $estoque)
     {
        
 
@@ -45,6 +57,19 @@ class SaidaController extends Controller
         $saida->created_at = $dt;
         $saida->updated_at = $dt;
         $data = $saida->save();
+
+        $estoqueAtl = Estoque::where('produto_id', $request->nome_produto)
+        ->get();
+        
+        $update = Estoque::updateOrCreate(['produto_id'=> $request->nome_produto],
+                [
+                 'qtd_estoque'=> $estoqueAtl ? $request->qtd_saida : $estoqueAtl[0]->qtd_estoque - $request->qtd_saida ,
+                 'valor' => str_replace(",",".", $request->valor),
+                 'produto_id ' => $request->nome_produto,
+                 'data_saida' => $dt
+                ]);
+       
+       
 
         if($data)
             return redirect()

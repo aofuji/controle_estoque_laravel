@@ -15,12 +15,13 @@ class CreateEstoqueTable extends Migration
     {
         Schema::create('estoque', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nome_produto');
             $table->integer('qtd_estoque');
             $table->decimal('valor');
-            $table->dateTime('data_entrada');
-            $table->dateTime('data_saida');
-            $table->integer('produto_id')->unsigned();
-            $table->foreign('produto_id')->references('id')->on('produtos')->onDelete('cascade');
+            $table->integer('historico_id')->unsigned();
+            $table->foreign('historico_id')->references('id')->on('historicos')->onDelete('cascade');
+            $table->integer('categoria_id')->unsigned();
+            $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
             $table->timestamps();
         });
     }

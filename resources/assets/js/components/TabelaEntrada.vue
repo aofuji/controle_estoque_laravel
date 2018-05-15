@@ -7,20 +7,25 @@
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCadastrar">
                             <span class="glyphicon glyphicon-plus"></span>
                             </button>
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <select class="form-control" >
+                                    <option>10</option>
+                                    <option>15</option>
+                                    <option>20</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
                             <input type="text" v-model="search" class="form-control" placeholder="Pesquisar.."> 
                         </div>
+                       
                       </div>
 
                     </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <paginate
-                            name="items"
-                            :list="filtroEntrada"
-                            :per="6">
+                       
                         <table class="table table-striped" >
                             <thead>
                                 <tr>
@@ -31,7 +36,7 @@
                             <tbody>
                                 <div  v-if="loading">Loading...</div>
                                 <div v-if="items == ''">Nenhum registro</div>
-                                <tr v-for="(i, index) in paginated('items')" :key="index">
+                                <tr v-for="(i, index) in lista" :key="index">
                                     
                                     <td>{{i.id}}</td>
                                     <td>{{i.nome_produto}}</td>
@@ -46,15 +51,10 @@
                                 </tr>  
                             </tbody>
                         </table>
-                    </paginate>
+                   
                         <div class="text-center">
-                            <paginate-links class="pagination" for="items"
-                                :show-step-links="true"
-                                :step-links="{
-                                    next: '>>',
-                                    prev: '<<'
-                                }"
-                                ></paginate-links>
+                        
+                            
                         </div>
 
                        </div>
@@ -182,9 +182,8 @@
                 masked: false
             },
             search:"",
-            
-            
-           
+            n_exibir:10,
+
         }
       },
       
@@ -192,8 +191,8 @@
           
           axios.get(this.url)
           .then(req => {
-              this.items = req.data
-              //this.pagination = req.data
+              this.items = req.data.data
+              console.log(this.items)
               })
           .finally(() => this.loading = false)
       },
@@ -203,6 +202,18 @@
               return this.items.filter(entrada => entrada.nome_produto.match(re)
               )
           },
+          lista: function(){
+              
+              return this.items.filter(res => {
+                 if(res.nome_produto.toLowerCase().indexOf(this.search.toLowerCase()) >= 0){
+                     return true
+                 }else {
+                     return false
+                 }
+                
+                  
+              })
+          }
           
       },
       methods:{
@@ -271,3 +282,7 @@
       directives: {money: VMoney}
     }
 </script>
+
+<style>
+.pointer {cursor: pointer;}
+</style>
