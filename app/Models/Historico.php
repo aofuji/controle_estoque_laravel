@@ -11,13 +11,16 @@ class Historico extends Model
         'tipo',
         'qtd',
         'valor',
+        'usuario',
+        'obs',
+        'estoque_id',
         'created_at',
         'updated_at'
     ];
     protected $table = 'historicos';
 
     public function estoque(){
-        return $this->hasMany(Estoque::class, 'historico_id');
+        return $this->belongsTo(Estoque::class, 'estoque_id');
     }
 }
 

@@ -8,6 +8,7 @@ use App\Models\Produto;
 use App\Models\Entrada;
 use App\Models\Saida;
 use App\Models\Categoria;
+use App\Models\Estoque;
 use Illuminate\Support\Facades\DB;
 
 class EstoqueController extends Controller
@@ -15,7 +16,8 @@ class EstoqueController extends Controller
    
     public function index()
     {
-        return view('estoque');
+        $lista = Estoque::all();
+        return view('estoque.estoque', compact('lista'));
     }
 
     public function listaProdutos(){

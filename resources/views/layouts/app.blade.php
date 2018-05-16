@@ -95,9 +95,7 @@
                         <li>
                             <a href="#"><i class="fa fa-file-text-o" aria-hidden="true"></i> Cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="{{ route('produto') }}">Produto</a>
-                                </li>
+                                
                                 <li>
                                     <a href="{{ route('categoria') }}">Categorias</a>
                                 </li>
@@ -107,12 +105,7 @@
                         <li>
                             <a href="{{ route('estoque') }}"><i class="fa fa-table fa-fw"></i> Estoque</a>
                         </li>
-                        <li>
-                            <a href="{{ route('entrada') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Entrada</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('saida') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Saida</a>
-                        </li>
+                        
                  @endguest
                 </menu-left>
         
