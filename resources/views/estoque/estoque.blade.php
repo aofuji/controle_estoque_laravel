@@ -14,7 +14,16 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">      
-                                <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#saidaCad" ><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                <a class="btn btn-primary btn-sm"  href="{{ route('form.estoque') }}" ><i class="fa fa-plus" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12">   
+                                <form method="POST" class="form form-inline" action="{{ route('estoque.search') }}">
+                                {!! csrf_field()  !!}
+                                    <input type="text" name="nome_produto" class="form-control" placeholder="Pesquisar..">
+                                    <input type="text" name="qtd_estoque" class="form-control" placeholder="Quantidade">
+
+                                    <button type="submit" class="btn btn-primary">Pesquisar</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -36,16 +45,17 @@
                                 </tr>
                             </thead>
                         <tbody>
+                        
                         @foreach ($lista as $item)
                             <tr >
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->nome_produto}}</td>
-                                <td>{{$item->categoria_id}}</td>
+                                <td>{{$item->categoria}}</td>
                                 <td>{{$item->qtd_estoque}}</td>
                                 <td>R$ {{number_format($item->valor, 2, ',', '.')}}</td>
                                
-                                <td>{{$item->created_at}}</td>
-                                <td>{{$item->updated_at}}</td>
+                                <td>{{date('d/m/Y - H:i:s a', strtotime($item->created_at))}}</td>
+                                <td>{{ date('d/m/Y - H:i:s a', strtotime($item->updated_at))}}</td>
                                 <td>
                                     <button class="btn btn-success btn-sm"><i class="fa fa-sign-in" aria-hidden="true"></i></button>
                                     <button class="btn btn-info btn-sm"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
@@ -56,6 +66,9 @@
                         @endforeach    
                         </tbody>
                         </table>
+                            <div class="text-center">
+                                {!! $lista->links() !!}
+                            </div>
                     </div>
                 <!-- /.table-responsive -->
                     </div>

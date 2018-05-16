@@ -13,11 +13,26 @@ use Illuminate\Support\Facades\DB;
 
 class EstoqueController extends Controller
 {
+    private $totalPage = 7;
    
     public function index()
     {
-        $lista = Estoque::all();
+
+        $lista = DB::table('estoque')
+        ->leftJoin('categorias', 'categorias.id', '=', 'estoque.categoria_id')
+        ->select('estoque.*', 'categorias.categoria')
+        ->orderby('estoque.id','desc')
+        ->paginate($this->totalPage);
+        
         return view('estoque.estoque', compact('lista'));
+    }
+
+    public function searchEstoque(Request $request, Estoque $estoque){
+        $dataForm = $request->except('_token');
+        
+        $lista = $estoque->search($dataForm, $this->totalPage);
+        
+        return view('estoque.estoque', compact('lista','dataForm'));
     }
 
     public function listaProdutos(){
@@ -40,18 +55,40 @@ class EstoqueController extends Controller
 
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function form(){
+        $lista_categoria = Categoria::all();
+
+        return view('estoque.cadform',compact('lista_categoria'));
+    }
+
+  
+    public function store(Request $request, Estoque $estoque)
     {
-        //
+        $request->validate([
+            'nome_produto' => 'required | max:255',
+            'categoria_id' => 'required | numeric',
+            'qtd_estoque' => 'required | numeric | min:1 | max:255',
+            'valor'=> 'required | numeric | min:1 | max:255',    
+        ]);
+
+        $estoque->nome_produto = $request->nome_produto;
+        $estoque->categoria_id = $request->categoria_id;
+        $estoque->qtd_estoque = $request->qtd_estoque;
+        $estoque->valor = $request->valor;
+
+        $data = $estoque->save();
+
+        if($data)
+            return redirect() 
+                ->back()
+                ->with('success',  'Cadastro efetuado com sucesso!');
+
+            return redirect()
+                ->back()
+                ->with('error',['message' => 'Falha ao carregar']);
     }
 
     /**

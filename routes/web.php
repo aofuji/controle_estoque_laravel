@@ -21,6 +21,9 @@ Route::middleware(['auth'])->group(function(){
 
         Route::prefix('estoque')->group(function () {
             Route::get('','EstoqueController@index')->name('estoque');
+            Route::get('form','EstoqueController@form')->name('form.estoque');
+            Route::post('form','EstoqueController@store')->name('form.store');
+            Route::any('search', 'EstoqueController@searchEstoque')->name('estoque.search');
             Route::get('lista','EstoqueController@ListaProdutos');
         });
         
