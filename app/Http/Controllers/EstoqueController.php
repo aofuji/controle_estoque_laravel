@@ -91,15 +91,12 @@ class EstoqueController extends Controller
                 ->with('error',['message' => 'Falha ao carregar']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function show($id)
     {
-        //
+      
+        $list = Estoque::find($id);
+        return response()->json($list);
     }
 
     /**
@@ -133,6 +130,10 @@ class EstoqueController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $estoque = Estoque::find($id);
+        $data = $estoque->delete();
+        return redirect()
+                        ->back()
+                        ->with('success',  'Sucesso ao Deletar');
     }
 }

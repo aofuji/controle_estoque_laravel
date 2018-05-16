@@ -30,6 +30,7 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="table-responsive">
+                    @include('includes.alerts')
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -60,7 +61,7 @@
                                     <button class="btn btn-success btn-sm"><i class="fa fa-sign-in" aria-hidden="true"></i></button>
                                     <button class="btn btn-info btn-sm"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
                                     <button class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i></button> 
+                                    <buttondelete modalnome="saidaDelete"  url="estoque/show/" idsaida="{{$item->id}}"></buttondelete> 
                                 </td>
                             </tr>
                         @endforeach    
@@ -80,5 +81,18 @@
 
     
 </div>
-
+<modal nome="saidaDelete" titulo="Excluir">
+    <formulario token="{{ csrf_token() }}" v-bind:action="'estoque/delete/'+ $store.state.item.id" method="post">
+        <h3>Deseja exluir esse produto ?</h3>
+        <p>#ID @{{$store.state.item.id}} </p>
+        <p>Nome @{{$store.state.item.nome_produto}}</p>
+        <p>Valor @{{$store.state.item.valor}}</p>
+        <p>Quantidade @{{$store.state.item.qtd_estoque}}</p>
+    
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Excluir</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+        </div>
+    </formulario>
+</modal>
 @endsection

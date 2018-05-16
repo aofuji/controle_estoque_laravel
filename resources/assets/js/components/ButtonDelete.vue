@@ -15,6 +15,7 @@
             getItens(id){
                 axios.get(this.url + id)
                 .then(res =>{
+                    
                     this.$store.commit('setItem',res.data)
                 });
                 

@@ -24,6 +24,8 @@ Route::middleware(['auth'])->group(function(){
             Route::get('form','EstoqueController@form')->name('form.estoque');
             Route::post('form','EstoqueController@store')->name('form.store');
             Route::any('search', 'EstoqueController@searchEstoque')->name('estoque.search');
+            Route::get('show/{id}', 'EstoqueController@show')->name('estoque.show');
+            Route::post('delete/{id}', 'EstoqueController@destroy')->name('estoque.delete');
             Route::get('lista','EstoqueController@ListaProdutos');
         });
         

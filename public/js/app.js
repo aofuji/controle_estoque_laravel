@@ -65787,6 +65787,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             axios.get(this.url + id).then(function (res) {
+
                 _this.$store.commit('setItem', res.data);
             });
         }
