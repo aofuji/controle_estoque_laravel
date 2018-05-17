@@ -26,9 +26,19 @@ Route::middleware(['auth'])->group(function(){
             Route::any('search', 'EstoqueController@searchEstoque')->name('estoque.search');
             Route::get('show/{id}', 'EstoqueController@show')->name('estoque.show');
             Route::post('delete/{id}', 'EstoqueController@destroy')->name('estoque.delete');
+            Route::get('edit/{id}', 'EstoqueController@edit')->name('estoque.edit');
+            Route::post('edit/{id}', 'EstoqueController@update')->name('estoque.update');
+
             Route::get('lista','EstoqueController@ListaProdutos');
         });
         
+        Route::prefix('cliente')->group(function () {
+            Route::get('','ClienteController@index')->name('cliente');
+            Route::get('form','ClienteController@form')->name('form.cliente');
+            Route::post('form','ClienteController@store')->name('cliente.store');
+            Route::get('edit/{id}', 'ClienteController@edit')->name('cliente.edit');
+        });
+
         Route::prefix('entrada')->group(function () {
             Route::get('','EntradaController@index')->name('entrada');
             Route::get('lista','EntradaController@listaEntrada');
