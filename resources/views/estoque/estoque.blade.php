@@ -68,7 +68,12 @@
                         </tbody>
                         </table>
                             <div class="text-center">
+                               
+                                @if(isset($dataform))
+                                {!! $lista->appends($dataForm)->links() !!}
+                                @else
                                 {!! $lista->links() !!}
+                                @endif
                             </div>
                     </div>
                 <!-- /.table-responsive -->

@@ -23,7 +23,7 @@ Route::middleware(['auth'])->group(function(){
             Route::get('','EstoqueController@index')->name('estoque');
             Route::get('form','EstoqueController@form')->name('form.estoque');
             Route::post('form','EstoqueController@store')->name('form.store');
-            Route::any('search', 'EstoqueController@searchEstoque')->name('estoque.search');
+            Route::any('', 'EstoqueController@searchEstoque')->name('estoque.search');
             Route::get('show/{id}', 'EstoqueController@show')->name('estoque.show');
             Route::post('delete/{id}', 'EstoqueController@destroy')->name('estoque.delete');
             Route::get('edit/{id}', 'EstoqueController@edit')->name('estoque.edit');
@@ -37,6 +37,10 @@ Route::middleware(['auth'])->group(function(){
             Route::get('form','ClienteController@form')->name('form.cliente');
             Route::post('form','ClienteController@store')->name('cliente.store');
             Route::get('edit/{id}', 'ClienteController@edit')->name('cliente.edit');
+            Route::post('edit/{id}', 'ClienteController@update')->name('cliente.update');
+            Route::post('delete/{id}', 'ClienteController@destroy')->name('cliente.delete');
+            Route::get('show/{id}', 'ClienteController@show')->name('cliente.show');
+            Route::any('', 'ClienteController@searchCliente')->name('cliente.search');
         });
 
         Route::prefix('entrada')->group(function () {

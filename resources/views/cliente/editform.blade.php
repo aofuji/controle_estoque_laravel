@@ -10,7 +10,7 @@
 
     <div class="row">
     @include('includes.alerts')
-    <form action="" method="post">
+    <form action="{{route('cliente.update',$cliente->id)}}" method="post">
         {!! csrf_field()  !!}
         <div class="form-row">
         <div class="form-group col-md-12">
@@ -70,7 +70,7 @@
             
         </div>
         <div class="form-group col-md-2">
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-primary">Atualizar</button>
             <a href="{{ route('cliente') }}" class="btn">Voltar</a>
         </div>
         </form>

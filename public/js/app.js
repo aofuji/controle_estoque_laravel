@@ -45015,6 +45015,7 @@ Vue.component('tabela-saida', __webpack_require__(201));
 Vue.component('formulario', __webpack_require__(204));
 Vue.component('buttonedit', __webpack_require__(207));
 Vue.component('buttondelete', __webpack_require__(210));
+Vue.component('buttonview', __webpack_require__(223));
 
 var app = new Vue({
     props: ['urlsaida'],
@@ -65836,6 +65837,123 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(224)
+/* template */
+var __vue_template__ = __webpack_require__(225)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\ButtonView.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0565442e", Component.options)
+  } else {
+    hotAPI.reload("data-v-0565442e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 224 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['modalnome', 'url', 'idview'],
+    mounted: function mounted() {},
+
+    methods: {
+        getItens: function getItens(id) {
+            var _this = this;
+
+            axios.get(this.url + id).then(function (res) {
+
+                _this.$store.commit('setItem', res.data);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "a",
+    {
+      staticClass: "btn btn-info btn-sm",
+      attrs: { "data-toggle": "modal", "data-target": "#" + _vm.modalnome },
+      on: {
+        click: function($event) {
+          _vm.getItens(_vm.idview)
+        }
+      }
+    },
+    [_c("i", { staticClass: "fa fa-eye", attrs: { "aria-hidden": "true" } })]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0565442e", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
