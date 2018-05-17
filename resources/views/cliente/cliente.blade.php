@@ -57,9 +57,10 @@
                                 <td>{{$item->telefone}}</td>
                                 
                                 <td>
-                                <buttonview modalnome="clienteView"  url="cliente/show/" idview="{{$item->id}}"></buttonview> 
+                                    
+                                    <buttonex modalnome="clienteView" cssbtn="btn btn-info btn-sm" cssicon="fa fa-eye" url="cliente/show/" id="{{$item->id}}"></buttonex> 
                                     <a href="{{route('cliente.edit', $item->id)}}" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    <buttondelete modalnome="clienteDelete"  url="cliente/show/" idsaida="{{$item->id}}"></buttondelete> 
+                                    <buttonex modalnome="clienteDelete" cssbtn="btn btn-danger btn-sm" cssicon="fa fa-trash-o" url="cliente/show/" id="{{$item->id}}"></buttonex> 
                                     
                                 </td>
                             </tr>
@@ -104,7 +105,7 @@
         <div class="form-group col-md-12">
                 <label for="">Nome</label>
                 <input type="text" class="form-control" name="nome" v-model="$store.state.item.nome" disabled>
-            </div>
+        </div>
             
         </div>
  

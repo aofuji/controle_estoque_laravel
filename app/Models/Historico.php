@@ -11,6 +11,7 @@ class Historico extends Model
         'tipo',
         'qtd',
         'valor',
+        'cliente',
         'usuario',
         'obs',
         'estoque_id',

@@ -108,7 +108,9 @@
                         <li>
                             <a href="{{ route('estoque') }}"><i class="fa fa-table fa-fw"></i> Estoque</a>
                         </li>
-                        
+                        <li>
+                            <a href="#"><i class="fa fa-history"></i> Histórico</a>
+                        </li>
                  @endguest
                 </menu-left>
         

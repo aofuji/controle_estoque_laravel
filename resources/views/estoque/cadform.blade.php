@@ -13,7 +13,7 @@
     <form action="{{ route('form.store') }}" method="post">
         {!! csrf_field()  !!}
         <div class="form-row">
-        <div class="form-group col-md-2">
+            <div class="form-group col-md-2">
                 <label for="inputEmail4">Cod. Produto</label>
                 <input type="text" class="form-control" name="codigo_produto" placeholder="Digite codigo....">
             </div>

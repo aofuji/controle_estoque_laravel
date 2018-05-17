@@ -22,5 +22,12 @@ class UsersTableSeeder extends Seeder
             'created_at'=> $dt,
             'updated_at'=>$dt
         ]);
+        DB::table('users')->insert([
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('secret'),
+            'created_at'=> $dt,
+            'updated_at'=>$dt
+        ]);
     }
 }

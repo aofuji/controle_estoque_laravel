@@ -9,8 +9,11 @@ use App\Models\Entrada;
 use App\Models\Saida;
 use App\Models\Categoria;
 use App\Models\Estoque;
+use App\Models\Historico;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 
 class EstoqueController extends Controller
 {
@@ -56,6 +59,38 @@ class EstoqueController extends Controller
     public function create()
     {
         
+    }
+
+    public function entrada(Request $request, $id){
+
+        $request->validate([
+            'quantidade' => 'required | numeric ',
+              
+        ]);
+
+        $entrada = Estoque::find($id);
+        
+        $entrada->qtd_estoque = $entrada->qtd_estoque + $request->quantidade;
+
+        $data = $entrada->save();
+
+        if($data)
+            Historico::create(
+                ['tipo' => 'Entrada',
+                'qtd' => $request->quantidade,
+                'valor' => $entrada->valor,
+                'usuario' => Auth::user()->name,
+                'cliente' => 'nenhum',
+                'obs' => 'teste',
+                'estoque_id' => $entrada->id
+                ]);
+            return redirect() 
+                ->back()
+                ->with('success',  'Entrada efetuado com sucesso!');
+
+            return redirect()
+                ->back()
+                ->with('error',['message' => 'Falha ao carregar']);
     }
 
     public function form(){

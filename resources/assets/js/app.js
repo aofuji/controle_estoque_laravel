@@ -57,6 +57,8 @@ Vue.component('formulario', require('./components/Form.vue'));
 Vue.component('buttonedit', require('./components/ButtonEdit.vue'));
 Vue.component('buttondelete', require('./components/ButtonDelete.vue'));
 Vue.component('buttonview', require('./components/ButtonView.vue'));
+Vue.component('buttonex', require('./components/ButtonEx.vue'));
+
 
 const app = new Vue({
     props:['urlsaida'],

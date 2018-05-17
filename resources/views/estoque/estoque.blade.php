@@ -58,10 +58,12 @@
                                 <td>R$ {{number_format($item->valor, 2, ',', '.')}}</td>
                                 <td>{{date('d/m/Y', strtotime($item->data))}}</td>
                                 <td>
-                                    <button class="btn btn-success btn-sm"><i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                                    
+                                    <buttonex modalnome="entrada" cssbtn="btn btn-success btn-sm" cssicon="fa fa-sign-in" url="estoque/show/" id="{{$item->id}}"></buttonex>
                                     <button class="btn btn-info btn-sm"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
                                     <a href="{{ route('estoque.edit', $item->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    <buttondelete modalnome="saidaDelete"  url="estoque/show/" idsaida="{{$item->id}}"></buttondelete> 
+                                    <buttonex modalnome="saidaDelete" cssbtn="btn btn-danger btn-sm" cssicon="fa fa-trash-o" url="estoque/show/" id="{{$item->id}}"></buttonex>
+                                    
                                 </td>
                             </tr>
                         @endforeach    
@@ -75,9 +77,9 @@
                                 {!! $lista->links() !!}
                                 @endif
                             </div>
-                    </div>
+                        </div>
                 <!-- /.table-responsive -->
-                    </div>
+                      </div>
                 <!-- /.panel-body -->
                     </div>
                 <!-- /.panel -->
@@ -98,6 +100,35 @@
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Excluir</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+        </div>
+    </formulario>
+</modal>
+
+<modal nome="entrada" titulo="Entrada">
+    <formulario token="{{ csrf_token() }}" v-bind:action="'estoque/entrada/'+ $store.state.item.id" method="post">
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label>Codigo do Produto</label> @{{$store.state.item.codigo_produto}}
+            </div>
+            <div class="form-group col-md-12">
+                <label>Nome</label> @{{$store.state.item.nome_produto}}
+            </div>
+            <div class="form-group col-md-12">
+                <label>Quantidade</label> @{{$store.state.item.qtd_estoque}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label>Entrada</label>
+                <input type="number" min="1" max="99" class="form-control" name="quantidade" required>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-primary ">Cadastrar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+            </div>
         </div>
     </formulario>
 </modal>
