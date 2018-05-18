@@ -30,7 +30,6 @@ Route::middleware(['auth'])->group(function(){
             Route::post('edit/{id}', 'EstoqueController@update')->name('estoque.update');
             Route::post('entrada/{id}','EstoqueController@entrada')->name('estoque.entrada');
             Route::post('saida/{id}','EstoqueController@saida')->name('estoque.saida');
-            Route::get('lista','EstoqueController@ListaProdutos');
         });
         
         Route::prefix('cliente')->group(function () {
@@ -42,30 +41,6 @@ Route::middleware(['auth'])->group(function(){
             Route::post('delete/{id}', 'ClienteController@destroy')->name('cliente.delete');
             Route::get('show/{id}', 'ClienteController@show')->name('cliente.show');
             Route::any('', 'ClienteController@searchCliente')->name('cliente.search');
-        });
-
-        Route::prefix('entrada')->group(function () {
-            Route::get('','EntradaController@index')->name('entrada');
-            Route::get('lista','EntradaController@listaEntrada');
-            Route::post('','EntradaController@store')->name('entrada.store');
-            Route::get('show/{id}','EntradaController@show')->name('entrada.show');
-            Route::get('edit/{id}', 'EntradaController@edit')->name('entrada.edit');
-            Route::post('update/{id}', 'EntradaController@update')->name('entrada.update');
-            Route::get('delete/{id}', 'EntradaController@destroy')->name('entrada.delete');
-            Route::any('search','EntradaController@searchEntrada');
-        });
-
-        Route::prefix('saida')->group(function () {
-            Route::get('','SaidaController@index')->name('saida');
-            Route::post('','SaidaController@store')->name('saida.store');
-            Route::get('edit/{id}', 'SaidaController@edit')->name('saida.edit');
-            Route::post('update/{id}', 'SaidaController@update')->name('saida.update');
-            Route::post('delete/{id}', 'SaidaController@destroy')->name('saida.delete');
-            Route::any('search', 'SaidaController@searchSaida')->name('saida.search');
-        });
-
-        Route::prefix('produto')->group(function () {
-            Route::get('','ProdutoController@index')->name('produto');
         });
 
         Route::prefix('categoria')->group(function () {

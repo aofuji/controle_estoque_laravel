@@ -42,27 +42,17 @@ const store = new Vuex.Store({
 });
 
 
-
-
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('menu-topo', require('./components/MenuTopo.vue'));
 Vue.component('menu-left', require('./components/MenuLeft.vue'));
 Vue.component('modal', require('./components/modal/Modal.vue'));
-Vue.component('modal-link', require('./components/modal/ModalLink.vue'));
-Vue.component('painel', require('./components/Painel.vue'));
-Vue.component('tabela-estoque', require('./components/TabelaEstoque.vue'));
 Vue.component('tabela-entrada', require('./components/TabelaEntrada.vue'));
-Vue.component('tabela-saida', require('./components/TabelaSaida.vue'));
 Vue.component('formulario', require('./components/Form.vue'));
-Vue.component('buttonedit', require('./components/ButtonEdit.vue'));
-Vue.component('buttondelete', require('./components/ButtonDelete.vue'));
 Vue.component('buttonview', require('./components/ButtonView.vue'));
 Vue.component('buttonsaida', require('./components/ButtonSaida.vue'));
 Vue.component('buttonex', require('./components/ButtonEx.vue'));
 
 
 const app = new Vue({
-    props:['urlsaida'],
     el: '#app',
     store,
     data(){

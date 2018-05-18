@@ -50,14 +50,14 @@
                         
                         @foreach ($lista as $item)
                             <tr >
-                                <td>{{$item->id}}</td>
-                                <td>{{$item->codigo_produto}}</td>
-                                <td>{{$item->nome_produto}}</td>
-                                <td>{{$item->categoria}}</td>
-                                <td>{{$item->qtd_estoque}}</td>
-                                <td>R$ {{number_format($item->valor, 2, ',', '.')}}</td>
-                                <td>{{date('d/m/Y', strtotime($item->data))}}</td>
-                                <td>
+                                <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{$item->id}}</td>
+                                <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{$item->codigo_produto}}</td>
+                                <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{$item->nome_produto}}</td>
+                                <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{$item->categoria}}</td>
+                                <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{$item->qtd_estoque}}</td>
+                                <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">R$ {{number_format($item->valor, 2, ',', '.')}}</td>
+                                <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{date('d/m/Y', strtotime($item->data))}}</td>
+                                <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">
                                 
                                     <buttonex modalnome="entrada" cssbtn="btn btn-success btn-sm" cssicon="fa fa-sign-in" url="estoque/show/" id="{{$item->id}}"></buttonex>
                                     <buttonsaida modalnome="saida" validacao="{{$item->qtd_estoque}}" cssbtn="btn btn-info btn-sm" cssicon="fa fa-sign-out" url="estoque/show/" id="{{$item->id}}"></buttonsaida>
@@ -132,7 +132,7 @@
         <div class="row">
             <div class="form-group col-md-2">
                 <label>Entrada</label>
-                <input type="number" min="1" max="99" class="form-control" name="quantidade" required>
+                <input type="number" min="1"  class="form-control" name="quantidade" required>
                 
             </div>
         </div>
@@ -146,6 +146,7 @@
 </modal>
 
 <modal nome="saida" titulo="Saida">
+    
     <formulario token="{{ csrf_token() }}" v-bind:action="'estoque/saida/'+ $store.state.item.id" method="post">
         <div class="row">
                 <div class="form-group col-md-4">
@@ -180,7 +181,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label>Saida</label>
-                    <input type="number" min="1" max="99" class="form-control" name="quantidade" required>
+                    <input type="number" min="1" v-bind:max="$store.state.item.qtd_estoque" class="form-control" name="qtd_saida" required>
                 </div>              
             </div>
             <div class="row">

@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Models\Produto;
-use App\Models\Entrada;
-use App\Models\Saida;
 use App\Models\Categoria;
 use App\Models\Estoque;
 use App\Models\Historico;
@@ -41,23 +38,6 @@ class EstoqueController extends Controller
         return view('estoque.estoque', compact('lista','lista_cliente','dataForm'));
     }
 
-    public function listaProdutos(){
-        $list = DB::table('produtos')
-            ->leftJoin('categorias', 'categorias.id', '=', 'produtos.categoria_id')
-            ->leftJoin('entrada_produtos', 'produtos.id', '=', 'entrada_produtos.produto_id')
-            ->leftJoin('saida_produtos', 'produtos.id', '=', 'saida_produtos.produto_id')
-            ->select('produtos.id','nome_produto','categorias.categoria','produtos.status', 
-                DB::raw('count(entrada_produtos.produto_id) as qtd_registro_entrada '),
-                DB::raw('count(saida_produtos.produto_id) as qtd_registro_saida '),
-                DB::raw('COALESCE(SUM(entrada_produtos.qtd_entrada),0) as quantidade_entrada'), 
-                DB::raw('COALESCE(SUM(saida_produtos.qtd_saida),0) as quantidade_saida'),
-                DB::raw('COALESCE(SUM(entrada_produtos.qtd_entrada),0) - COALESCE(SUM(saida_produtos.qtd_saida),0)  as total'))    
-            ->groupBy('produtos.id','nome_produto','categorias.categoria','produtos.status')
-            ->get();
-            
-           
-        return response()->json($list, 200);
-    }
 
     public function create()
     {
@@ -95,31 +75,30 @@ class EstoqueController extends Controller
     }
 
     public function saida(Request $request, $id){
-        
+       
         $saida = Estoque::find($id);
         
+            $saida->qtd_estoque = $saida->qtd_estoque - $request->qtd_saida;
 
-        $saida->qtd_estoque = $saida->qtd_estoque - $request->quantidade;
-
-        $data = $saida->save();
-
-        if($data)
-            Historico::create(
-                ['tipo' => 'Saida',
-                'qtd' => $request->quantidade,
-                'valor' => $saida->valor ,
-                'usuario' => Auth::user()->name,
-                'cliente' => $request->cliente,
-                'obs' => 'teste',
-                'estoque_id' => $saida->id
-                ]);
-            return redirect() 
-                ->back()
-                ->with('success',  'Saida efetuado com sucesso!');
-
-            return redirect()
-                ->back()
-                ->with('error',['message' => 'Falha ao carregar']);
+            $data = $saida->save();
+    
+            if($data)
+                Historico::create(
+                    ['tipo' => 'Saida',
+                    'qtd' => $request->qtd_saida,
+                    'valor' => $saida->valor ,
+                    'usuario' => Auth::user()->name,
+                    'cliente' => $request->cliente,
+                    'obs' => 'teste',
+                    'estoque_id' => $saida->id
+                    ]);
+                return redirect() 
+                    ->back()
+                    ->with('success',  'Saida efetuado com sucesso!');
+    
+                return redirect()
+                    ->back()
+                    ->with('error',['message' => 'Falha ao carregar']);
     }
 
     public function form(){
