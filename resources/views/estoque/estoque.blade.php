@@ -60,7 +60,8 @@
                                 <td>
                                     
                                     <buttonex modalnome="entrada" cssbtn="btn btn-success btn-sm" cssicon="fa fa-sign-in" url="estoque/show/" id="{{$item->id}}"></buttonex>
-                                    <button class="btn btn-info btn-sm"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+                                    <buttonex modalnome="saida" cssbtn="btn btn-info btn-sm" cssicon="fa fa-sign-out" url="estoque/show/" id="{{$item->id}}"></buttonex>
+                                    
                                     <a href="{{ route('estoque.edit', $item->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                     <buttonex modalnome="saidaDelete" cssbtn="btn btn-danger btn-sm" cssicon="fa fa-trash-o" url="estoque/show/" id="{{$item->id}}"></buttonex>
                                     
@@ -107,14 +108,25 @@
 <modal nome="entrada" titulo="Entrada">
     <formulario token="{{ csrf_token() }}" v-bind:action="'estoque/entrada/'+ $store.state.item.id" method="post">
         <div class="row">
-            <div class="form-group col-md-12">
-                <label>Codigo do Produto</label> @{{$store.state.item.codigo_produto}}
+            <div class="form-group col-md-4">
+                <label>Codigo do Produto</label> 
+                <input type="text" class="form-control"  v-model="$store.state.item.codigo_produto" disabled>
             </div>
-            <div class="form-group col-md-12">
-                <label>Nome</label> @{{$store.state.item.nome_produto}}
+            <div class="form-group col-md-4">
+                <label>Nome</label>
+                <input type="text" class="form-control"  v-model="$store.state.item.nome_produto" disabled>
             </div>
-            <div class="form-group col-md-12">
-                <label>Quantidade</label> @{{$store.state.item.qtd_estoque}}
+            <div class="form-group col-md-2">
+                <label>Quantidade</label>
+                <input type="text" class="form-control"  v-model="$store.state.item.qtd_estoque" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label>Valor</label>
+                
+                <div class="form-group input-group">
+                        <span class="input-group-addon">R$</span>
+                        <input type="text" v-money="money" class="form-control" v-model="$store.state.item.valor" disabled>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -130,6 +142,53 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
             </div>
         </div>
+    </formulario>
+</modal>
+
+<modal nome="saida" titulo="Saida">
+    <formulario token="{{ csrf_token() }}" v-bind:action="'estoque/saida/'+ $store.state.item.id" method="post">
+        <div class="row">
+                <div class="form-group col-md-4">
+                    <label>Codigo do Produto</label> 
+                    <input type="text" class="form-control"  v-model="$store.state.item.codigo_produto" disabled>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Nome</label>
+                    <input type="text" class="form-control"  v-model="$store.state.item.nome_produto" disabled>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Quantidade</label>
+                    <input type="text" class="form-control"  v-model="$store.state.item.qtd_estoque" disabled>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Valor</label>
+                    
+                    <div class="form-group input-group">
+                        <span class="input-group-addon">R$</span>
+                        <input type="text" v-money="money" class="form-control" v-model="$store.state.item.valor" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label>Cliente</label>
+                    <select multiple class="form-control" name="cliente" required>                    
+                        @foreach ($lista_cliente as $cliente)
+                            <option value="{{$cliente->id}}">{{$cliente->nome}}</option>
+                        @endforeach                   
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Saida</label>
+                    <input type="number" min="1" max="99" class="form-control" name="quantidade" required>
+                </div>              
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <button type="submit" class="btn btn-primary ">Cadastrar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+                </div>
+            </div>
     </formulario>
 </modal>
 @endsection

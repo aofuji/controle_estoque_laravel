@@ -44948,7 +44948,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(139);
-module.exports = __webpack_require__(216);
+module.exports = __webpack_require__(219);
 
 
 /***/ }),
@@ -45016,7 +45016,7 @@ Vue.component('formulario', __webpack_require__(204));
 Vue.component('buttonedit', __webpack_require__(207));
 Vue.component('buttondelete', __webpack_require__(210));
 Vue.component('buttonview', __webpack_require__(213));
-Vue.component('buttonex', __webpack_require__(232));
+Vue.component('buttonex', __webpack_require__(216));
 
 var app = new Vue({
     props: ['urlsaida'],
@@ -65943,35 +65943,14 @@ if (false) {
 
 /***/ }),
 /* 216 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 217 */,
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */,
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */,
-/* 229 */,
-/* 230 */,
-/* 231 */,
-/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(233)
+var __vue_script__ = __webpack_require__(217)
 /* template */
-var __vue_template__ = __webpack_require__(234)
+var __vue_template__ = __webpack_require__(218)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -66010,7 +65989,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 233 */
+/* 217 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66039,7 +66018,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 234 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -66069,6 +66048,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-158a077c", module.exports)
   }
 }
+
+/***/ }),
+/* 219 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

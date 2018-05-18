@@ -39,7 +39,11 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="inputCity">Valor</label>
-                <input type="text" class="form-control" name="valor" placeholder="Digite valor....">
+                
+                <div class="form-group input-group">
+                        <span class="input-group-addon">R$</span>
+                        <input type="text" name="valor" v-money="money" class="form-control" placeholder="Digite valor....">
+                </div>
             </div>
             
         </div>

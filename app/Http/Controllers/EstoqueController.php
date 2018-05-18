@@ -10,6 +10,7 @@ use App\Models\Saida;
 use App\Models\Categoria;
 use App\Models\Estoque;
 use App\Models\Historico;
+use App\Models\Cliente;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,7 @@ class EstoqueController extends Controller
    
     public function index()
     {
+        $lista_cliente = Cliente::all();
 
         $lista = DB::table('estoque')
         ->leftJoin('categorias', 'categorias.id', '=', 'estoque.categoria_id')
@@ -28,14 +30,15 @@ class EstoqueController extends Controller
         ->orderby('estoque.id','desc')
         ->paginate($this->totalPage);
         
-        return view('estoque.estoque', compact('lista'));
+        return view('estoque.estoque', compact('lista', 'lista_cliente'));
     }
 
     public function searchEstoque(Request $request, Estoque $estoque){
+        $lista_cliente = Cliente::all();
         $dataForm = $request->except('_token');
         $lista = $estoque->search($dataForm, $this->totalPage);
         
-        return view('estoque.estoque', compact('lista','dataForm'));
+        return view('estoque.estoque', compact('lista','lista_cliente','dataForm'));
     }
 
     public function listaProdutos(){
@@ -65,15 +68,13 @@ class EstoqueController extends Controller
 
         $request->validate([
             'quantidade' => 'required | numeric ',
-              
         ]);
 
         $entrada = Estoque::find($id);
-        
         $entrada->qtd_estoque = $entrada->qtd_estoque + $request->quantidade;
 
         $data = $entrada->save();
-
+        
         if($data)
             Historico::create(
                 ['tipo' => 'Entrada',
@@ -93,6 +94,33 @@ class EstoqueController extends Controller
                 ->with('error',['message' => 'Falha ao carregar']);
     }
 
+    public function saida(Request $request, $id){
+        
+        $saida = Estoque::find($id);
+
+        $saida->qtd_estoque = $saida->qtd_estoque - $request->quantidade;
+
+        $data = $saida->save();
+
+        if($data)
+            Historico::create(
+                ['tipo' => 'Saida',
+                'qtd' => $request->quantidade,
+                'valor' => $saida->valor ,
+                'usuario' => Auth::user()->name,
+                'cliente' => $request->cliente,
+                'obs' => 'teste',
+                'estoque_id' => $saida->id
+                ]);
+            return redirect() 
+                ->back()
+                ->with('success',  'Saida efetuado com sucesso!');
+
+            return redirect()
+                ->back()
+                ->with('error',['message' => 'Falha ao carregar']);
+    }
+
     public function form(){
         $lista_categoria = Categoria::all();
 
@@ -104,13 +132,13 @@ class EstoqueController extends Controller
     {
         $dt = Carbon::now();
         $dt->timezone = 'America/Sao_Paulo';
-
+        
         $request->validate([
             'nome_produto' => 'required | max:255',
             'codigo_produto'=> 'required| max:255',
             'categoria_id' => 'required | numeric',
             'qtd_estoque' => 'required | numeric | min:1 | max:255',
-            'valor'=> 'required | numeric | min:1 | max:255',    
+            'valor'=> 'required  ',    
         ]);
         
         $estoque->codigo_produto = $request->codigo_produto;
@@ -118,7 +146,7 @@ class EstoqueController extends Controller
         $estoque->categoria_id = $request->categoria_id;
         $estoque->qtd_estoque = $request->qtd_estoque;
         $estoque->data = $dt;
-        $estoque->valor = $request->valor;
+        $estoque->valor = str_replace(",",".", $request->valor);
 
         $data = $estoque->save();
 
@@ -135,7 +163,6 @@ class EstoqueController extends Controller
   
     public function show($id)
     {
-      
         $list = Estoque::find($id);
         return response()->json($list);
     }
@@ -157,7 +184,7 @@ class EstoqueController extends Controller
             'codigo_produto'=> 'required| max:255',
             'categoria_id' => 'required | numeric',
             'qtd_estoque' => 'required | numeric | min:1 | max:255',
-            'valor'=> 'required | numeric | min:1 | max:255',    
+            'valor'=> 'required ',    
         ]);
 
         $estoque = Estoque::find($id);
@@ -165,7 +192,7 @@ class EstoqueController extends Controller
         $estoque->nome_produto = $request->nome_produto;
         $estoque->categoria_id = $request->categoria_id;
         $estoque->qtd_estoque = $request->qtd_estoque;
-        $estoque->valor = $request->valor;
+        $estoque->valor = str_replace(",",".", $request->valor);
 
         $data = $estoque->save();
         if($data)
@@ -177,12 +204,7 @@ class EstoqueController extends Controller
                     ->with('error',['message' => 'Falha ao atualizar']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy($id)
     {
         $estoque = Estoque::find($id);

@@ -29,12 +29,15 @@
  
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="inputCity">Quantidade</label>
+                <label for="">Quantidade</label>
                 {!! Form::text('qtd_estoque', null, array('placeholder' => 'Digite quantidade...','class' => 'form-control')) !!}
             </div>
             <div class="form-group col-md-6">
-                <label for="inputCity">Valor</label>
-                {!! Form::text('valor', null, array('placeholder' => 'Digite valor...','class' => 'form-control')) !!}
+                <label for="">Valor</label>
+                <div class="form-group input-group">
+                        <span class="input-group-addon">R$</span>
+                        <input type="text" name="valor" v-money="money" value="{{$estoque->valor}}" class="form-control" placeholder="Digite valor....">
+                </div>
             </div>
             
         </div>

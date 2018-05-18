@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function(){
             Route::get('edit/{id}', 'EstoqueController@edit')->name('estoque.edit');
             Route::post('edit/{id}', 'EstoqueController@update')->name('estoque.update');
             Route::post('entrada/{id}','EstoqueController@entrada')->name('estoque.entrada');
+            Route::post('saida/{id}','EstoqueController@saida')->name('estoque.saida');
             Route::get('lista','EstoqueController@ListaProdutos');
         });
         

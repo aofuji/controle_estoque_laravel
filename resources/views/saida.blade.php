@@ -84,8 +84,8 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="form-group">
-                        <label for="exampleFormControlSelect2">Selecione Produto</label>
-                        <select multiple class="form-control" id="exampleFormControlSelect2" name="nome_produto">
+                        <label for="">Selecione Produto</label>
+                        <select multiple class="form-control"  name="nome_produto">
                         @foreach ($produtos as $produto)
                         <option value="{{$produto->id}}">{{$produto->nome_produto}}</option>
                         @endforeach
