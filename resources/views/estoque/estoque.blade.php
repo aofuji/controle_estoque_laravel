@@ -58,9 +58,9 @@
                                 <td>R$ {{number_format($item->valor, 2, ',', '.')}}</td>
                                 <td>{{date('d/m/Y', strtotime($item->data))}}</td>
                                 <td>
-                                    
+                                
                                     <buttonex modalnome="entrada" cssbtn="btn btn-success btn-sm" cssicon="fa fa-sign-in" url="estoque/show/" id="{{$item->id}}"></buttonex>
-                                    <buttonex modalnome="saida" cssbtn="btn btn-info btn-sm" cssicon="fa fa-sign-out" url="estoque/show/" id="{{$item->id}}"></buttonex>
+                                    <buttonsaida modalnome="saida" validacao="{{$item->qtd_estoque}}" cssbtn="btn btn-info btn-sm" cssicon="fa fa-sign-out" url="estoque/show/" id="{{$item->id}}"></buttonsaida>
                                     
                                     <a href="{{ route('estoque.edit', $item->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                     <buttonex modalnome="saidaDelete" cssbtn="btn btn-danger btn-sm" cssicon="fa fa-trash-o" url="estoque/show/" id="{{$item->id}}"></buttonex>

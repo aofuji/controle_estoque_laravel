@@ -97,6 +97,7 @@ class EstoqueController extends Controller
     public function saida(Request $request, $id){
         
         $saida = Estoque::find($id);
+        
 
         $saida->qtd_estoque = $saida->qtd_estoque - $request->quantidade;
 
@@ -183,7 +184,7 @@ class EstoqueController extends Controller
             'nome_produto' => 'required | max:255',
             'codigo_produto'=> 'required| max:255',
             'categoria_id' => 'required | numeric',
-            'qtd_estoque' => 'required | numeric | min:1 | max:255',
+            'qtd_estoque' => 'required ',
             'valor'=> 'required ',    
         ]);
 
