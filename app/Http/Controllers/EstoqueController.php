@@ -47,21 +47,22 @@ class EstoqueController extends Controller
     public function entrada(Request $request, $id){
 
         $request->validate([
-            'quantidade' => 'required | numeric ',
+            'qtd_entrada' => 'required | numeric ',
         ]);
 
         $entrada = Estoque::find($id);
-        $entrada->qtd_estoque = $entrada->qtd_estoque + $request->quantidade;
+        $entrada->qtd_estoque = $entrada->qtd_estoque + $request->qtd_entrada;
 
         $data = $entrada->save();
         
         if($data)
             Historico::create(
                 ['tipo' => 'Entrada',
-                'qtd' => $request->quantidade,
-                'valor' => $entrada->valor,
+                'qtd' => $request->qtd_entrada,
+                'valor_unitario' => $entrada->valor ,
+                'valor_total' => $request->qtd_entrada * $entrada->valor,
                 'usuario' => Auth::user()->name,
-                'cliente' => 'nenhum',
+                'cliente_id' => null,
                 'obs' => 'teste',
                 'estoque_id' => $entrada->id
                 ]);
@@ -86,9 +87,10 @@ class EstoqueController extends Controller
                 Historico::create(
                     ['tipo' => 'Saida',
                     'qtd' => $request->qtd_saida,
-                    'valor' => $saida->valor ,
+                    'valor_unitario' => $saida->valor ,
+                    'valor_total' => $request->qtd_saida * $saida->valor,
                     'usuario' => Auth::user()->name,
-                    'cliente' => $request->cliente,
+                    'cliente_id' => $request->cliente,
                     'obs' => 'teste',
                     'estoque_id' => $saida->id
                     ]);

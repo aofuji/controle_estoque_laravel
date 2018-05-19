@@ -132,7 +132,7 @@
         <div class="row">
             <div class="form-group col-md-2">
                 <label>Entrada</label>
-                <input type="number" min="1"  class="form-control" name="quantidade" required>
+                <input type="number" min="1"  class="form-control" name="qtd_entrada" required>
                 
             </div>
         </div>

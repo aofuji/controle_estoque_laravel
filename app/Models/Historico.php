@@ -10,8 +10,9 @@ class Historico extends Model
         'id',
         'tipo',
         'qtd',
-        'valor',
-        'cliente',
+        'valor_unitario',
+        'valor_total',
+        'cliente_id',
         'usuario',
         'obs',
         'estoque_id',
@@ -22,6 +23,10 @@ class Historico extends Model
 
     public function estoque(){
         return $this->belongsTo(Estoque::class, 'estoque_id');
+    }
+
+    public function cliente(){
+        return $this->belongsTo(Estoque::class, 'cliente_id');
     }
 }
 

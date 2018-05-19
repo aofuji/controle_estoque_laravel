@@ -23,11 +23,11 @@
         <div class="form-row">
             <div class="form-group col-md-5">
                 <label for="">RG</label>
-                <input type="text" class="form-control" name="rg" placeholder="Digite RG">
+                <input type="text" class="form-control" name="rg" maxlength="9" placeholder="Digite RG sem ponto sem traço." required>
             </div>
             <div class="form-group col-md-5">
                 <label for="">CPF</label>
-                <input type="text" class="form-control" name="cpf" placeholder="Digite CPF">
+                <input type="text" class="form-control" name="cpf" maxlength="11" placeholder="Digite CPF sem ponto sem traco">
             </div>
             <div class="form-group col-md-2">
                 <label for="">Data Nascimento</label>

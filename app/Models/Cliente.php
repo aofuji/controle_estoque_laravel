@@ -36,4 +36,7 @@ class Cliente extends Model
                     ->paginate($totalPage);
          
      }
+     public function historico(){
+        return $this->hasMany(Historico::class, 'cliente_id');
+    }
 }
