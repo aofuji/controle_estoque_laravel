@@ -91,13 +91,36 @@
 </div>
 <modal nome="saidaDelete" titulo="Excluir">
     <formulario token="{{ csrf_token() }}" v-bind:action="'estoque/delete/'+ $store.state.item.id" method="post">
-        <h3>Deseja exluir esse produto ?</h3>
-        <p><strong>Id:</strong> @{{$store.state.item.id}} </p>
-        <p><strong>Cod. Produto:</strong> @{{$store.state.item.codigo_produto}} </p>
-        <p><strong>Nome:</strong> @{{$store.state.item.nome_produto}}</p>
-        <p><strong>Valor:</strong> @{{$store.state.item.valor}}</p>
-        <p><strong>Quantidade:</strong> @{{$store.state.item.qtd_estoque}}</p>
-    
+        <div class="row">
+            <div class="col-md-12"> 
+                <h3>Deseja exluir esse produto ?</h3>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">               
+                <strong>#ID</strong> @{{$store.state.item.id}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <dl>
+                    <dt>Nome</dt>
+                    <dd>@{{$store.state.item.nome_produto}}</dd>
+                    <dt>Quantidade</dt>
+                    <dd>@{{$store.state.item.qtd_estoque}}</dd>
+                </dl>
+            </div>
+            <div class="col-md-4">
+                <dl>
+                    <dt>Cod. Produto</dt>
+                    <dd>@{{$store.state.item.codigo_produto}}</dd>
+                    <dt>Valor</dt>
+                    <dd>R$ @{{$store.state.item.valor}}</dd>
+                </dl>
+            </div>
+        </div>
+        
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Excluir</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class EstoqueController extends Controller
 {
-    private $totalPage = 7;
+    private $totalPage = 12;
    
     public function index()
     {

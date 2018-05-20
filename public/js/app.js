@@ -63429,7 +63429,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "modal fade bd-example-modal-lg",
+      staticClass: "modal fade",
       attrs: {
         id: _vm.nome,
         tabindex: "-1",
