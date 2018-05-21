@@ -50,6 +50,8 @@ Vue.component('formulario', require('./components/Form.vue'));
 Vue.component('buttonview', require('./components/ButtonView.vue'));
 Vue.component('buttonsaida', require('./components/ButtonSaida.vue'));
 Vue.component('buttonex', require('./components/ButtonEx.vue'));
+Vue.component('formentrada', require('./components/FormEntrada.vue'));
+
 
 
 const app = new Vue({

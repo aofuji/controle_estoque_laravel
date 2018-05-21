@@ -6,7 +6,7 @@
         <div class="col-lg-6">
             <h1 class="page-header">Estoque</h1>
         </div>
-        
+       
     </div>
     <div class="row">
     <div class="col-lg-12">
@@ -32,6 +32,7 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="table-responsive">
+                    
                     @include('includes.alerts')
                         <table class="table table-striped">
                             <thead>
@@ -137,7 +138,8 @@
             </div>
             <div class="form-group col-md-4">
                 <label>Nome</label>
-                <input type="text" class="form-control"  v-model="$store.state.item.nome_produto" disabled>
+                <input type="text" class="form-control" v-model="$store.state.item.nome_produto" disabled>
+                <input  type="hidden" name="nome_produto" v-bind:value="$store.state.item.nome_produto">
             </div>
             <div class="form-group col-md-2">
                 <label>Quantidade</label>

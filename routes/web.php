@@ -45,5 +45,9 @@ Route::middleware(['auth'])->group(function(){
 
         Route::prefix('categoria')->group(function () {
             Route::get('','CategoriaController@index')->name('categoria');
+            Route::post('form','CategoriaController@store')->name('categoria.store');
+            Route::get('show/{id}', 'CategoriaController@show')->name('categoria.show');
+            Route::post('edit/{id}', 'CategoriaController@update')->name('categoria.update');
+            Route::post('delete/{id}', 'CategoriaController@destroy')->name('categoria.delete');
         });
 });

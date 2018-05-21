@@ -11,12 +11,13 @@ use App\Models\Cliente;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 
 class EstoqueController extends Controller
 {
     private $totalPage = 12;
-   
+    private $testeform;
     public function index()
     {
         $lista_cliente = Cliente::all();
@@ -34,7 +35,8 @@ class EstoqueController extends Controller
         $lista_cliente = Cliente::all();
         $dataForm = $request->except('_token');
         $lista = $estoque->search($dataForm, $this->totalPage);
-        
+        $this->testeform = $dataForm;
+
         return view('estoque.estoque', compact('lista','lista_cliente','dataForm'));
     }
 
@@ -44,13 +46,22 @@ class EstoqueController extends Controller
         
     }
 
-    public function entrada(Request $request, $id){
+    public function entrada(Request $request, $id, Estoque $estoque){
+        
+        
+
+        $dt = Carbon::now();
+        $dt->timezone = 'America/Sao_Paulo';
 
         $request->validate([
             'qtd_entrada' => 'required | numeric ',
         ]);
+       // $lista_cliente = Cliente::all();
+       // $dataForm = $request->except('_token');
+       // $lista = $estoque->search($dataForm, $this->totalPage);
 
         $entrada = Estoque::find($id);
+        
         $entrada->qtd_estoque = $entrada->qtd_estoque + $request->qtd_entrada;
 
         $data = $entrada->save();
@@ -64,12 +75,14 @@ class EstoqueController extends Controller
                 'usuario' => Auth::user()->name,
                 'cliente_id' => null,
                 'obs' => 'teste',
-                'estoque_id' => $entrada->id
+                'estoque_id' => $entrada->id,
+                'created_at' => $dt
                 ]);
+           
             return redirect() 
-                ->back()
+                ->route('estoque') 
                 ->with('success',  'Entrada efetuado com sucesso!');
-
+                    
             return redirect()
                 ->back()
                 ->with('error',['message' => 'Falha ao carregar']);
