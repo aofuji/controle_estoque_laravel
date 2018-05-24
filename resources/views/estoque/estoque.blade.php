@@ -14,7 +14,7 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-lg-2 col-md-6 col-sm-6">      
-                                <a class="btn btn-primary btn-sm"  href="{{ route('form.estoque') }}" ><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                <a class="btn btn-primary "  href="{{ route('form.estoque') }}" ><i class="fa fa-plus" aria-hidden="true"> </i></a>
                             </div>
                             <div class="col-lg-10 col-md-12 col-sm-12">   
                                 <form method="POST" class="form form-inline" action="{{ route('estoque.search') }}">
@@ -24,7 +24,7 @@
                                     <input type="text" name="nome_produto" class="form-control" placeholder="Digite nome do produto">
                                     <input type="text" name="qtd_estoque" class="form-control" placeholder="Digite a quantidade">
 
-                                    <button type="submit" class="btn btn-primary">Pesquisar</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i> Pesquisar</button>
                                 </form>
                             </div>
                         </div>
@@ -59,7 +59,9 @@
                                 <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">R$ {{number_format($item->valor, 2, ',', '.')}}</td>
                                 <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{date('d/m/Y', strtotime($item->data))}}</td>
                                 <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">
-                                
+
+                                    
+                                    <a href="{{ route('estoque.historicoview', $item->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-history" aria-hidden="true"></i></a>
                                     <buttonex modalnome="entrada" cssbtn="btn btn-success btn-sm" cssicon="fa fa-sign-in" url="estoque/show/" id="{{$item->id}}"></buttonex>
                                     <buttonsaida modalnome="saida" validacao="{{$item->qtd_estoque}}" cssbtn="btn btn-info btn-sm" cssicon="fa fa-sign-out" url="estoque/show/" id="{{$item->id}}"></buttonsaida>
                                     
@@ -68,7 +70,15 @@
                                     
                                 </td>
                             </tr>
-                        @endforeach    
+                        @endforeach 
+
+                        @if($contador == 0)
+                             <tr>
+                                <th scope="row"></th>
+                                <th scope="row">Nenhum registro</th>
+                                <td colspan="6"></td>
+                            </tr>
+                        @endif   
                         </tbody>
                         </table>
                             <div class="text-center">
@@ -217,4 +227,8 @@
             </div>
     </formulario>
 </modal>
+
+
+
+
 @endsection

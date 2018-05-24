@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function(){
             Route::post('edit/{id}', 'EstoqueController@update')->name('estoque.update');
             Route::post('entrada/{id}','EstoqueController@entrada')->name('estoque.entrada');
             Route::post('saida/{id}','EstoqueController@saida')->name('estoque.saida');
+            Route::get('historico/{id}','EstoqueController@historicoView')->name('estoque.historicoview');
+            Route::post('historico/{id}','EstoqueController@historicoSearch')->name('estoque.historicosearch');
         });
         
         Route::prefix('cliente')->group(function () {
@@ -49,5 +51,18 @@ Route::middleware(['auth'])->group(function(){
             Route::get('show/{id}', 'CategoriaController@show')->name('categoria.show');
             Route::post('edit/{id}', 'CategoriaController@update')->name('categoria.update');
             Route::post('delete/{id}', 'CategoriaController@destroy')->name('categoria.delete');
+        });
+
+        Route::prefix('historico')->group(function () {
+            Route::get('','HistoricoController@index')->name('historico');
+            
+              
+        });
+        Route::prefix('report')->group(function () {
+            Route::get('historicoall','ReportController@historicoall')->name('report.historicoall');
+            Route::get('{id}','ReportController@historico')->name('report.historico');
+
+            Route::get('lista/{id}','ReportController@lista')->name('report.lista');
+            
         });
 });

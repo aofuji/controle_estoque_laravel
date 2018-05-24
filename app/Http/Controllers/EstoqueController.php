@@ -28,7 +28,9 @@ class EstoqueController extends Controller
         ->orderby('estoque.id','desc')
         ->paginate($this->totalPage);
         
-        return view('estoque.estoque', compact('lista', 'lista_cliente'));
+        $contador = count($lista);
+
+        return view('estoque.estoque', compact('lista', 'lista_cliente', 'contador'));
     }
 
     public function searchEstoque(Request $request, Estoque $estoque){
@@ -37,7 +39,8 @@ class EstoqueController extends Controller
         $lista = $estoque->search($dataForm, $this->totalPage);
         $this->testeform = $dataForm;
 
-        return view('estoque.estoque', compact('lista','lista_cliente','dataForm'));
+        $contador = count($lista);
+        return view('estoque.estoque', compact('lista','lista_cliente','dataForm','contador'));
     }
 
 
@@ -162,7 +165,50 @@ class EstoqueController extends Controller
         return response()->json($list);
     }
 
- 
+    public function historicoView($id, Request $request){
+        $idestoque = $id;
+        $historico = DB::table('historicos')
+        ->where(function ($query) use ($id, $request) {
+            if(isset($id))
+                $query->where('estoque_id', $id);
+            if(isset($request['tipo']))
+                $query->where('tipo', $request['tipo']);
+                })->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
+                  ->select('historicos.*', 'clientes.nome')
+                  ->orderby('historicos.id','desc')
+                  ->paginate(9);
+                  
+        $contador = count($historico);
+        $produto = Estoque::find($id);
+
+        return view('estoque.historico', compact('historico','contador','produto'))
+        ->with(['idestoque' => $idestoque]);
+    }
+
+     public function historicoSearch($id, Request $request){
+        $request->except('_token');
+        
+        $idestoque = $id;
+        
+        $historico = DB::table('historicos')
+        ->where(function ($query) use ($id, $request) {
+            $request->except('_token');
+            if(isset($id))
+                $query->where('estoque_id', $id);
+            if($request->tipo != null)
+                 $query->where('tipo', $request->tipo);
+                })->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
+                  ->select('historicos.*', 'clientes.nome')
+                  ->orderby('historicos.id','desc')
+                  ->paginate(9);
+                  
+        $contador = count($historico);
+        $produto = Estoque::find($id);
+
+        return view('estoque.historico', compact('historico','contador','produto'))
+        ->with(['idestoque' => $idestoque]);
+    }
+
     public function edit($id)
     {
         $estoque = Estoque::find($id);

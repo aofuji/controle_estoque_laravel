@@ -16,15 +16,16 @@ class ClienteController extends Controller
         ->orderby('id','desc')
         ->paginate($this->totalPage);
        
+       $contador = count($lista);
        
-        return view('cliente.cliente', compact('lista'));
+        return view('cliente.cliente', compact('lista', 'contador'));
     }
 
     public function searchCliente(Request $request, Cliente $cliente){
         $dataForm = $request->except('_token');
         $lista = $cliente->search($dataForm, $this->totalPage);
-        
-        return view('cliente.cliente', compact('lista','dataForm'));
+         $contador = count($lista);
+        return view('cliente.cliente', compact('lista','dataForm','contador'));
     }
 
   

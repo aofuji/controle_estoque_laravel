@@ -14,7 +14,7 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-lg-5 col-md-6 col-sm-6">      
-                                <a class="btn btn-primary btn-sm"  href="{{route('form.cliente')}}" ><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                <a class="btn btn-primary "  href="{{route('form.cliente')}}" ><i class="fa fa-plus" aria-hidden="true"></i></a>
                             </div>
                             <div class="col-lg-7 col-md-12 col-sm-12">   
                                 <form method="POST" class="form form-inline" action="{{route('cliente.search')}}">
@@ -64,7 +64,14 @@
                                     
                                 </td>
                             </tr>
-                        @endforeach    
+                        @endforeach 
+                        @if($contador == 0)
+                             <tr>
+                                <th scope="row"></th>
+                                <th scope="row">Nenhum registro</th>
+                                <td colspan="6"></td>
+                            </tr>
+                        @endif   
                         </tbody>
                         </table>
                             <div class="text-center">

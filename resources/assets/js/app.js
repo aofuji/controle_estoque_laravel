@@ -11,11 +11,9 @@ window.Vue = require('vue');
 window.moment = require('moment');
 
 import Vuex from 'Vuex';
-import VuePaginate from 'vue-paginate'
 import {VMoney} from 'v-money'
-import daterangepicker from 'daterangepicker';
 
-Vue.use(VuePaginate)
+
 Vue.use(Vuex);
 
 
@@ -51,6 +49,8 @@ Vue.component('buttonview', require('./components/ButtonView.vue'));
 Vue.component('buttonsaida', require('./components/ButtonSaida.vue'));
 Vue.component('buttonex', require('./components/ButtonEx.vue'));
 Vue.component('formentrada', require('./components/FormEntrada.vue'));
+Vue.component('tabelahistorico', require('./components/TabelaHistorico.vue'));
+Vue.component('teste', require('./components/Teste.vue'));
 
 
 

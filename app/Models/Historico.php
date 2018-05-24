@@ -26,7 +26,7 @@ class Historico extends Model
     }
 
     public function cliente(){
-        return $this->belongsTo(Estoque::class, 'cliente_id');
+        return $this->belongsTo(Cliente::class, 'cliente_id');
     }
 }
 

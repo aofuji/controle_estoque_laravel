@@ -15,8 +15,8 @@ class CategoriaController extends Controller
         $lista = DB::table('categorias')
         ->orderby('id','desc')
         ->paginate($this->totalPage);
-        
-        return view('categoria.categoria', compact('lista'));
+        $contador = count($lista);
+        return view('categoria.categoria', compact('lista','contador'));
     }
 
   

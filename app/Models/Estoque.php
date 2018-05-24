@@ -38,4 +38,5 @@ class Estoque extends Model
     public function historico(){
         return $this->hasMany(Historico::class, 'estoque_id');
     }
+    
 }

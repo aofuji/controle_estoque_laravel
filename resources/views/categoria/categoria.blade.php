@@ -43,7 +43,15 @@
                                     <buttonex modalnome="categoriaDelete" cssbtn="btn btn-danger btn-sm" cssicon="fa fa-trash-o" url="categoria/show/" id="{{$item->id}}"></buttonex>
                                 </td>
                             </tr>
-                        @endforeach    
+                        @endforeach
+
+                        @if($contador == 0)
+                             <tr>
+                                <th scope="row"></th>
+                                <th scope="row">Nenhum registro</th>
+                                <td colspan="2"></td>
+                            </tr>
+                        @endif     
                         </tbody>
                         </table>
                             <div class="text-center">
