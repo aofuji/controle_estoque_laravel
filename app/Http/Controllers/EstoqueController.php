@@ -18,8 +18,10 @@ class EstoqueController extends Controller
 {
     private $totalPage = 12;
     private $testeform;
+    
     public function index()
     {
+        
         $lista_cliente = Cliente::all();
 
         $lista = DB::table('estoque')
@@ -34,6 +36,7 @@ class EstoqueController extends Controller
     }
 
     public function searchEstoque(Request $request, Estoque $estoque){
+        
         $lista_cliente = Cliente::all();
         $dataForm = $request->except('_token');
         $lista = $estoque->search($dataForm, $this->totalPage);
@@ -81,10 +84,11 @@ class EstoqueController extends Controller
                 'estoque_id' => $entrada->id,
                 'created_at' => $dt
                 ]);
-           
+          
             return redirect() 
                 ->route('estoque') 
                 ->with('success',  'Entrada efetuado com sucesso!');
+                
                     
             return redirect()
                 ->back()

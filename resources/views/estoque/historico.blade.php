@@ -4,8 +4,9 @@
 <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Histórico {{$produto->nome_produto}}</h1>
-                    <h4>Cod. {{$produto->codigo_produto}}</h4>
+                    <h1 class="page-header">Histórico</h1>
+                    <h4><strong>Cod.</strong> {{$produto->codigo_produto}}</h4>
+                    <h4><strong>Nome Produto</strong> {{$produto->nome_produto}}</h4>
                 </div>
                
                 <div class="row">
