@@ -22,7 +22,7 @@ class EstoqueController extends Controller
     public function index()
     {
         
-        $lista_cliente = Cliente::all();
+        
 
         $lista = DB::table('estoque')
         ->leftJoin('categorias', 'categorias.id', '=', 'estoque.categoria_id')
@@ -32,28 +32,28 @@ class EstoqueController extends Controller
         
         $contador = count($lista);
 
-        return view('estoque.estoque', compact('lista', 'lista_cliente', 'contador'));
+        return view('estoque.estoque', compact('lista', 'contador'));
     }
 
     public function searchEstoque(Request $request, Estoque $estoque){
         
-        $lista_cliente = Cliente::all();
+        
         $dataForm = $request->except('_token');
         $lista = $estoque->search($dataForm, $this->totalPage);
         $this->testeform = $dataForm;
 
         $contador = count($lista);
-        return view('estoque.estoque', compact('lista','lista_cliente','dataForm','contador'));
+        return view('estoque.estoque', compact('lista','dataForm','contador'));
     }
 
 
-    public function create()
-    {
-        
+    public function entradaForm($id){
+        $item = Estoque::find($id);
+       
+        return view('estoque.entradaForm', compact('item'));
     }
 
     public function entrada(Request $request, $id, Estoque $estoque){
-        
         
 
         $dt = Carbon::now();
@@ -86,13 +86,20 @@ class EstoqueController extends Controller
                 ]);
           
             return redirect() 
-                ->route('estoque') 
+                ->back() 
                 ->with('success',  'Entrada efetuado com sucesso!');
                 
                     
             return redirect()
                 ->back()
                 ->with('error',['message' => 'Falha ao carregar']);
+    }
+
+    public function saidaForm($id){
+        $lista_cliente = Cliente::all()->reverse();
+        $item = Estoque::find($id);
+       
+        return view('estoque.saidaForm', compact('item','lista_cliente'));
     }
 
     public function saida(Request $request, $id){
