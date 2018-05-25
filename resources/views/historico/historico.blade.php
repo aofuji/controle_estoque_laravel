@@ -26,6 +26,16 @@
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true"></i> Relatorio</button>
                             </form>
                         </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12">   
+                                <form method="POST" class="form form-inline" action="">
+                                {!! csrf_field()  !!}
+                                    
+                                    <input type="text" name="nome_produto" class="form-control" placeholder="Digite nome do produto">
+                                    <input type="text" name="qtd_estoque" class="form-control" placeholder="Digite a quantidade">
+
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i> Pesquisar</button>
+                                </form>
+                            </div>
                       </div>
                     </div>
                 <!-- /.panel-heading -->

@@ -63154,7 +63154,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['modalnome', 'url', 'id', 'cssbtn', 'cssicon'],
+    props: ['modalnome', 'url', 'id', 'cssbtn', 'cssicon', 'tooltipname'],
     mounted: function mounted() {},
 
     methods: {
@@ -63188,7 +63188,16 @@ var render = function() {
         }
       }
     },
-    [_c("i", { class: _vm.cssicon, attrs: { "aria-hidden": "true" } })]
+    [
+      _c("i", {
+        class: _vm.cssicon,
+        attrs: {
+          "aria-hidden": "true",
+          "data-toggle": "tooltip",
+          title: _vm.tooltipname
+        }
+      })
+    ]
   )
 }
 var staticRenderFns = []

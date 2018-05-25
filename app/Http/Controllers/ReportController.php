@@ -22,6 +22,7 @@ class ReportController extends Controller
                 })->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
                 ->leftJoin('estoque', 'estoque.id', '=', 'historicos.estoque_id')
                   ->select('historicos.*', 'clientes.nome','estoque.nome_produto')
+                  ->whereBetween('historicos.created_at', array($request->data_inicial, $request->data_final))
                   ->orderby('historicos.id','desc')
                   ->get();
 
@@ -77,6 +78,7 @@ class ReportController extends Controller
     
     public function lista($id,Request $request)
     {
+      
         //$lista = Historico::find(4)->cliente;
         //$historico = DB::table('historicos')
         //->where(function ($query) use ($id, $request) {
@@ -100,10 +102,13 @@ class ReportController extends Controller
                 $query->where('estoque_id', $id);
             if(isset($request['tipo']))
                 $query->where('tipo', $request['tipo']);
-                })->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
+                })
+                
+                ->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
                 ->leftJoin('estoque', 'estoque.id', '=', 'historicos.estoque_id')
                   ->select('historicos.*', 'clientes.nome','estoque.nome_produto')
-                  ->orderby('historicos.id','desc')
+                  ->whereBetween('historicos.created_at', array($request->data_inicial, $request->data_final))
+                  ->orderby('historicos.id','desc')  
                   ->get();
                  
         return response()->json($historico);

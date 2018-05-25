@@ -9,7 +9,7 @@
         <th>Qtd</th>   
         <th>Valor Unitario</th>   
         <th>Valor Total</th>   
-        <th>Usuario</th>   
+        <th>Data</th>   
         
         <th>Cliente</th>   
         <th>Estoque</th>   
@@ -25,9 +25,9 @@
         <td>{{$item->id}}</td>
         <td>{{$item->tipo}}</td>
         <td>{{$item->qtd}}</td>
-        <td>R$ R$ {{number_format($item->valor_unitario, 2, ',', '.')}}</td>
+        <td>R$ {{number_format($item->valor_unitario, 2, ',', '.')}}</td>
         <td>R$ {{number_format($item->valor_total, 2, ',', '.')}}</td>
-        <td>{{$item->usuario}}</td>
+        <td>{{date('d/m/Y', strtotime($item->created_at))}}</td>
         <td>{{$item->nome}}</td>
         <td>{{$item->nome_produto}}</td>
         

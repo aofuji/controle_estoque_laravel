@@ -21,8 +21,7 @@ class EstoqueController extends Controller
     
     public function index()
     {
-        
-        
+       
 
         $lista = DB::table('estoque')
         ->leftJoin('categorias', 'categorias.id', '=', 'estoque.categoria_id')
@@ -36,8 +35,7 @@ class EstoqueController extends Controller
     }
 
     public function searchEstoque(Request $request, Estoque $estoque){
-        
-        
+       
         $dataForm = $request->except('_token');
         $lista = $estoque->search($dataForm, $this->totalPage);
         $this->testeform = $dataForm;
@@ -49,13 +47,25 @@ class EstoqueController extends Controller
 
     public function entradaForm($id){
         $item = Estoque::find($id);
+        $historico = DB::table('historicos')
+        ->where(function ($query) use ($id) {
+            if(isset($id))
+                $query->where('estoque_id', $id);
+            
+                $query->where('tipo', 'Entrada');
+                })->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
+                  ->select('historicos.*', 'clientes.nome')
+                  ->orderby('historicos.id','desc')
+                  ->limit(7)
+                  ->get();
        
-        return view('estoque.entradaForm', compact('item'));
+        $contador = count($historico);
+
+        return view('estoque.entradaForm', compact('item','historico','contador'));
     }
 
     public function entrada(Request $request, $id, Estoque $estoque){
         
-
         $dt = Carbon::now();
         $dt->timezone = 'America/Sao_Paulo';
 
@@ -98,8 +108,21 @@ class EstoqueController extends Controller
     public function saidaForm($id){
         $lista_cliente = Cliente::all()->reverse();
         $item = Estoque::find($id);
+        $historico = DB::table('historicos')
+        ->where(function ($query) use ($id) {
+            if(isset($id))
+                $query->where('estoque_id', $id);
+            
+                $query->where('tipo', 'Saida');
+                })->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
+                  ->select('historicos.*', 'clientes.nome')
+                  ->orderby('historicos.id','desc')
+                  ->limit(7)
+                  ->get();
        
-        return view('estoque.saidaForm', compact('item','lista_cliente'));
+        $contador = count($historico);
+       
+        return view('estoque.saidaForm', compact('item','lista_cliente','historico','contador'));
     }
 
     public function saida(Request $request, $id){

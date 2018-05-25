@@ -12,14 +12,13 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="row">
-                            <div class="col-lg-2 col-md-6 col-sm-6">      
+                            <div class="col-lg-4 col-md-6 col-sm-6">      
                                 <a class="btn btn-primary "  href="{{ route('form.estoque') }}" ><i class="fa fa-plus" aria-hidden="true"> </i></a>
                             </div>
-                            <div class="col-lg-10 col-md-12 col-sm-12">   
+                            <div class="col-lg-8 col-md-12 col-sm-12">   
                                 <form method="POST" class="form form-inline" action="{{ route('estoque.search') }}">
                                 {!! csrf_field()  !!}
                                     <input type="text" name="codigo_produto" class="form-control" placeholder="Digite codigo do produto">
-                                    <input type="date" name="date" class="form-control" placeholder="Digite codigo do produto">
                                     <input type="text" name="nome_produto" class="form-control" placeholder="Digite nome do produto">
                                     <input type="text" name="qtd_estoque" class="form-control" placeholder="Digite a quantidade">
 
@@ -60,11 +59,14 @@
                                 <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">
 
                                     
-                                    <a href="{{ route('estoque.historicoview', $item->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-history" aria-hidden="true"></i></a>
-                                    <a href="{{ route('estoque.entradaform', $item->id) }}" class="btn btn-success btn-sm"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
-                                    <a href="{{ route('estoque.saidaform', $item->id) }}" class="btn btn-info btn-sm"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
-                                    <a href="{{ route('estoque.edit', $item->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    <buttonex modalnome="saidaDelete" cssbtn="btn btn-danger btn-sm" cssicon="fa fa-trash-o" url="estoque/show/" id="{{$item->id}}"></buttonex>
+                                    <a href="{{ route('estoque.historicoview', $item->id) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Historico"><i class="fa fa-history" aria-hidden="true"></i></a>
+                                   
+                                    <a href="{{ route('estoque.entradaform', $item->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" title="Entrada"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+                                    @if($item->qtd_estoque != 0)
+                                        <a href="{{ route('estoque.saidaform', $item->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" title="Saida"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                                    @endif
+                                    <a href="{{ route('estoque.edit', $item->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Editar"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                    <buttonex modalnome="saidaDelete" cssbtn="btn btn-danger btn-sm" tooltipname="Deletar" cssicon="fa fa-trash-o" url="estoque/show/" id="{{$item->id}}"></buttonex>
                                     
                                 </td>
                             </tr>

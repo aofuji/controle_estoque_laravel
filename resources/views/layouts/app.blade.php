@@ -16,7 +16,9 @@
 
     <!-- MetisMenu CSS -->
     <link href="../../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-
+    <link href="../../vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    
+   
     <!-- Custom CSS -->
     <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
 
@@ -121,17 +123,41 @@
        
      </div>
     </div>
+    
     <script>
            window.Laravel = <?php echo json_encode([
                'csrfToken' => csrf_token(),
                     ]); ?>
+
+                   
           </script>
     <!-- /#wrapper -->
     <script src="{{ asset('js/app.js') }}"></script>
    
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
-
+    
+    <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        
+        </script>
+       
+    <script src="../../vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+ 
+    <script type="text/javascript">
+            $(function () {
+                $('#data_inicial').datetimepicker({
+                    locale: 'pt-BR'
+                });
+                $('#data_final').datetimepicker({
+                    locale: 'pt-BR'
+                });
+                
+            });
+        </script>
+   
 </body>
 
 </html>

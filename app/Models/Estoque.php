@@ -21,8 +21,7 @@ class Estoque extends Model
                     $query->where('qtd_estoque', $data['qtd_estoque']); 
                 if(isset($data['codigo_produto']))
                     $query->where('codigo_produto', $data['codigo_produto']);
-                if(isset($data['date']))
-                    $query->where('data', $data['date']);   
+                 
                     })
                     ->leftJoin('categorias', 'categorias.id', '=', 'estoque.categoria_id')
                     ->select('estoque.*', 'categorias.categoria')
