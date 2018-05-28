@@ -34636,6 +34636,7 @@ Vue.component('buttonex', __webpack_require__(196));
 Vue.component('formentrada', __webpack_require__(199));
 Vue.component('tabelahistorico', __webpack_require__(202));
 Vue.component('teste', __webpack_require__(206));
+Vue.component('saidacliente', __webpack_require__(219));
 
 var app = new Vue({
     el: '#app',
@@ -64418,6 +64419,173 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(220)
+/* template */
+var __vue_template__ = __webpack_require__(221)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\SaidaCLiente.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3b446f59", Component.options)
+  } else {
+    hotAPI.reload("data-v-3b446f59", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 220 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['url'],
+    data: function data() {
+        return {
+            search: '',
+            items: []
+        };
+    },
+
+    computed: {
+        filtroCliente: function filtroCliente() {
+            var _this = this;
+
+            return this.items.filter(function (res) {
+                return res.nome.toLowerCase().match(_this.search);
+            });
+        }
+    },
+    mounted: function mounted() {
+        this.items = this.url.slice(0.10);
+    },
+
+    methods: {}
+
+});
+
+/***/ }),
+/* 221 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "form-group col-md-4" },
+    [
+      _c("label", [_vm._v("Cliente")]),
+      _vm._v(" "),
+      _vm._t("default"),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search,
+            expression: "search"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "Pesquisar" },
+        domProps: { value: _vm.search },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticClass: "form-control",
+          attrs: { multiple: "", name: "cliente", required: "" }
+        },
+        _vm._l(_vm.filtroCliente.reverse(), function(cliente, key) {
+          return _c("option", { domProps: { value: cliente.id } }, [
+            _vm._v("RG " + _vm._s(cliente.rg) + " | " + _vm._s(cliente.nome))
+          ])
+        })
+      )
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3b446f59", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

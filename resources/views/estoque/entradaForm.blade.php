@@ -75,7 +75,7 @@
                                 <tr>
                                     <th>#</th>   
                                     <th>Tipo</th>   
-                                    <th>Quantidade</th>   
+                                    <th>Qtd Entrada</th>   
                                     <th>Valor Unitario</th>   
                                     <th>Valor Total</th>   
                                     <th>Usuario</th>   
