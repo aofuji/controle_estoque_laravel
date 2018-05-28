@@ -28,6 +28,10 @@ class Historico extends Model
     
                 if(isset($data['tipo']))
                     $query->where('tipo', $data['tipo']);
+                if(isset($data['nome_produto']))
+                    $query->where('nome_produto', $data['nome_produto']);
+                if(isset($data['nome_cliente']))
+                    $query->where('nome', $data['nome_cliente']);
                     })
                     ->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
                     ->leftJoin('estoque', 'estoque.id', '=', 'historicos.estoque_id')

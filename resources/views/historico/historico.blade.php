@@ -32,7 +32,7 @@
                         <option value="Saida">Saida</option>
                     </select>
                     <input type="text" name="nome_produto" class="form-control" placeholder="Digite nome do produto">
-                    <input type="text" name="qtd_estoque" class="form-control" placeholder="Digite a quantidade">
+                    <input type="text" name="nome_cliente" class="form-control" placeholder="Digite o nome cliente">
 
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </form>
@@ -45,7 +45,7 @@
                 <tr>
                     <th>#</th>   
                     <th>Tipo</th>   
-                    <th>Quantidade</th>   
+                    <th>Qtd Ent./Sai.</th>   
                     <th>Valor Unitario</th>   
                     <th>Valor Total</th>   
                     <th>Usuario</th>   

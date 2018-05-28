@@ -51,7 +51,6 @@
                     <div class="pull-right">
                         <form action="{{ route('estoque.historicosearch', $idestoque) }}" class="form-inline" method="post">
                             {!! csrf_field()  !!}
-                            
                             <select class="form-control" name="tipo">
                                 <option value="">Selecione</option>
                                 <option value="Entrada">Entrada</option>
@@ -107,8 +106,6 @@
                         {!! $historico->links() !!}
                     </div>
                 </div>
-                  
-                
         </div>
     </div>
   </div>

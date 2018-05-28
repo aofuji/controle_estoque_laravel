@@ -1,12 +1,12 @@
 
 
-
+<div class="">
 <table>
     
     <tr>
         <th>#</th>   
         <th>Tipo</th>   
-        <th>Qtd</th>   
+        <th>Qtd Entrada/Saida</th>   
         <th>Valor Unitario</th>   
         <th>Valor Total</th>   
         <th>Data</th>   
@@ -27,7 +27,7 @@
         <td>{{$item->qtd}}</td>
         <td>R$ {{number_format($item->valor_unitario, 2, ',', '.')}}</td>
         <td>R$ {{number_format($item->valor_total, 2, ',', '.')}}</td>
-        <td>{{date('d/m/Y', strtotime($item->created_at))}}</td>
+        <td>{{date('d/m/Y H:i:s', strtotime($item->created_at))}}</td>
         <td>{{$item->nome}}</td>
         <td>{{$item->nome_produto}}</td>
         
@@ -35,6 +35,7 @@
     @endforeach
 <br>
 </table>
+</div>
 <div class="footer">
     <strong>Total de Registro:</strong>{{$contador}}
     <br>
@@ -52,10 +53,11 @@ text-align: left;
 padding: 2px;
 border-collapse: collapse;
 width: 100%;
-font-size: 8px;
+
+font-size:10px;
 }
 .footer{
-    font-size: 8px;
+    font-size: 10px;
 }
 
 </style>

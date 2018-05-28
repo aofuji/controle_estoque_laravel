@@ -1,6 +1,8 @@
 
 
 
+<div class="table-responsive">
+
 <table>
     
         <tr>
@@ -15,9 +17,6 @@
             <th>Estoque</th>   
             
         </tr>
-
-    
-
 
         @foreach($historico as $item)
         <tr>
@@ -34,7 +33,7 @@
         @endforeach
    
 </table>
-
+</div>
 <style>
 table {
     border-collapse: collapse;
