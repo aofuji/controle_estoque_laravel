@@ -63,67 +63,58 @@
             </div>
             <br>
             <div class="row">
-                <div class="col-lg-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="row">     
-                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <h5><strong>Últimas Entradas </strong></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        <!-- /.panel-heading -->
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped" >
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>   
-                                                <th>Tipo</th>   
-                                                <th>Quantidade</th>   
-                                                <th>Valor Unitario</th>   
-                                                <th>Valor Total</th>   
-                                                <th>Usuario</th>   
-                                                <th>Obs</th>   
-                                                <th>Cliente</th>        
-                                                <th>Data</th>        
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach ($historico as $item)
-                                            <tr> 
-                                                <td>{{$item->id}}</td>
-                                                <td>{{$item->tipo}}</td>
-                                                <td>{{$item->qtd}}</td>
-                                                <td>R$ {{number_format($item->valor_unitario, 2, ',', '.')}}</td>
-                                                <td>R$ {{number_format($item->valor_total, 2, ',', '.')}}</td>
-                                                <td>{{$item->usuario}}</td>
-                                                <td>{{$item->obs}}</td>
-                                                <td>{{$item->nome}}</td>
-                                                <td>{{date('d/m/Y - H:i:s', strtotime($item->created_at))}}</td>
-                                            </tr>
-                                            
-                                        @endforeach  
-                                        
-                                        @if($contador == 0)
-                                        <tr>
-                                            <th scope="row"></th>
-                                            <th scope="row">Nenhum registro</th>
-                                            <td colspan="7"></td>
-                                        </tr>
-                                    
-                                        @endif
-                                        </tbody>
-                                    </table>
+                <div class="col-lg-12"> 
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item active">
+                                <a class="nav-link active" ><i class="fa fa-list" aria-hidden="true"></i> Lista</a>
+                            </li>                        
+                        </ul>
+                    <div class="table-responsive">
+                        <table class="table table-striped" >
+                            <thead>
+                                <tr>
+                                    <th>#</th>   
+                                    <th>Tipo</th>   
+                                    <th>Quantidade</th>   
+                                    <th>Valor Unitario</th>   
+                                    <th>Valor Total</th>   
+                                    <th>Usuario</th>   
+                                    <th>Obs</th>   
+                                    <th>Cliente</th>        
+                                    <th>Data</th>        
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($historico as $item)
+                                <tr> 
+                                    <td>{{$item->id}}</td>
+                                    <td>{{$item->tipo}}</td>
+                                    <td>{{$item->qtd}}</td>
+                                    <td>R$ {{number_format($item->valor_unitario, 2, ',', '.')}}</td>
+                                    <td>R$ {{number_format($item->valor_total, 2, ',', '.')}}</td>
+                                    <td>{{$item->usuario}}</td>
+                                    <td>{{$item->obs}}</td>
+                                    <td>{{$item->nome}}</td>
+                                    <td>{{date('d/m/Y - H:i:s', strtotime($item->created_at))}}</td>
+                                </tr>
+                                
+                            @endforeach  
                             
-                                    <div class="text-center">
-                                        
-                                    </div>
-                                </div>
-                            <!-- /.table-responsive -->
-                            </div>
-                        <!-- /.panel-body -->
+                            @if($contador == 0)
+                            <tr>
+                                <th scope="row"></th>
+                                <th scope="row">Nenhum registro</th>
+                                <td colspan="7"></td>
+                            </tr>
+                        
+                            @endif
+                            </tbody>
+                        </table>
+                
+                        <div class="text-center">
+                            
                         </div>
+                    </div>
                 </div>
             </div>
 </div>

@@ -3,35 +3,33 @@
 @section('content')
 <div id="page-wrapper">
     <div class="row">
+        <br>
+            @include('includes.alerts')
         <div class="col-lg-6">
             <h1 class="page-header">Cliente</h1>
         </div>
         
     </div>
     <div class="row">
-    <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-lg-5 col-md-6 col-sm-6">      
-                                <a class="btn btn-primary "  href="{{route('form.cliente')}}" ><i class="fa fa-plus" aria-hidden="true"></i></a>
-                            </div>
-                            <div class="col-lg-7 col-md-12 col-sm-12">   
-                                <form method="POST" class="form form-inline" action="{{route('cliente.search')}}">
-                                {!! csrf_field()  !!}
-                                    
-                                    <input type="text" name="nome" class="form-control" placeholder="Digite Nome do Cliente">
-                                  
-
-                                    <button type="submit" class="btn btn-primary">Pesquisar</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <div class="table-responsive">
-                    @include('includes.alerts')
+    <div class="col-lg-12"> 
+        <ul class="nav nav-tabs">
+            <li class="nav-item active">
+                <a class="nav-link active" ><i class="fa fa-list" aria-hidden="true"></i> Lista</a>
+            </li>
+            
+            <li class="nav">
+                <a class="btn" data-toggle="modal"  data-target="#cadastro" ><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
+            </li>   
+            <div class="pull-right">   
+                <form method="POST" class="form form-inline" action="{{route('cliente.search')}}">
+                {!! csrf_field()  !!}
+                    <input type="text" name="nome" class="form-control" placeholder="Digite Nome do Cliente">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </form>
+                </div>                            
+            </ul>  
+                <div class="table-responsive">
+                    
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -82,16 +80,10 @@
                                 @endif
                             </div>
                     </div>
-                <!-- /.table-responsive -->
-                    </div>
-                <!-- /.panel-body -->
-                    </div>
-                <!-- /.panel -->
         </div>
     </div>
-
-    
 </div>
+
 <modal nome="clienteDelete" titulo="Excluir">
     <formulario token="{{ csrf_token() }}" v-bind:action="'cliente/delete/'+ $store.state.item.id" method="post">
         <h3>Deseja exluir esse Cliente ?</h3>
@@ -167,4 +159,73 @@
         </div>
         
 </modal>
+
+<modal nome="cadastro" titulo="Cadastrar">
+    <formulario token="{{ csrf_token() }}" action="{{ route('cliente.store') }}" method="post">
+            
+                    <div class="row">
+                    <div class="form-group col-md-12">
+                            <label for="">Nome</label>
+                            <input type="text" class="form-control" name="nome" placeholder="Digite Nome Completo" required>
+                        </div>
+                        
+                    </div>
+             
+                    <div class="row">
+                        <div class="form-group col-md-5">
+                            <label for="">RG</label>
+                            <input type="text" class="form-control" name="rg" maxlength="9" placeholder="Digite RG sem ponto sem traço." required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">CPF</label>
+                            <input type="text" class="form-control" name="cpf" maxlength="11" placeholder="Digite CPF sem ponto sem traco" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="">Data Nascimento</label>
+                            <input type="date" class="form-control" name="data_nascimento" placeholder="Digite Data Nascimento" required>
+                        </div>
+                    </div>
+            
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="">Endereco</label>
+                            <input type="text" class="form-control" name="endereco" placeholder="Digite Endereço" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="">Cidade</label>
+                            <input type="text" class="form-control" name="cidade" placeholder="Digite Cidade" required>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label for="">Estado</label>
+                            <input type="text" class="form-control" name="estado" placeholder="UF" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="">Cep</label>
+                            <input type="text" class="form-control" name="cep" placeholder="Digite CEP">
+                        </div>
+                    </div>
+            
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="">Telefone</label>
+                            <input type="text" class="form-control" name="telefone" placeholder="Digite Telefone" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Celular</label>
+                            <input type="text" class="form-control" name="celular" placeholder="Digite Celular" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Email</label>
+                            <input type="email" class="form-control" name="email" placeholder="Digite Email" required>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        </div>
+                    </div>
+    </formulario>
+</modal>
+
 @endsection

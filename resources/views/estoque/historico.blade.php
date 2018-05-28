@@ -57,7 +57,7 @@
                                 <option value="Entrada">Entrada</option>
                                 <option value="Saida">Saida</option>
                             </select>
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i> Pesquisar</button>
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
                         </form>
                     </div>      
                 </ul>

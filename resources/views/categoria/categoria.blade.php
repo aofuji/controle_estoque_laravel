@@ -5,68 +5,57 @@
     <div class="row">
         <div class="col-lg-6">
             <h1 class="page-header">Categoria</h1>
-        </div>
-        
+        </div>    
     </div>
     <div class="row">
-    <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-lg-5 col-md-6 col-sm-6">      
-                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#cadCategoria"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                               
-                            </div>
-                           
-                        </div>
-                    </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <div class="table-responsive">
+        <div class="col-lg-12">             
+            <ul class="nav nav-tabs">
+                <li class="nav-item active">
+                    <a class="nav-link active" ><i class="fa fa-list" aria-hidden="true"></i> Lista</a>
+                </li>
+                
+                <li class="nav">
+                    <a class="btn" data-toggle="modal" data-target="#cadCategoria" ><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
+                </li>                               
+            </ul>  
+            <div class="table-responsive">
                     @include('includes.alerts')
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Categorias</th>                
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                        <tbody>
-                        
-                        @foreach ($lista as $item)
-                            <tr >
-                                <td>{{$item->id}}</td>
-                                <td>{{$item->categoria}}</td>
-                                <td>
-                                    <buttonex modalnome="categoriaEdit" cssbtn="btn btn-warning btn-sm" cssicon="fa fa-pencil" url="categoria/show/" id="{{$item->id}}"></buttonex>
-                                    <buttonex modalnome="categoriaDelete" cssbtn="btn btn-danger btn-sm" cssicon="fa fa-trash-o" url="categoria/show/" id="{{$item->id}}"></buttonex>
-                                </td>
-                            </tr>
-                        @endforeach
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Categorias</th>                
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                <tbody>
+                
+                @foreach ($lista as $item)
+                    <tr >
+                        <td>{{$item->id}}</td>
+                        <td>{{$item->categoria}}</td>
+                        <td>
+                            <buttonex modalnome="categoriaEdit" cssbtn="btn btn-warning btn-sm" cssicon="fa fa-pencil" url="categoria/show/" id="{{$item->id}}"></buttonex>
+                            <buttonex modalnome="categoriaDelete" cssbtn="btn btn-danger btn-sm" cssicon="fa fa-trash-o" url="categoria/show/" id="{{$item->id}}"></buttonex>
+                        </td>
+                    </tr>
+                @endforeach
 
-                        @if($contador == 0)
-                             <tr>
-                                <th scope="row"></th>
-                                <th scope="row">Nenhum registro</th>
-                                <td colspan="2"></td>
-                            </tr>
-                        @endif     
-                        </tbody>
-                        </table>
-                            <div class="text-center">
-                            {!! $lista->links() !!}
-                            </div>
+                @if($contador == 0)
+                        <tr>
+                        <th scope="row"></th>
+                        <th scope="row">Nenhum registro</th>
+                        <td colspan="2"></td>
+                    </tr>
+                @endif     
+                </tbody>
+                </table>
+                    <div class="text-center">
+                    {!! $lista->links() !!}
                     </div>
-                <!-- /.table-responsive -->
-                    </div>
-                <!-- /.panel-body -->
-                    </div>
-                <!-- /.panel -->
+            </div>
         </div>
     </div>
-
-    
 </div>
 <modal nome="cadCategoria" titulo="Cadastrar">
     <formulario token="{{ csrf_token() }}" action="{{ route('categoria.store') }}" method="post">

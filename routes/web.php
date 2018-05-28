@@ -37,7 +37,6 @@ Route::middleware(['auth'])->group(function(){
         
         Route::prefix('cliente')->group(function () {
             Route::get('','ClienteController@index')->name('cliente');
-            Route::get('form','ClienteController@form')->name('form.cliente');
             Route::post('form','ClienteController@store')->name('cliente.store');
             Route::get('edit/{id}', 'ClienteController@edit')->name('cliente.edit');
             Route::post('edit/{id}', 'ClienteController@update')->name('cliente.update');

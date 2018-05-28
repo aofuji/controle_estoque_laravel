@@ -154,7 +154,9 @@
                 $('#data_final').datetimepicker({
                     locale: 'pt-BR'
                 });
-                
+                $('#data').datetimepicker({
+                    locale: 'pt-BR'
+                });
             });
         </script>
    

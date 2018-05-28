@@ -34,9 +34,7 @@ class ClienteController extends Controller
         //
     }
 
-    public function form(){
-        return view('cliente.cadform');
-    }
+   
    
     public function store(Request $request, Cliente $cliente)
     {
