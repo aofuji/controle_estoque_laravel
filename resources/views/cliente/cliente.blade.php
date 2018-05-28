@@ -35,7 +35,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nome</th>
-                                    <th>Endereco</th>
+                                    <th>Endereço</th>
                                     <th>Cidade</th>
                                     <th>Estado</th>
                                     <th>Telefone</th>
