@@ -21,7 +21,6 @@ Route::middleware(['auth'])->group(function(){
 
         Route::prefix('estoque')->group(function () {
             Route::get('','EstoqueController@index')->name('estoque');
-            Route::get('form','EstoqueController@form')->name('form.estoque');
             Route::post('form','EstoqueController@store')->name('form.store');
             Route::any('', 'EstoqueController@searchEstoque')->name('estoque.search');
             Route::get('show/{id}', 'EstoqueController@show')->name('estoque.show');
@@ -57,7 +56,7 @@ Route::middleware(['auth'])->group(function(){
 
         Route::prefix('historico')->group(function () {
             Route::get('','HistoricoController@index')->name('historico');
-            
+            Route::post('', 'HistoricoController@searchHistorico')->name('historico.search');
               
         });
         Route::prefix('report')->group(function () {

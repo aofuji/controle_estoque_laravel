@@ -3,19 +3,31 @@
 @section('content')
 <div id="page-wrapper">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
+            <br>
+                @include('includes.alerts')
             <h1 class="page-header">Estoque</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Estoque</li>
+                </ol>
+            </nav>
         </div>
+        
     </div>
     <div class="row">
+            
     <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-6">      
-                                <a class="btn btn-primary "  href="{{ route('form.estoque') }}" ><i class="fa fa-plus" aria-hidden="true"> </i></a>
-                            </div>
-                            <div class="col-lg-8 col-md-12 col-sm-12">   
+                  
+                <ul class="nav nav-tabs">
+                        <li class="nav-item active">
+                          <a class="nav-link active" ><i class="fa fa-list" aria-hidden="true"></i> Lista</a>
+                        </li>
+                        
+                        <li class="nav">
+                          <a class="btn" data-toggle="modal"  data-target="#cadastro" ><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
+                        </li>                    
+                            <div class="pull-right">   
                                 <form method="POST" class="form form-inline" action="{{ route('estoque.search') }}">
                                 {!! csrf_field()  !!}
                                     <input type="text" name="codigo_produto" class="form-control" placeholder="Digite codigo do produto">
@@ -25,13 +37,8 @@
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i> Pesquisar</button>
                                 </form>
                             </div>
-                        </div>
-                    </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
+                    </ul>
                     <div class="table-responsive">
-                    
-                    @include('includes.alerts')
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -90,12 +97,10 @@
                                 @endif
                             </div>
                         </div>
-                <!-- /.table-responsive -->
-                      </div>
-                <!-- /.panel-body -->
-                    </div>
-                <!-- /.panel -->
+              
+            
         </div>
+        
     </div>
 
     
@@ -139,4 +144,48 @@
     </formulario>
 </modal>
 
+<modal nome="cadastro" titulo="Cadastrar">
+        <formulario token="{{ csrf_token() }}" action="{{ route('form.store') }}" method="post">
+                <div class="row">
+                        <div class="form-group col-md-2">
+                            <label for="inputEmail4">Cod. Produto</label>
+                            <input type="text" class="form-control" name="codigo_produto" placeholder="Digite codigo...." required>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="inputEmail4">Nome Produto</label>
+                            <input type="text" class="form-control" name="nome_produto" placeholder="Digite Nome do Produto...." required>
+                        </div>
+                        <div class="form-group col-md-5">
+                        <label for="inputState">Categoria</label>
+                        <select  class="form-control" name="categoria_id" required>
+                            <option value="">Selecione Categoria</option>
+                            @foreach ($lista_categoria as $item)
+                            <option value="{{$item->id}}">{{$item->categoria}}</option>
+                            @endforeach
+                        </select>
+                        </div>
+                    </div>
+             
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="">Quantidade</label>
+                            <input type="text" class="form-control" name="qtd_estoque" placeholder="Digite quantidade...." required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Valor</label>
+                            
+                            <div class="form-group input-group">
+                                    <span class="input-group-addon">R$</span>
+                                    <input type="text" name="valor" v-money="money" class="form-control" placeholder="Digite valor...." required>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                                
+                            </div>
+                    </div>
+                    
+        </formulario>
+</modal>
 @endsection

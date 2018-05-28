@@ -27,9 +27,13 @@
                             </form>
                         </div>
                         <div class="col-lg-6 col-md-12 col-sm-12">   
-                                <form method="POST" class="form form-inline" action="">
+                        <form method="POST" class="form form-inline" action="{{ route('historico.search') }}">
                                 {!! csrf_field()  !!}
-                                    
+                                <select class="form-control" name="tipo">
+                                        <option value="">Selecione</option>
+                                        <option value="Entrada">Entrada</option>
+                                        <option value="Saida">Saida</option>
+                                    </select>
                                     <input type="text" name="nome_produto" class="form-control" placeholder="Digite nome do produto">
                                     <input type="text" name="qtd_estoque" class="form-control" placeholder="Digite a quantidade">
 

@@ -5,6 +5,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Entrada</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{route('estoque')}}">Estoque</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Entrada</li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
             <div class="row">

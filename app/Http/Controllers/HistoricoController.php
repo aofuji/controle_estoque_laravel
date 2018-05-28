@@ -24,7 +24,15 @@ class HistoricoController extends Controller
         return view('historico.historico', compact('historico'))->with('contador', $contador);
     }
 
-   
+   public function searchHistorico(Request $request, Historico $historico){
+       
+       $dataForm = $request->except('_token');
+       $historico = $historico->search($dataForm, $this->totalPage);
+      
+       $contador = count($historico);
+
+       return view('historico.historico', compact('historico','dataForm','contador'));
+   }
     
 
     public function create()

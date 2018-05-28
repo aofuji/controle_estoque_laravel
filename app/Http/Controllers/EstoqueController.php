@@ -21,7 +21,7 @@ class EstoqueController extends Controller
     
     public function index()
     {
-       
+        $lista_categoria = Categoria::all();
 
         $lista = DB::table('estoque')
         ->leftJoin('categorias', 'categorias.id', '=', 'estoque.categoria_id')
@@ -31,17 +31,18 @@ class EstoqueController extends Controller
         
         $contador = count($lista);
 
-        return view('estoque.estoque', compact('lista', 'contador'));
+        return view('estoque.estoque', compact('lista', 'contador','lista_categoria'));
     }
 
     public function searchEstoque(Request $request, Estoque $estoque){
-       
+        $lista_categoria = Categoria::all();
+
         $dataForm = $request->except('_token');
         $lista = $estoque->search($dataForm, $this->totalPage);
-        $this->testeform = $dataForm;
+       
 
         $contador = count($lista);
-        return view('estoque.estoque', compact('lista','dataForm','contador'));
+        return view('estoque.estoque', compact('lista','dataForm','contador','lista_categoria'));
     }
 
 
@@ -153,11 +154,7 @@ class EstoqueController extends Controller
                     ->with('error',['message' => 'Falha ao carregar']);
     }
 
-    public function form(){
-        $lista_categoria = Categoria::all();
-
-        return view('estoque.cadform',compact('lista_categoria'));
-    }
+ 
 
   
     public function store(Request $request, Estoque $estoque)
@@ -286,6 +283,6 @@ class EstoqueController extends Controller
         $data = $estoque->delete();
         return redirect()
                         ->back()
-                        ->with('success',  'Sucesso ao Deletar');
+                        ->with('success',  'Deletado com Sucesso!');
     }
 }

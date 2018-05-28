@@ -35,9 +35,11 @@
     @endforeach
 <br>
 </table>
-<strong>Total de Registro:</strong>{{$contador}}
-<br>
-<strong>Valor Total:</strong>R$ {{$valor_total}}
+<div class="footer">
+    <strong>Total de Registro:</strong>{{$contador}}
+    <br>
+    <strong>Valor Total:</strong>R$ {{$valor_total}}
+</div>
 <style>
 table {
 border-collapse: collapse;
@@ -50,7 +52,10 @@ text-align: left;
 padding: 2px;
 border-collapse: collapse;
 width: 100%;
+font-size: 8px;
 }
-
+.footer{
+    font-size: 8px;
+}
 
 </style>
