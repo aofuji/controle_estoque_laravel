@@ -17,14 +17,14 @@
     <!-- MetisMenu CSS -->
     <link href="../../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
     <link href="../../vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    
-   
+
+
     <!-- Custom CSS -->
     <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-   
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -62,22 +62,20 @@
                         <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
+
                         <li class="divider"></li>
                         <li>
                             <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); 
+                                onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
                                 <i class="fa fa-sign-out fa-fw"></i>
                                 Logout
-                            </a> 
+                            </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
-                            
+
                         </li>
                     </ul>
                     @endguest
@@ -97,10 +95,11 @@
                         <li>
                             <a href="#"><i class="fa fa-file-text-o" aria-hidden="true"></i> Cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                
+                                @if(Auth::user()->nivel_acesso == 1)
                                 <li>
                                     <a href="{{ route('categoria') }}">Categorias</a>
                                 </li>
+                                @endif
                                 <li>
                                     <a href="{{ route('cliente') }}">Clientes</a>
                                 </li>
@@ -113,39 +112,44 @@
                         <li>
                             <a href="{{ route('historico') }}"><i class="fa fa-history"></i> Histórico</a>
                         </li>
+                        @if(Auth::user()->nivel_acesso == 1)
+                        <li>
+                            <a href="{{ route('user') }}"><i class="fa fa-users" aria-hidden="true"></i> Usuários</a>
+                        </li>
+                        @endif
                  @endguest
                 </menu-left>
-        
+
             </div>
         </nav>
 
         @yield('content')
-       
+
      </div>
     </div>
-    
+
     <script>
            window.Laravel = <?php echo json_encode([
-               'csrfToken' => csrf_token(),
-                    ]); ?>
+	'csrfToken' => csrf_token(),
+]); ?>
 
-                   
+
           </script>
     <!-- /#wrapper -->
     <script src="{{ asset('js/app.js') }}"></script>
-   
+
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
-    
+
     <script>
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             })
-        
+
         </script>
-       
+
     <script src="../../vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
- 
+
     <script type="text/javascript">
             $(function () {
                 $('#data_inicial').datetimepicker({
@@ -159,7 +163,7 @@
                 });
             });
         </script>
-   
+
 </body>
 
 </html>

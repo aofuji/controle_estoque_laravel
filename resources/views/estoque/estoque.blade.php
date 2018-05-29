@@ -7,32 +7,34 @@
             <br>
                 @include('includes.alerts')
             <h1 class="page-header">Estoque</h1>
+
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">Estoque</li>
                 </ol>
             </nav>
         </div>
-        
+
     </div>
     <div class="row">
-            
-    <div class="col-lg-12">    
-        <!-- Tabs -->       
+
+    <div class="col-lg-12">
+        <!-- Tabs -->
         <ul class="nav nav-tabs">
             <li class="nav-item active">
                 <a class="nav-link active" ><i class="fa fa-list" aria-hidden="true"></i> Lista</a>
             </li>
-            
+            @if(Auth::user()->nivel_acesso == 1)
             <li class="nav">
                 <a class="btn" data-toggle="modal"  data-target="#cadastro" ><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
-            </li>                    
-                <div class="pull-right ">                
+            </li>
+            @endif
+                <div class="pull-right ">
                     <form method="POST" class="form form-inline" action="{{ route('estoque.search') }}">
                     {!! csrf_field()  !!}
                         <input type="text" name="codigo_produto" class="form-control" placeholder="Digite codigo do produto">
                         <input type="text" name="nome_produto" class="form-control" placeholder="Digite nome do produto">
-                        
+
                         <input type="number" name="qtd_estoque" class="form-control" placeholder="Digite a quantidade">
 
                         <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -55,7 +57,7 @@
                     </tr>
                 </thead>
             <tbody>
-            
+
             @foreach ($lista as $item)
                 <tr >
                     <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{$item->id}}</td>
@@ -67,19 +69,26 @@
                     <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{date('d/m/Y', strtotime($item->data))}}</td>
                     <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">
 
-                        
+
                         <a href="{{ route('estoque.historicoview', $item->id) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Historico"><i class="fa fa-history" aria-hidden="true"></i></a>
-                        
-                        <a href="{{ route('estoque.entradaform', $item->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" title="Entrada"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+                        @if(Auth::user()->nivel_acesso == 1)
+                             <a href="{{ route('estoque.entradaform', $item->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" title="Entrada"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+                        @endif
+
                         @if($item->qtd_estoque != 0)
                             <a href="{{ route('estoque.saidaform', $item->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" title="Saida"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
                         @endif
-                        <a href="{{ route('estoque.edit', $item->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Editar"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+                        @if(Auth::user()->nivel_acesso == 1)
+                            <a href="{{ route('estoque.edit', $item->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Editar"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        @endif
+                        @if(Auth::user()->nivel_acesso == 1)
                         <buttonex modalnome="saidaDelete" cssbtn="btn btn-danger btn-sm" tooltipname="Deletar" cssicon="fa fa-trash-o" url="estoque/show/" id="{{$item->id}}"></buttonex>
-                        
+                        @endif
+
                     </td>
                 </tr>
-            @endforeach 
+            @endforeach
 
             @if($contador == 0)
                     <tr>
@@ -87,11 +96,11 @@
                     <th scope="row">Nenhum registro</th>
                     <td colspan="6"></td>
                 </tr>
-            @endif   
+            @endif
             </tbody>
             </table>
                 <div class="text-center">
-                    
+
                     @if(isset($dataform))
                     {!! $lista->appends($dataForm)->links() !!}
                     @else
@@ -106,13 +115,13 @@
 <modal nome="saidaDelete" titulo="Excluir">
     <formulario token="{{ csrf_token() }}" v-bind:action="'estoque/delete/'+ $store.state.item.id" method="post">
         <div class="row">
-            <div class="col-md-12"> 
+            <div class="col-md-12">
                 <h3>Deseja exluir esse produto ?</h3>
             </div>
         </div>
-        
+
         <div class="row">
-            <div class="col-md-12">               
+            <div class="col-md-12">
                 <strong>#ID</strong> @{{$store.state.item.id}}
             </div>
         </div>
@@ -134,7 +143,7 @@
                 </dl>
             </div>
         </div>
-        
+
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Excluir</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
@@ -163,7 +172,7 @@
                         </select>
                         </div>
                     </div>
-             
+
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="">Quantidade</label>
@@ -171,7 +180,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Valor</label>
-                            
+
                             <div class="form-group input-group">
                                     <span class="input-group-addon">R$</span>
                                     <input type="text" name="valor" v-money="money" class="form-control" placeholder="Digite valor...." required>
@@ -180,10 +189,10 @@
 
                         <div class="form-group col-md-2">
                                 <button type="submit" class="btn btn-primary">Adicionar</button>
-                                
+
                             </div>
                     </div>
-                    
+
         </formulario>
 </modal>
 @endsection
