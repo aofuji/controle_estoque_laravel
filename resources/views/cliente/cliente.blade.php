@@ -197,7 +197,7 @@
                         </div>
                         <div class="form-group col-md-1">
                             <label for="">Estado</label>
-                            <input type="text" class="form-control" name="estado" placeholder="UF" required>
+                            <input type="text" class="form-control" maxlength="2" name="estado" placeholder="UF" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="">Cep</label>
@@ -208,11 +208,11 @@
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label for="">Telefone</label>
-                            <input type="text" class="form-control" name="telefone" placeholder="Digite Telefone" required>
+                            <input type="text" class="form-control" maxlength="11"  name="telefone" placeholder="Digite Telefone" required>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="">Celular</label>
-                            <input type="text" class="form-control" name="celular" placeholder="Digite Celular" required>
+                            <input type="text" class="form-control" maxlength="12" name="celular" placeholder="Digite Celular" required>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="">Email</label>
