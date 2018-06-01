@@ -1,169 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-br">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+	<title>Dashboard | Klorofil - Free Bootstrap Dashboard Template</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Ofuji - OfujiSys</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="../../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-    <link href="../../vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-
-
-    <!-- Custom CSS -->
-    <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+	
+	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+	
+	<link rel="stylesheet" href="../../vendor/linearicons/style.css">
+	
+	
 </head>
 
 <body>
-  <div id="app" style="display:none">
-    <div id="wrapper">
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">OfujiSys v1.0</a>
+    <!-- WRAPPER -->
+    <div id="app">
+        <div id="wrapper">
+            <!-- NAVBAR -->
+            @guest
+            @else
+            <nav class="navbar navbar-default navbar-fixed-top">
+                
+                <div class="container-fluid">
+                    <div class="navbar-btn">
+                        <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-menu"></i></button>
+                    </div>
+                    
+                   
+                    <div id="navbar-menu">
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                           
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>{{ Auth::user()->name }}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
+                                    
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                            <i class="fa fa-sign-out fa-fw"></i>
+                                            Logout
+                                        </a>
+            
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- <li>
+                                <a class="update-pro" href="https://www.themeineed.com/downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- END NAVBAR -->
+            <!-- LEFT SIDEBAR -->
+            <div id="sidebar-nav" class="sidebar">
+                <div class="sidebar-scroll">
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="{{ route('home') }}" class="active"><i class="lnr lnr-home"></i> <span>Inicio</span></a></li>
+                            <li><a href="{{ route('categoria') }}" class=""><i class="lnr lnr-tag"></i> <span>Categorias</span></a></li>
+                            <li><a href="{{ route('cliente') }}" class=""><i class="lnr lnr-user"></i> <span>Clientes</span></a></li>
+                            <li><a href="{{ route('estoque') }}" class=""><i class="lnr lnr-inbox"></i> <span>Estoque</span></a></li>
+                            <li><a href="{{ route('historico') }}" class=""><i class="lnr lnr-history"></i> <span>Histórico</span></a></li>          
+                            @if(Auth::user()->nivel_acesso == 1)
+                            <li><a href="{{ route('user') }}" class=""><i class="lnr lnr-users"></i> <span>Usuários</span></a></li>
+                            @endif
+                        </ul>
+                    </nav>
+                </div>
             </div>
-            <!-- /.navbar-header -->
-
-            <ul class="nav navbar-top-links navbar-right">
-                <menu-topo >
-                @guest
-                @else
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    {{ Auth::user()->name }} <i class="fa fa-user fa-fw"></i>
-                    <i class="fa fa-caret-down"></i>
-                </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-
-                        <li class="divider"></li>
-                        <li>
-                            <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                                <i class="fa fa-sign-out fa-fw"></i>
-                                Logout
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-
-                        </li>
-                    </ul>
-                    @endguest
-                    <!-- /.dropdown-user -->
-                </menu-topo>
-            </ul>
-            <!-- /.navbar-top-links -->
-
-            <div class="navbar-default sidebar" role="navigation">
-
-                <menu-left>
-                @guest
-                @else
-                    <li>
-                        <a href="{{ route('home') }}"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>
-                    </li>
-                        <li>
-                            <a href="#"><i class="fa fa-file-text-o" aria-hidden="true"></i> Cadastro<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                @if(Auth::user()->nivel_acesso == 1)
-                                <li>
-                                    <a href="{{ route('categoria') }}">Categorias</a>
-                                </li>
-                                @endif
-                                <li>
-                                    <a href="{{ route('cliente') }}">Clientes</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="{{ route('estoque') }}"><i class="fa fa-table fa-fw"></i> Estoque</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('historico') }}"><i class="fa fa-history"></i> Histórico</a>
-                        </li>
-                        @if(Auth::user()->nivel_acesso == 1)
-                        <li>
-                            <a href="{{ route('user') }}"><i class="fa fa-users" aria-hidden="true"></i> Usuários</a>
-                        </li>
-                        @endif
-                 @endguest
-                </menu-left>
-
+            @endguest
+            <!-- END LEFT SIDEBAR -->
+            <!-- MAIN -->
+            <div class="main">
+                <!-- MAIN CONTENT -->
+                <div class="main-content">
+                    <div class="container-fluid">
+                        @yield('content')
+                    </div>
+                </div>
+                <!-- END MAIN CONTENT -->
             </div>
-        </nav>
-
-        @yield('content')
-
-     </div>
+            <!-- END MAIN -->
+            <div class="clearfix"></div>
+            <footer>
+                <div class="container-fluid">
+                    <p class="copyright">&copy; 2018 <a href="#" target="_blank">Ofuji</a>. All Rights Reserved.</p>
+                </div>
+            </footer>
+        </div>
     </div>
+	<!-- END WRAPPER -->
+	<!-- Javascript -->
 
-    <script>
-           window.Laravel = <?php echo json_encode([
-	'csrfToken' => csrf_token(),
-]); ?>
-
-
-          </script>
-    <!-- /#wrapper -->
-    <script src="{{ asset('js/app.js') }}"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
-
-    <script>
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            })
-
-        </script>
-
-    <script src="../../vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-
-    <script type="text/javascript">
-            $(function () {
-                $('#data_inicial').datetimepicker({
-                    locale: 'pt-BR'
-                });
-                $('#data_final').datetimepicker({
-                    locale: 'pt-BR'
-                });
-                $('#data').datetimepicker({
-                    locale: 'pt-BR'
-                });
-            });
-        </script>
-
+	<script src="{{ asset('js/app.js') }}"></script>
+	
+	<script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+            ]); ?>
+       </script>
+	
+	
 </body>
 
 </html>
