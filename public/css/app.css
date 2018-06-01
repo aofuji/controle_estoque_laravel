@@ -8448,11 +8448,6 @@ footer {
   background-color: #f5f5fa;
 }
 
-#wrapper #sidebar-nav,
-#wrapper .main {
-  padding-top: 80px;
-}
-
 @media screen and (max-width: 767px) {
   #wrapper #sidebar-nav,
   #wrapper .main {

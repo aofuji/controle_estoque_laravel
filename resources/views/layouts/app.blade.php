@@ -22,50 +22,15 @@
             <!-- NAVBAR -->
             @guest
             @else
-            <nav class="navbar navbar-default navbar-fixed-top">
-                
-                <div class="container-fluid">
-                    <div class="navbar-btn">
-                        <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-menu"></i></button>
-                    </div>
-                    
-                   
-                    <div id="navbar-menu">
-                        <ul class="nav navbar-nav navbar-right">
-                            
-                           
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>{{ Auth::user()->name }}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-                                    
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                            <i class="fa fa-sign-out fa-fw"></i>
-                                            Logout
-                                        </a>
             
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- <li>
-                                <a class="update-pro" href="https://www.themeineed.com/downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
-                            </li> -->
-                        </ul>
-                    </div>
-                </div>
-            </nav>
             <!-- END NAVBAR -->
             <!-- LEFT SIDEBAR -->
             <div id="sidebar-nav" class="sidebar">
                 <div class="sidebar-scroll">
                     <nav>
+                            
                         <ul class="nav">
+                                <li><a href="#" class=""><h4><span>Controle Estoque v1.0</span></h4></a></li>
                             <li><a href="{{ route('home') }}" class="active"><i class="lnr lnr-home"></i> <span>Inicio</span></a></li>
                             <li><a href="{{ route('categoria') }}" class=""><i class="lnr lnr-tag"></i> <span>Categorias</span></a></li>
                             <li><a href="{{ route('cliente') }}" class=""><i class="lnr lnr-user"></i> <span>Clientes</span></a></li>
@@ -84,7 +49,43 @@
             <div class="main">
                 <!-- MAIN CONTENT -->
                 <div class="main-content">
+                    
                     <div class="container-fluid">
+                            @guest
+                            @else
+                            <nav class="navbar navbar-default ">
+                                    <div class="container-fluid">
+                                        <div class="navbar-btn">
+                                            <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-menu"></i></button>
+                                        </div>
+
+                                        <div id="navbar-menu">
+                                            <ul class="nav navbar-nav navbar-right">
+                                                <li class="dropdown">
+                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>{{ Auth::user()->name }}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
+                                                        
+                                                        <li>
+                                                            <a href="{{ route('logout') }}"
+                                                                onclick="event.preventDefault();
+                                                                document.getElementById('logout-form').submit();">
+                                                                <i class="fa fa-sign-out fa-fw"></i>
+                                                                Logout
+                                                            </a>
+                                
+                                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                                {{ csrf_field() }}
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </nav>
+                                @endguest
                         @yield('content')
                     </div>
                 </div>

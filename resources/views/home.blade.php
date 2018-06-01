@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">Inicio</h3>
+<div class="row">
+		<div class="col-md-8">
+				<h1 class="page-header">Inicio</h1>
+		</div>
+</div>
     <div class="row">
 		<div class="col-md-8">
 			<!-- PANEL HEADLINE -->
