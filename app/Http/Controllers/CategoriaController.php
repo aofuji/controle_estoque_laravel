@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 class CategoriaController extends Controller
 {
     private $totalPage = 7;
+   
 
     public function index()
     {
@@ -35,10 +36,10 @@ class CategoriaController extends Controller
         if($data)
             return redirect() 
                     ->route('categoria') 
-                    ->with('success',  'Entrada efetuado com sucesso!');
+                    ->with('success',  'Categoria efetuado com sucesso!');
             return redirect()
                     ->back()
-                    ->with('error',['message' => 'Falha ao carregar']);
+                    ->with('error','Falha ao carregar');
     }
 
  
@@ -77,6 +78,6 @@ class CategoriaController extends Controller
         $data = $categoria->delete();
         return redirect()
             ->back()
-            ->with('success',  'Sucesso ao Deletar');
+            ->with('success',  'Deletado com sucesso');
     }
 }

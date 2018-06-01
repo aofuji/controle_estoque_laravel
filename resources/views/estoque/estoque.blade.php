@@ -1,116 +1,106 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="page-wrapper">
+
     <div class="row">
         <div class="col-lg-12">
+            <h1 class="">Estoque</h1>
             <br>
-                @include('includes.alerts')
-            <h1 class="page-header">Estoque</h1>
-
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">Estoque</li>
-                </ol>
-            </nav>
+            @include('includes.alerts')
         </div>
-
     </div>
+
     <div class="row">
+            <div class="col-lg-12">
+                    <div class="panel">
+                            <div class="panel-heading">
+                                    @if(Auth::user()->nivel_acesso == 1)
+                                    <a href="#" data-toggle="modal"  data-target="#cadastro" ><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
+                                    @endif
+                                    <div class="pull-right ">
+                                        <form method="POST" class="form form-inline" action="{{ route('estoque.search') }}">
+                                        {!! csrf_field()  !!}
+                                            <input type="text" name="codigo_produto" class="form-control" placeholder="Digite codigo do produto">
+                                            <input type="text" name="nome_produto" class="form-control" placeholder="Digite nome do produto">
+                    
+                                            <input type="number" name="qtd_estoque" class="form-control" placeholder="Digite a quantidade">
+                    
+                                            <a type="submit" class="btn btn-primary form-control"><i class="fa fa-search" ></i></a>
+                                        </form>
+                                    </div>
+                            </div>
+                            <div class="panel-body no-padding">
+                                    <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Cod. Produto</th>
+                                                    <th>Nome Produto</th>
+                                                    <th>Categoria</th>
+                                                    <th>Quantidade</th>
+                                                    <th>Valor</th>
+                                                    <th>Data</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                            </thead>
+                                        <tbody>
+                            
+                                        @foreach ($lista as $item)
+                                            <tr  >
+                                                <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">{{$item->id}}</td>
+                                                <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">{{$item->codigo_produto}}</td>
+                                                <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">{{$item->nome_produto}}</td>
+                                                <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">{{$item->categoria}}</td>
+                                                <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">{{$item->qtd_estoque}}</td>
+                                                <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">R$ {{number_format($item->valor, 2, ',', '.')}}</td>
+                                                <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">{{date('d/m/Y', strtotime($item->data))}}</td>
+                                                <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">
+                            
+                            
+                                                    <a href="{{ route('estoque.historicoview', $item->id) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Historico"><i class="fa fa-history" aria-hidden="true"></i></a>
+                                                    @if(Auth::user()->nivel_acesso == 1)
+                                                         <a href="{{ route('estoque.entradaform', $item->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" title="Entrada"><i class="fas fa-sign-in-alt"></i></a>
+                                                    @endif
+                            
+                                                    @if($item->qtd_estoque != 0)
+                                                        <a href="{{ route('estoque.saidaform', $item->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" title="Saida"><i class="fas fa-sign-out-alt"></i></a>
+                                                    @endif
+                            
+                                                    @if(Auth::user()->nivel_acesso == 1)
+                                                        <a href="{{ route('estoque.edit', $item->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Editar"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                                    @endif
+                                                    @if(Auth::user()->nivel_acesso == 1)
+                                                    <buttonex modalnome="saidaDelete" cssbtn="btn btn-danger btn-sm" tooltipname="Deletar" cssicon="fas fa-trash-alt" url="estoque/show/" id="{{$item->id}}"></buttonex>
+                                                    @endif
+                            
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                            
+                                        @if($contador == 0)
+                                                <tr>
+                                                <th scope="row"></th>
+                                                <th scope="row">Nenhum registro</th>
+                                                <td colspan="6"></td>
+                                            </tr>
+                                        @endif
+                                        </tbody>
+                                        </table>
+                                        <div class="text-center">
 
-    <div class="col-lg-12">
-        <!-- Tabs -->
-        <ul class="nav nav-tabs">
-            <li class="nav-item active">
-                <a class="nav-link active" ><i class="fa fa-list" aria-hidden="true"></i> Lista</a>
-            </li>
-            @if(Auth::user()->nivel_acesso == 1)
-            <li class="nav">
-                <a class="btn" data-toggle="modal"  data-target="#cadastro" ><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
-            </li>
-            @endif
-                <div class="pull-right ">
-                    <form method="POST" class="form form-inline" action="{{ route('estoque.search') }}">
-                    {!! csrf_field()  !!}
-                        <input type="text" name="codigo_produto" class="form-control" placeholder="Digite codigo do produto">
-                        <input type="text" name="nome_produto" class="form-control" placeholder="Digite nome do produto">
-
-                        <input type="number" name="qtd_estoque" class="form-control" placeholder="Digite a quantidade">
-
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </form>
-                </div>
-        </ul>
-        <!-- Table -->
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Cod. Produto</th>
-                        <th>Nome Produto</th>
-                        <th>Categoria</th>
-                        <th>Quantidade</th>
-                        <th>Valor</th>
-                        <th>Data</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-            <tbody>
-
-            @foreach ($lista as $item)
-                <tr >
-                    <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{$item->id}}</td>
-                    <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{$item->codigo_produto}}</td>
-                    <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{$item->nome_produto}}</td>
-                    <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{$item->categoria}}</td>
-                    <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{$item->qtd_estoque}}</td>
-                    <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">R$ {{number_format($item->valor, 2, ',', '.')}}</td>
-                    <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">{{date('d/m/Y', strtotime($item->data))}}</td>
-                    <td class="{{$item->qtd_estoque == 0 ? "bg-danger": ''}}">
-
-
-                        <a href="{{ route('estoque.historicoview', $item->id) }}" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Historico"><i class="fa fa-history" aria-hidden="true"></i></a>
-                        @if(Auth::user()->nivel_acesso == 1)
-                             <a href="{{ route('estoque.entradaform', $item->id) }}" class="btn btn-success btn-sm" data-toggle="tooltip" title="Entrada"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
-                        @endif
-
-                        @if($item->qtd_estoque != 0)
-                            <a href="{{ route('estoque.saidaform', $item->id) }}" class="btn btn-info btn-sm" data-toggle="tooltip" title="Saida"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
-                        @endif
-
-                        @if(Auth::user()->nivel_acesso == 1)
-                            <a href="{{ route('estoque.edit', $item->id) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Editar"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                        @endif
-                        @if(Auth::user()->nivel_acesso == 1)
-                        <buttonex modalnome="saidaDelete" cssbtn="btn btn-danger btn-sm" tooltipname="Deletar" cssicon="fa fa-trash-o" url="estoque/show/" id="{{$item->id}}"></buttonex>
-                        @endif
-
-                    </td>
-                </tr>
-            @endforeach
-
-            @if($contador == 0)
-                    <tr>
-                    <th scope="row"></th>
-                    <th scope="row">Nenhum registro</th>
-                    <td colspan="6"></td>
-                </tr>
-            @endif
-            </tbody>
-            </table>
-                <div class="text-center">
-
-                    @if(isset($dataform))
-                    {!! $lista->appends($dataForm)->links() !!}
-                    @else
-                    {!! $lista->links() !!}
-                    @endif
-                </div>
+                                                @if(isset($dataform))
+                                                {!! $lista->appends($dataForm)->links() !!}
+                                                @else
+                                                {!! $lista->links() !!}
+                                                @endif
+                                            </div>
+                            </div>
+                    </div>
             </div>
-        </div>
     </div>
-</div>
+
+  
+
 <!-- Modal -->
 <modal nome="saidaDelete" titulo="Excluir">
     <formulario token="{{ csrf_token() }}" v-bind:action="'estoque/delete/'+ $store.state.item.id" method="post">
@@ -145,8 +135,8 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Excluir</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Excluir</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
         </div>
     </formulario>
 </modal>
@@ -187,8 +177,9 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-2">
-                                <button type="submit" class="btn btn-primary">Adicionar</button>
+                        <div class="form-group col-md-12">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Cadastrar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
 
                             </div>
                     </div>

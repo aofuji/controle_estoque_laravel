@@ -1,99 +1,94 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="page-wrapper">
+
     <div class="row">
-        <br>
+        <div class="col-lg-12">
+            <h1 class="">Clientes</h1>
+            <br>
             @include('includes.alerts')
-        <div class="col-lg-6">
-            <h1 class="page-header">Cliente</h1>
         </div>
-        
     </div>
+
     <div class="row">
-    <div class="col-lg-12"> 
-        <ul class="nav nav-tabs">
-            <li class="nav-item active">
-                <a class="nav-link active" ><i class="fa fa-list" aria-hidden="true"></i> Lista</a>
-            </li>
-            
-            <li class="nav">
-                <a class="btn" data-toggle="modal"  data-target="#cadastro" ><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
-            </li>   
-            <div class="pull-right">   
-                <form method="POST" class="form form-inline" action="{{route('cliente.search')}}">
-                {!! csrf_field()  !!}
-                    <input type="text" name="nome" class="form-control" placeholder="Digite Nome do Cliente">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </form>
-                </div>                            
-            </ul>  
-                <div class="table-responsive">
-                    
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nome</th>
-                                    <th>Endereço</th>
-                                    <th>Cidade</th>
-                                    <th>Estado</th>
-                                    <th>Telefone</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                        <tbody>
-                        
-                        @foreach ($lista as $item)
-                            <tr >
-                                <td>{{$item->id}}</td>
-                                <td>{{$item->nome}}</td>
-                                
-                                <td>{{$item->endereco}}</td>
-                                <td>{{$item->cidade}}</td>
-                                <td>{{$item->estado}}</td>
-                                <td>{{$item->telefone}}</td>
-                                
-                                <td>
-                                    
-                                    <buttonex modalnome="clienteView" cssbtn="btn btn-info btn-sm" cssicon="fa fa-eye" url="cliente/show/" id="{{$item->id}}"></buttonex> 
-                                    <a href="{{route('cliente.edit', $item->id)}}" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    <buttonex modalnome="clienteDelete" cssbtn="btn btn-danger btn-sm" cssicon="fa fa-trash-o" url="cliente/show/" id="{{$item->id}}"></buttonex> 
-                                    
-                                </td>
-                            </tr>
-                        @endforeach 
-                        @if($contador == 0)
-                             <tr>
-                                <th scope="row"></th>
-                                <th scope="row">Nenhum registro</th>
-                                <td colspan="6"></td>
-                            </tr>
-                        @endif   
-                        </tbody>
-                        </table>
-                            <div class="text-center">
-                                @if(isset($dataform))
-                                {!! $lista->appends($dataForm)->links() !!}
-                                @else
-                                {!! $lista->links() !!}
-                                @endif
+            <div class="col-lg-12">
+                    <div class="panel">
+                            <div class="panel-heading">
+                                <a href="#" data-toggle="modal"  data-target="#cadastro" ><i class="fa fa-plus" ></i> Adicionar</a>
+
+                                <div class="pull-right">   
+                                    <form method="POST" class="form form-inline" action="{{route('cliente.search')}}">
+                                    {!! csrf_field()  !!}
+                                        <input type="text" name="nome" class="form-control" placeholder="Digite Nome do Cliente">
+                                        <a type="submit" class="btn btn-primary form-control"><i class="fa fa-search" ></i></a>
+                                    </form>
+                                </div>  
                             </div>
-                    </div>
+                            <div class="panel-body no-padding">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nome</th>
+                                            <th>Endereço</th>
+                                            <th>Cidade</th>
+                                            <th>Estado</th>
+                                            <th>Telefone</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            @foreach ($lista as $item)
+                                            <tr >
+                                                <td>{{$item->id}}</td>
+                                                <td>{{$item->nome}}</td>
+                                                <td>{{$item->endereco}}</td>
+                                                <td>{{$item->cidade}}</td>
+                                                <td>{{$item->estado}}</td>
+                                                <td>{{$item->telefone}}</td>
+                                                <td>
+                                                    
+                                                    <buttonex modalnome="clienteView" cssbtn="btn btn-info btn-sm" cssicon="fa fa-eye" url="cliente/show/" id="{{$item->id}}"></buttonex> 
+                                                    <a href="{{route('cliente.edit', $item->id)}}" class="btn btn-warning btn-sm"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                                    <buttonex modalnome="clienteDelete" cssbtn="btn btn-danger btn-sm" cssicon="fas fa-trash-alt" url="cliente/show/" id="{{$item->id}}"></buttonex> 
+                                                    
+                                                </td>
+                                            </tr>
+                                        @endforeach 
+                                        @if($contador == 0)
+                                             <tr>
+                                                <th scope="row"></th>
+                                                <th scope="row">Nenhum registro</th>
+                                                <td colspan="6"></td>
+                                            </tr>
+                                        @endif 
+                                    </tbody>
+                                </table>
+                                <div class="text-center">
+                                        @if(isset($dataform))
+                                        {!! $lista->appends($dataForm)->links() !!}
+                                        @else
+                                        {!! $lista->links() !!}
+                                        @endif
+                                    </div>
+                            </div>
+                        </div>
+            </div>
         </div>
-    </div>
-</div>
+
+    
+
 
 <modal nome="clienteDelete" titulo="Excluir">
     <formulario token="{{ csrf_token() }}" v-bind:action="'cliente/delete/'+ $store.state.item.id" method="post">
         <h3>Deseja exluir esse Cliente ?</h3>
-        <p><strong>Id:</strong> @{{$store.state.item.id}} </p>
+        <p><strong>#Id:</strong> @{{$store.state.item.id}} </p>
         <p><strong>Nome:</strong> @{{$store.state.item.nome}} </p>
         
     
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Excluir</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Excluir</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
         </div>
     </formulario>
 </modal>
@@ -221,8 +216,9 @@
                         
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-2">
-                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Cadastrar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                         </div>
                     </div>
     </formulario>

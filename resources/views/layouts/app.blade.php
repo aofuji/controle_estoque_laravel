@@ -2,7 +2,7 @@
 <html lang="pt-br">
 
 <head>
-	<title>Dashboard | Klorofil - Free Bootstrap Dashboard Template</title>
+	<title>Controle Estoque v1.0</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -17,7 +17,7 @@
 
 <body>
     <!-- WRAPPER -->
-    <div id="app">
+    <div id="app" style="display:none">
         <div id="wrapper">
             <!-- NAVBAR -->
             @guest
@@ -31,6 +31,7 @@
                             
                         <ul class="nav">
                                 <li><a href="#" class=""><h4><span>Controle Estoque v1.0</span></h4></a></li>
+                            
                             <li><a href="{{ route('home') }}" class="active"><i class="lnr lnr-home"></i> <span>Inicio</span></a></li>
                             <li><a href="{{ route('categoria') }}" class=""><i class="lnr lnr-tag"></i> <span>Categorias</span></a></li>
                             <li><a href="{{ route('cliente') }}" class=""><i class="lnr lnr-user"></i> <span>Clientes</span></a></li>
@@ -70,7 +71,7 @@
                                                             <a href="{{ route('logout') }}"
                                                                 onclick="event.preventDefault();
                                                                 document.getElementById('logout-form').submit();">
-                                                                <i class="fa fa-sign-out fa-fw"></i>
+                                                                <i class="lnr lnr-exit"></i>
                                                                 Logout
                                                             </a>
                                 

@@ -34672,6 +34672,10 @@ var app = new Vue({
         };
         $(document).ready(function () {
 
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+
             /*-----------------------------------/
             /*	TOP NAVIGATION AND LAYOUT
             /*----------------------------------*/
@@ -63403,11 +63407,7 @@ var render = function() {
     [
       _c("i", {
         class: _vm.cssicon,
-        attrs: {
-          "aria-hidden": "true",
-          "data-toggle": "tooltip",
-          title: _vm.tooltipname
-        }
+        attrs: { "data-toggle": "tooltip", title: _vm.tooltipname }
       })
     ]
   )

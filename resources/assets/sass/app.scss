@@ -1,7 +1,7 @@
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
+@import url("https://use.fontawesome.com/releases/v5.0.13/css/all.css");
 // Variables
 @import "variables";
 
@@ -606,6 +606,8 @@ html {
       background-color: #00a0f0;
       border-color: #00a0f0; }
   
+  
+
   .btn-warning {
     background-color: #e4cb10;
     border-color: #d6be0f; }
@@ -1125,7 +1127,9 @@ html {
   
   .bg-warning {
     background-color: #e4cb10; }
-  
+  .bg-row{
+    background-color: #e407076e; 
+  }
   .bg-danger {
     background-color: #F9354C; }
   

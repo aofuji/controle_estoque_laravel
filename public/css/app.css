@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);@import url(https://use.fontawesome.com/releases/v5.0.13/css/all.css);@charset "UTF-8";
 
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -9879,6 +9879,10 @@ ul.activity-list > li .timestamp {
 
 .bg-warning {
   background-color: #e4cb10;
+}
+
+.bg-row {
+  background-color: #e407076e;
 }
 
 .bg-danger {
