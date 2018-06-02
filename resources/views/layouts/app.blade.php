@@ -30,16 +30,28 @@
                     <nav>
                             
                         <ul class="nav">
-                                <li><a href="#" class=""><h4><span>Controle Estoque v1.0</span></h4></a></li>
-                            
-                            <li><a href="{{ route('home') }}" class="active"><i class="lnr lnr-home"></i> <span>Inicio</span></a></li>
-                            <li><a href="{{ route('categoria') }}" class=""><i class="lnr lnr-tag"></i> <span>Categorias</span></a></li>
-                            <li><a href="{{ route('cliente') }}" class=""><i class="lnr lnr-user"></i> <span>Clientes</span></a></li>
-                            <li><a href="{{ route('estoque') }}" class=""><i class="lnr lnr-inbox"></i> <span>Estoque</span></a></li>
-                            <li><a href="{{ route('historico') }}" class=""><i class="lnr lnr-history"></i> <span>Histórico</span></a></li>          
+                            <li><a href="#" class=""><h4><span>Controle Estoque v1.0</span></h4></a></li>
+
+                            <li><a href="{{ route('home') }}" class="{{ Request::path() == '/' ? 'active' : '' }}"><i class="lnr lnr-home"></i> <span>Inicio</span></a></li>
+                            <li><a href="{{ route('categoria') }}" class="{{ Request::path() == 'categoria' ? 'active' : '' }}"><i class="lnr lnr-tag"></i> <span>Categorias</span></a></li>
+                            <li><a href="{{ route('cliente') }}" class="{{ Request::path() == 'cliente' ? 'active' : '' }}"><i class="lnr lnr-user"></i> <span>Clientes</span></a></li>
+                            <li><a href="{{ route('estoque') }}" class="{{ Request::path() == 'estoque' ? 'active' : '' }}"><i class="lnr lnr-inbox"></i> <span>Estoque</span></a></li>
+                            <li><a href="{{ route('historico') }}" class="{{ Request::path() == 'historico' ? 'active' : '' }}"><i class="lnr lnr-history"></i> <span>Histórico</span></a></li>          
                             @if(Auth::user()->nivel_acesso == 1)
-                            <li><a href="{{ route('user') }}" class=""><i class="lnr lnr-users"></i> <span>Usuários</span></a></li>
+                            <li><a href="{{ route('user') }}" class="{{ Request::path() == 'user' ? 'active' : '' }}"><i class="lnr lnr-users"></i> <span>Usuários</span></a></li>
                             @endif
+                            <li>
+                                    <a href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                        <i class="lnr lnr-exit"></i>
+                                        Logout
+                                    </a>
+        
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
                         </ul>
                     </nav>
                 </div>

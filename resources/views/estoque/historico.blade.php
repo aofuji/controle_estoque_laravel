@@ -24,13 +24,13 @@
                                     <option value="Saida">Saida</option>
                                 </select>
                                 <div class='input-group date' id='data_inicial'>
-                                    <input type='text' class="form-control" name="data_inicial" placeholder="Data Inicial" required/>
+                                    <input type='datetime-local' class="form-control" name="data_inicial" placeholder="Data Inicial" required/>
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
                                 <div class='input-group date' id='data_final'>
-                                    <input type='text' class="form-control" name="data_final" placeholder="Data Final" required/>
+                                    <input type='datetime-local' class="form-control" name="data_final" placeholder="Data Final" required/>
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>

@@ -93,6 +93,8 @@ const app = new Vue({
                 $('[data-toggle="tooltip"]').tooltip()
             })
 
+           
+
             /*-----------------------------------/
             /*	TOP NAVIGATION AND LAYOUT
             /*----------------------------------*/

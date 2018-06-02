@@ -20,7 +20,7 @@
                                     <form method="POST" class="form form-inline" action="{{route('cliente.search')}}">
                                     {!! csrf_field()  !!}
                                         <input type="text" name="nome" class="form-control" placeholder="Digite Nome do Cliente">
-                                        <a type="submit" class="btn btn-primary form-control"><i class="fa fa-search" ></i></a>
+                                        <button type="submit" class="btn btn-primary form-control"><i class="fa fa-search" ></i></button>
                                     </form>
                                 </div>  
                             </div>
