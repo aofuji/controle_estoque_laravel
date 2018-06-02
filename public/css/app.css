@@ -9210,18 +9210,6 @@ fieldset[disabled] .btn {
   font-weight: 300;
 }
 
-.panel .panel-heading button {
-  padding: 0;
-  margin-left: 5px;
-  background-color: transparent;
-  border: none;
-  outline: none;
-}
-
-.panel .panel-heading button i {
-  font-size: 14px;
-}
-
 .panel .panel-body {
   padding-top: 10px;
   padding-bottom: 15px;

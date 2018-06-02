@@ -1,70 +1,60 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="page-wrapper">
-            <div class="row">
-            	<br>
-            	@include('includes.alerts')
-                <div class="col-lg-12">
-                    <h1 class="page-header">Usuarios</h1>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="">Usuarios</h1>
+            <br>
+            @include('includes.alerts')         
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <a href="#" data-toggle="modal" data-target="#cadUser" ><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
+                </div>
+                <div class="panel-body no-padding">
+                        <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Nivel</th>
+                                        <th>Criado em</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+            
+                            @foreach ($lista as $item)
+                                <tr>
+                                    <td>{{$item->id}}</td>
+                                    <td>{{$item->name}}</td>
+                                    <td>{{$item->email}}</td>
+                                    <td>{{$item->nivel_acesso == 1? 'Administrador': 'Atendente'}}</td>
+                                    <td>{{$item->created_at}}</td>
+                                    <td>
+                                         <buttonex modalnome="userEdit" cssbtn="btn btn-warning btn-sm" cssicon="fas fa-edit" url="user/show/" id="{{$item->id}}"></buttonex>
+                                        <buttonex modalnome="userDelete" cssbtn="btn btn-danger btn-sm" cssicon="fas fa-trash-alt" url="user/show/" id="{{$item->id}}"></buttonex>
+                                    </td>
+                                </tr>
+                            @endforeach
+            
+                            @if($contador == 0)
+                                    <tr>
+                                    <th scope="row"></th>
+                                    <th scope="row">Nenhum registro</th>
+                                    <td colspan="2"></td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
                 </div>
             </div>
-            <div class="row">
-            	<div class="col-lg-12">
-            <ul class="nav nav-tabs">
-                <li class="nav-item active">
-                    <a class="nav-link active" ><i class="fa fa-list" aria-hidden="true"></i> Lista</a>
-                </li>
-
-                <li class="nav">
-                    <a class="btn" data-toggle="modal" data-target="#cadUser" ><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
-                </li>
-            </ul>
-            <div class="table-responsive">
-
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Nivel</th>
-                            <th>Criado em</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                <tbody>
-
-                @foreach ($lista as $item)
-                    <tr>
-                        <td>{{$item->id}}</td>
-                        <td>{{$item->name}}</td>
-                        <td>{{$item->email}}</td>
-                        <td>{{$item->nivel_acesso == 1? 'Administrador': 'Atendente'}}</td>
-                        <td>{{$item->created_at}}</td>
-                        <td>
-                        	 <buttonex modalnome="userEdit" cssbtn="btn btn-warning btn-sm" cssicon="fa fa-pencil" url="user/show/" id="{{$item->id}}"></buttonex>
-                        	<buttonex modalnome="userDelete" cssbtn="btn btn-danger btn-sm" cssicon="fa fa-trash-o" url="user/show/" id="{{$item->id}}"></buttonex>
-                        </td>
-                    </tr>
-                @endforeach
-
-                @if($contador == 0)
-                        <tr>
-                        <th scope="row"></th>
-                        <th scope="row">Nenhum registro</th>
-                        <td colspan="2"></td>
-                    </tr>
-                @endif
-                </tbody>
-                </table>
-                    <div class="text-center">
-
-                    </div>
-            </div>
         </div>
-            </div>
-        </div>
+    </div>
 
 
  <modal nome="cadUser" titulo="Cadastrar">
@@ -89,8 +79,8 @@
         <br>
         <div class="row">
                 <div class=" col-md-12">
-                    <button type="submit" class="btn btn-primary ">Cadastrar</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Cadastrar</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                 </div>
             </div>
     </formulario>
@@ -120,8 +110,8 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Excluir</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Excluir</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
         </div>
     </formulario>
 </modal>
@@ -152,8 +142,8 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Atualizar</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+                <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i> Atualizar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
         </div>
     </formulario>
 </modal>

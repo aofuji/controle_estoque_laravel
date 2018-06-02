@@ -25,7 +25,7 @@
                     
                                             <input type="number" name="qtd_estoque" class="form-control" placeholder="Digite a quantidade">
                     
-                                            <a type="submit" class="btn btn-primary form-control"><i class="fa fa-search" ></i></a>
+                                            <button type="submit" class="btn btn-primary form-control"><i class="fa fa-search" ></i></button>
                                         </form>
                                     </div>
                             </div>
