@@ -9029,7 +9029,7 @@ ul.list-justify > li span {
 
 .fancy-checkbox input[type="checkbox"]:checked + span:before {
   font-family: FontAwesome;
-  content: '\F00C';
+  content: '\F05D';
   font-size: 12px;
   color: #99a1a7;
   text-align: center;
