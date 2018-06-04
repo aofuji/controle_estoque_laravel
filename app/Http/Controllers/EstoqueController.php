@@ -83,7 +83,7 @@ class EstoqueController extends Controller {
 
 		$contador = count($historico);
 
-		return view('estoque.entradaForm', compact('item', 'historico', 'contador'));
+		return view('estoque.entradaForm', compact('item', 'historico', 'contador'))->with('entrada','Entrada');
 	}
 
 	public function entrada(Request $request, $id, Estoque $estoque) {
@@ -147,7 +147,8 @@ class EstoqueController extends Controller {
 
 		$contador = count($historico);
 
-		return view('estoque.saidaForm', compact('item', 'lista_cliente', 'historico', 'contador'));
+		return view('estoque.saidaForm', compact('item', 'lista_cliente', 'historico', 'contador'))
+		->with('saida', 'saida');
 	}
 
 	public function saida(Request $request, $id) {
@@ -241,7 +242,8 @@ class EstoqueController extends Controller {
 		$produto = Estoque::find($id);
 
 		return view('estoque.historico', compact('historico', 'contador', 'produto'))
-			->with(['idestoque' => $idestoque]);
+			->with(['idestoque' => $idestoque])
+			->with('historicoview', 'Historico');
 	}
 
 	public function historicoSearch($id, Request $request) {
@@ -276,7 +278,8 @@ class EstoqueController extends Controller {
 		$estoque = Estoque::find($id);
 		$categoria = Categoria::all(['categoria', 'id']);
 
-		return view('estoque.editform', compact('estoque', 'categoria'));
+		return view('estoque.editform', compact('estoque', 'categoria'))
+		->with('estoqueedit','estoqueedit');
 	}
 
 	public function update(Request $request, $id) {

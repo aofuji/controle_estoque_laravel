@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="">Categoria</h1>
+            
             <br>
             @include('includes.alerts')
             
