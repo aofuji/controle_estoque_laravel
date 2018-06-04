@@ -16,7 +16,7 @@ class Estoque extends Model
             ->where(function ($query) use ($data) {
     
                 if(isset($data['nome_produto']))
-                    $query->where('nome_produto', $data['nome_produto']);
+                    $query->where('nome_produto','like', '%'. $data['nome_produto'] .'%');
                 if(isset($data['qtd_estoque']))
                     $query->where('qtd_estoque', $data['qtd_estoque']); 
                 if(isset($data['codigo_produto']))

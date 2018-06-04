@@ -203,6 +203,7 @@
                 <button type="submit" class="btn btn-success"><i class="fas fa-upload" ></i> Importar</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
             </div>
+            
         </form>
     </modal>
 
