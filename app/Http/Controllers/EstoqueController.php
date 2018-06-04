@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Excel;
 
 class EstoqueController extends Controller {
 	private $totalPage = 12;
@@ -39,6 +40,30 @@ class EstoqueController extends Controller {
 
 		$contador = count($lista);
 		return view('estoque.estoque', compact('lista', 'dataForm', 'contador', 'lista_categoria'));
+	}
+
+	public function import(Request $request){
+		if($request->hasFile('file')){
+            $path = $request->file('file')->getRealPath();
+
+            $data = Excel::load($path, function($reader){})->get();
+                if(!empty($data) && $data->count()) {
+                    foreach ($data as $key => $value){
+                        $estoque = new Estoque();
+                        $estoque->codigo_produto = $value->codigo_produto;
+                        $estoque->nome_produto = $value->nome_produto;
+                        $estoque->qtd_estoque = $value->qtd_estoque;
+                        $estoque->valor = $value->valor;
+                        $estoque->data = $value->data;
+                        $estoque->categoria_id = $value->categoria_id;
+                        $estoque->save();
+                    }
+                }
+		}
+		return redirect()
+			->back()
+			->with('success', 'importado com sucesso!');
+		
 	}
 
 	public function entradaForm($id) {
@@ -166,7 +191,7 @@ class EstoqueController extends Controller {
 			'nome_produto' => 'required | max:255',
 			'codigo_produto' => 'required| max:255',
 			'categoria_id' => 'required | numeric',
-			'qtd_estoque' => 'required | numeric | min:1 | max:255',
+			'qtd_estoque' => 'required | numeric | max:255',
 			'valor' => 'required  ',
 		]);
 

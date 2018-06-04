@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
 		Route::get('', 'EstoqueController@index')->name('estoque');
 		Route::post('form', 'EstoqueController@store')->name('form.store');
 		Route::any('', 'EstoqueController@searchEstoque')->name('estoque.search');
+		Route::post('import', 'EstoqueController@import')->name('estoque.import');
 		Route::get('show/{id}', 'EstoqueController@show')->name('estoque.show');
 		Route::post('delete/{id}', 'EstoqueController@destroy')->name('estoque.delete');
 		Route::get('edit/{id}', 'EstoqueController@edit')->name('estoque.edit');
@@ -47,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::prefix('categoria')->group(function () {
 		Route::get('', 'CategoriaController@index')->name('categoria');
 		Route::post('form', 'CategoriaController@store')->name('categoria.store');
+		Route::post('import', 'CategoriaController@import')->name('categoria.import');
 		Route::get('show/{id}', 'CategoriaController@show')->name('categoria.show');
 		Route::post('edit/{id}', 'CategoriaController@update')->name('categoria.update');
 		Route::post('delete/{id}', 'CategoriaController@destroy')->name('categoria.delete');

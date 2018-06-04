@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Categoria;
 use Illuminate\Support\Facades\DB;
 
+use Excel;
+
 class CategoriaController extends Controller
 {
     private $totalPage = 7;
@@ -49,7 +51,24 @@ class CategoriaController extends Controller
         return response()->json($list, 200);
     }
 
-   
+    public function import(Request $request){
+        if($request->hasFile('file')){
+            $path = $request->file('file')->getRealPath();
+
+            $data = Excel::load($path, function($reader){})->get();
+                if(!empty($data) && $data->count()) {
+                    foreach ($data as $key => $value){
+                        $categoria = new Categoria();
+                        $categoria->categoria = $value->categoria;
+                        $categoria->save();
+                    }
+                }
+        }
+        return redirect() 
+                    ->route('categoria')
+                    ->with('success',  'Importado com Sucesso!');
+    }
+
     public function edit($id)
     {
         //
