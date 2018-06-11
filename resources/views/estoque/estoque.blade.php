@@ -22,11 +22,14 @@
                                     <div class="pull-right ">
                                         <form method="POST" class="form form-inline" action="{{ route('estoque.search') }}">
                                         {!! csrf_field()  !!}
-                                            <input type="text" name="codigo_produto" class="form-control" placeholder="Digite codigo do produto">
-                                            <input type="text" name="nome_produto" class="form-control" placeholder="Digite nome do produto">
-                    
+                                            
+                                            <input type="text" list="idOfDatalist"  class="form-control" name="nome_produto" placeholder="Digite nome do produto"> 
+                                            <datalist id="idOfDatalist" >
+                                                @foreach ($searchLista as $item)
+                                                <option value="{{$item->nome_produto}}" />
+                                                @endforeach  
+                                           </datalist>
                                             <input type="number" name="qtd_estoque" class="form-control" placeholder="Digite a quantidade">
-                    
                                             <button type="submit" class="btn btn-primary form-control"><i class="fa fa-search" ></i></button>
                                         </form>
                                     </div>
@@ -50,7 +53,13 @@
                                         @foreach ($lista as $item)
                                             <tr  >
                                                 <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">{{$item->id}}</td>
-                                                <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">{{$item->codigo_produto}}</td>
+                                                <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">
+                                                    <buttonex modalnome="history"                                                      
+                                                        url="estoque/history/" 
+                                                        id="{{$item->id}}">
+                                                        {{$item->codigo_produto}}
+                                                    </buttonex>
+                                                </td>
                                                 <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">{{$item->nome_produto}}</td>
                                                 <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">{{$item->categoria}}</td>
                                                 <td class="{{$item->qtd_estoque == 0 ? "bg-row": ''}}">{{$item->qtd_estoque}}</td>
@@ -205,6 +214,10 @@
             </div>
             
         </form>
+    </modal>
+
+    <modal nome="history" titulo="Historico">
+        <tabelahistorico></tabelahistorico>
     </modal>
 
 @endsection

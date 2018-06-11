@@ -55,6 +55,8 @@ Vue.component('saidacliente', require('./components/SaidaCLiente.vue'));
 
 
 
+
+
 const app = new Vue({
     el: '#app',
     store,
@@ -71,6 +73,8 @@ const app = new Vue({
     mounted: function(){
       
         document.getElementById('app').style.display = "block";
+        
+       
 
         $.fn.clickToggle = function( f1, f2 ) {
             return this.each( function() {

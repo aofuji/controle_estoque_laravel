@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
 		Route::get('', 'EstoqueController@index')->name('estoque');
 		Route::post('form', 'EstoqueController@store')->name('form.store');
 		Route::any('', 'EstoqueController@searchEstoque')->name('estoque.search');
+		Route::any('busca', 'EstoqueController@search')->name('estoque.searchteste');
 		Route::post('import', 'EstoqueController@import')->name('estoque.import');
 		Route::get('show/{id}', 'EstoqueController@show')->name('estoque.show');
 		Route::post('delete/{id}', 'EstoqueController@destroy')->name('estoque.delete');
@@ -32,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
 		Route::get('saida/{id}', 'EstoqueController@saidaForm')->name('estoque.saidaform');
 		Route::post('saida/{id}', 'EstoqueController@saida')->name('estoque.saida');
 		Route::get('historico/{id}', 'EstoqueController@historicoView')->name('estoque.historicoview');
+		Route::get('history/{id}', 'EstoqueController@historyView')->name('estoque.historyview');
 		Route::post('historico/{id}', 'EstoqueController@historicoSearch')->name('estoque.historicosearch');
 	});
 

@@ -19,6 +19,11 @@ class EstoqueController extends Controller {
 	private $testeform;
 
 	public function index() {
+		$searchLista =  DB::table('estoque')
+			->select('nome_produto')
+			->orderby('nome_produto', 'asc')
+			->get();
+
 		$lista_categoria = Categoria::all();
 
 		$lista = DB::table('estoque')
@@ -29,17 +34,27 @@ class EstoqueController extends Controller {
 
 		$contador = count($lista);
 
-		return view('estoque.estoque', compact('lista', 'contador', 'lista_categoria'));
+		return view('estoque.estoque', compact('lista', 'contador', 'lista_categoria', 'searchLista'));
 	}
 
 	public function searchEstoque(Request $request, Estoque $estoque) {
+		
+		$searchLista =  DB::table('estoque')
+			->select('nome_produto')
+			->orderby('nome_produto', 'asc')
+			->get();
+
 		$lista_categoria = Categoria::all();
 
 		$dataForm = $request->except('_token');
 		$lista = $estoque->search($dataForm, $this->totalPage);
 
 		$contador = count($lista);
-		return view('estoque.estoque', compact('lista', 'dataForm', 'contador', 'lista_categoria'));
+		return view('estoque.estoque', compact('lista', 'dataForm', 'contador', 'lista_categoria', 'searchLista'));
+	}
+
+	public function search(Request $request) {
+		dd($request->all());
 	}
 
 	public function import(Request $request){
@@ -219,6 +234,25 @@ class EstoqueController extends Controller {
 	public function show($id) {
 		$list = Estoque::find($id);
 		return response()->json($list);
+	}
+
+	public function historyView($id, Request $request){
+		$historico = DB::table('historicos')
+			->where(function ($query) use ($id, $request) {
+				if (isset($id)) {
+					$query->where('estoque_id', $id);
+				}
+
+				if (isset($request['tipo'])) {
+					$query->where('tipo', $request['tipo']);
+				}
+
+			})->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
+			->select('historicos.*', 'clientes.nome')
+			->orderby('historicos.id', 'desc')
+			->paginate(3);
+
+			return response()->json($historico,200);
 	}
 
 	public function historicoView($id, Request $request) {

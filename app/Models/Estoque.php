@@ -17,10 +17,10 @@ class Estoque extends Model
     
                 if(isset($data['nome_produto']))
                     $query->where('nome_produto','like', '%'. $data['nome_produto'] .'%');
+                    
                 if(isset($data['qtd_estoque']))
                     $query->where('qtd_estoque', $data['qtd_estoque']); 
-                if(isset($data['codigo_produto']))
-                    $query->where('codigo_produto', $data['codigo_produto']);
+                
                  
                     })
                     ->leftJoin('categorias', 'categorias.id', '=', 'estoque.categoria_id')
