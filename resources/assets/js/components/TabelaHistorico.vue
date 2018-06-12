@@ -3,6 +3,7 @@
         <div class="form form-inline pull-right" style="padding:10px;">
             <input type="text" class="form-control" v-model="search.tipo" placeholder="Digite">
             <button class="btn btn-primary" v-on:click="searchEstoque">Procurar</button>
+            
         </div>
     
         <table class="table table-striped" >
@@ -53,11 +54,12 @@ import VcPagination from './Pagination.vue'
                 items:[],
                 pagination:{},
                 search:{},
-                idestoque:''
+                idestoque:[],
+
             }
         },
         mounted() {
-          
+          console.log(this.$storeid)
         },
         computed: {
             atualiza: function(){
@@ -75,12 +77,14 @@ import VcPagination from './Pagination.vue'
               })
           },
           searchEstoque(){
+              
               axios.post('estoque/history/'+ this.items[0].estoque_id, this.search)
               .then(res =>{
-                  console.log(res.data)
+                  
                   this.$store.commit('setItem',res.data)
               })
-          }
+          },
+          
         }
         
     }

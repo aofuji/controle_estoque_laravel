@@ -32,12 +32,15 @@ const store = new Vuex.Store({
     state:{
         item:{}
     },
+  
     mutations:{
         setItem(state, obj){
             state.item = obj;
-        }
+        },
+       
     } 
 });
+
 
 
 Vue.component('menu-topo', require('./components/MenuTopo.vue'));

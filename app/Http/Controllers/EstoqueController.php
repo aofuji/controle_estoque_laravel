@@ -239,7 +239,7 @@ class EstoqueController extends Controller {
 	public function historyView($id, Request $request){
 		$historico = DB::table('historicos')
 			->where(function ($query) use ($id, $request) {
-				if (isset($id)) {
+				if ($request->id != null) {
 					$query->where('estoque_id', $id);
 				}
 
@@ -255,24 +255,7 @@ class EstoqueController extends Controller {
 			return response()->json($historico,200);
 	}
 
-	public function historyViewPost($id, Request $request){
-		$historico = DB::table('historicos')
-			->where(function ($query) use ($id, $request) {
-				if (isset($id)) {
-					$query->where('estoque_id', $id);
-				}
-
-				if ($request->tipo != null) {
-					$query->where('tipo', $request['tipo']);
-				}
-
-			})->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
-			->select('historicos.*', 'clientes.nome')
-			->orderby('historicos.id', 'desc')
-			->paginate(5);
-
-			return response()->json($historico,200);
-	}
+	
 
 	public function teste($id, Request $request){
 		$retorno = $request->tipo == null? true:false;

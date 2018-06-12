@@ -34618,6 +34618,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_Vuex__["a" /* default */].Store({
     state: {
         item: {}
     },
+
     mutations: {
         setItem: function setItem(state, obj) {
             state.item = obj;
@@ -63707,6 +63708,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -63719,10 +63721,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             items: [],
             pagination: {},
             search: {},
-            idestoque: ''
+            idestoque: []
+
         };
     },
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        console.log(this.$storeid);
+    },
 
     computed: {
         atualiza: function atualiza() {
@@ -63743,7 +63748,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             axios.post('estoque/history/' + this.items[0].estoque_id, this.search).then(function (res) {
-                console.log(res.data);
+
                 _this2.$store.commit('setItem', res.data);
             });
         }
