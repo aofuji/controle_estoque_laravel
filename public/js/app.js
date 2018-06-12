@@ -34586,6 +34586,7 @@ module.exports = __webpack_require__(215);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bus", function() { return bus; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_Vuex__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_v_money__ = __webpack_require__(136);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_v_money___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_v_money__);
@@ -34625,6 +34626,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_Vuex__["a" /* default */].Store({
         }
     }
 });
+
+var bus = new Vue();
 
 Vue.component('menu-topo', __webpack_require__(167));
 Vue.component('menu-left', __webpack_require__(170));
@@ -63363,6 +63366,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app__ = __webpack_require__(138);
 //
 //
 //
@@ -63370,6 +63374,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['modalnome', 'url', 'id', 'cssbtn', 'cssicon', 'tooltipname'],
@@ -63382,6 +63389,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(this.url + id).then(function (res) {
 
                 _this.$store.commit('setItem', res.data);
+                __WEBPACK_IMPORTED_MODULE_0__app__["bus"].$emit('id', id);
             });
         }
     }
@@ -63665,6 +63673,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Pagination_vue__ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Pagination_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Pagination_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app__ = __webpack_require__(138);
 //
 //
 //
@@ -63709,6 +63718,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -63721,12 +63731,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             items: [],
             pagination: {},
             search: {},
-            idestoque: []
+            idestoque: ''
 
         };
     },
     mounted: function mounted() {
-        console.log(this.$storeid);
+        var _this = this;
+
+        __WEBPACK_IMPORTED_MODULE_1__app__["bus"].$on('id', function (data) {
+            _this.idestoque = data;
+        });
     },
 
     computed: {
@@ -63738,18 +63752,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         navigate: function navigate(page) {
-            var _this = this;
+            var _this2 = this;
 
-            axios.post('estoque/history/' + this.items[0].estoque_id + '?page=' + page, this.search).then(function (res) {
-                _this.$store.commit('setItem', res.data);
+            axios.post('estoque/history/' + this.idestoque + '?page=' + page, this.search).then(function (res) {
+                _this2.$store.commit('setItem', res.data);
             });
         },
         searchEstoque: function searchEstoque() {
-            var _this2 = this;
+            var _this3 = this;
 
-            axios.post('estoque/history/' + this.items[0].estoque_id, this.search).then(function (res) {
+            axios.post('estoque/history/' + this.idestoque, this.search).then(function (res) {
 
-                _this2.$store.commit('setItem', res.data);
+                _this3.$store.commit('setItem', res.data);
             });
         }
     }

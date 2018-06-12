@@ -44,7 +44,8 @@
 
 <script>
 
-import VcPagination from './Pagination.vue'
+import VcPagination from './Pagination.vue';
+import { bus } from '../app';
     export default {
         components:{
             VcPagination
@@ -54,12 +55,14 @@ import VcPagination from './Pagination.vue'
                 items:[],
                 pagination:{},
                 search:{},
-                idestoque:[],
+                idestoque:'',
 
             }
         },
         mounted() {
-          console.log(this.$storeid)
+          bus.$on('id', (data)=>{
+              this.idestoque = data;
+          })
         },
         computed: {
             atualiza: function(){
@@ -71,14 +74,14 @@ import VcPagination from './Pagination.vue'
         methods:{
           navigate(page){
               
-              axios.post('estoque/history/'+ this.items[0].estoque_id +'?page='+page, this.search)
+              axios.post('estoque/history/'+ this.idestoque +'?page='+page, this.search)
               .then(res =>{
                   this.$store.commit('setItem',res.data)
               })
           },
           searchEstoque(){
               
-              axios.post('estoque/history/'+ this.items[0].estoque_id, this.search)
+              axios.post('estoque/history/'+ this.idestoque, this.search)
               .then(res =>{
                   
                   this.$store.commit('setItem',res.data)

@@ -41,7 +41,7 @@ const store = new Vuex.Store({
     } 
 });
 
-
+export const bus = new Vue();
 
 Vue.component('menu-topo', require('./components/MenuTopo.vue'));
 Vue.component('menu-left', require('./components/MenuLeft.vue'));

@@ -6,6 +6,9 @@
 </template>
 
 <script>
+
+import { bus } from '../app';
+
     export default {
         props:['modalnome','url','id','cssbtn','cssicon', 'tooltipname'],
         mounted() {
@@ -19,7 +22,7 @@
                 .then(res =>{
                    
                     this.$store.commit('setItem',res.data)
-                    
+                    bus.$emit('id', id)
                 });
                 
             }
