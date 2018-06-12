@@ -34,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
 		Route::post('saida/{id}', 'EstoqueController@saida')->name('estoque.saida');
 		Route::get('historico/{id}', 'EstoqueController@historicoView')->name('estoque.historicoview');
 		Route::get('history/{id}', 'EstoqueController@historyView')->name('estoque.historyview');
+		Route::post('history/{id}', 'EstoqueController@historyView')->name('estoque.historyview');
+		Route::post('teste/{id}', 'EstoqueController@teste')->name('estoque.teste');
 		Route::post('historico/{id}', 'EstoqueController@historicoSearch')->name('estoque.historicosearch');
 	});
 

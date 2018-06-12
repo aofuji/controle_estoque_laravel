@@ -63701,6 +63701,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -63712,13 +63718,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             items: [],
             pagination: {},
-            search: ''
+            search: {},
+            idestoque: ''
         };
     },
     mounted: function mounted() {},
 
     computed: {
         atualiza: function atualiza() {
+
             this.pagination = this.$store.state.item;
             return this.items = this.$store.state.item.data;
         }
@@ -63727,8 +63735,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         navigate: function navigate(page) {
             var _this = this;
 
-            axios.get('http://localhost:8000/estoque/history/23?page=' + page).then(function (res) {
+            axios.post('estoque/history/' + this.items[0].estoque_id + '?page=' + page, this.search).then(function (res) {
                 _this.$store.commit('setItem', res.data);
+            });
+        },
+        searchEstoque: function searchEstoque() {
+            var _this2 = this;
+
+            axios.post('estoque/history/' + this.items[0].estoque_id, this.search).then(function (res) {
+                console.log(res.data);
+                _this2.$store.commit('setItem', res.data);
             });
         }
     }
@@ -63745,6 +63761,43 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
+    _c(
+      "div",
+      {
+        staticClass: "form form-inline pull-right",
+        staticStyle: { padding: "10px" }
+      },
+      [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.search.tipo,
+              expression: "search.tipo"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "Digite" },
+          domProps: { value: _vm.search.tipo },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.search, "tipo", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", on: { click: _vm.searchEstoque } },
+          [_vm._v("Procurar")]
+        )
+      ]
+    ),
+    _vm._v(" "),
     _c("table", { staticClass: "table table-striped" }, [
       _vm._m(0),
       _vm._v(" "),
