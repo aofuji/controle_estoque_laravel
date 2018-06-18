@@ -19,29 +19,25 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('', 'HomeController@index')->name('home');
 
 	Route::prefix('estoque')->group(function () {
-		Route::get('', 'EstoqueController@index')->name('estoque');
-		Route::post('form', 'EstoqueController@store')->name('form.store');
-		Route::any('', 'EstoqueController@searchEstoque')->name('estoque.search');
-		Route::any('busca', 'EstoqueController@search')->name('estoque.searchteste');
-		Route::post('import', 'EstoqueController@import')->name('estoque.import');
-		Route::get('show/{id}', 'EstoqueController@show')->name('estoque.show');
-		Route::post('delete/{id}', 'EstoqueController@destroy')->name('estoque.delete');
-		Route::get('edit/{id}', 'EstoqueController@edit')->name('estoque.edit');
-		Route::post('edit/{id}', 'EstoqueController@update')->name('estoque.update');
-		Route::get('entrada/{id}', 'EstoqueController@entradaForm')->name('estoque.entradaform');
-		Route::post('entrada/{id}', 'EstoqueController@entrada')->name('estoque.entrada');
-		Route::get('saida/{id}', 'EstoqueController@saidaForm')->name('estoque.saidaform');
-		Route::post('saida/{id}', 'EstoqueController@saida')->name('estoque.saida');
-		Route::get('historico/{id}', 'EstoqueController@historicoView')->name('estoque.historicoview');
-		Route::get('history/{id}', 'EstoqueController@historyView')->name('estoque.historyview');
-		Route::post('history/{id}', 'EstoqueController@historyView')->name('estoque.historyview');
-		Route::post('teste/{id}', 'EstoqueController@teste')->name('estoque.teste');
-		Route::post('historico/{id}', 'EstoqueController@historicoSearch')->name('estoque.historicosearch');
+		Route::get('', 'EstoqueController@index')->name('estoque');	
+		Route::post('lista', 'EstoqueController@listaEstoque');
+		Route::get('listacategoria', 'EstoqueController@listaCategoria');
+		Route::post('cadastrar', 'EstoqueController@store');
+		Route::post('import', 'EstoqueController@import');
+		Route::get('show/{id}', 'EstoqueController@show');
+		Route::post('edit/{id}', 'EstoqueController@update');
+		Route::post('entrada/{id}', 'EstoqueController@entrada');
+		Route::get('cliente', 'EstoqueController@listaCliente');
+		Route::post('saida/{id}', 'EstoqueController@saida');
+		Route::get('history/{id}', 'EstoqueController@historyView');
+		Route::post('history/{id}', 'EstoqueController@historyView');
+		Route::delete('delete/{id}', 'EstoqueController@destroy');
+		
 	});
 
 	Route::prefix('cliente')->group(function () {
 		Route::get('', 'ClienteController@index')->name('cliente');
-		Route::post('form', 'ClienteController@store')->name('cliente.store');
+		Route::post('cadastrar', 'ClienteController@store');
 		Route::get('edit/{id}', 'ClienteController@edit')->name('cliente.edit');
 		Route::post('edit/{id}', 'ClienteController@update')->name('cliente.update');
 		Route::post('delete/{id}', 'ClienteController@destroy')->name('cliente.delete');

@@ -55,6 +55,7 @@ Vue.component('formentrada', require('./components/FormEntrada.vue'));
 Vue.component('tabelahistorico', require('./components/TabelaHistorico.vue'));
 Vue.component('teste', require('./components/Teste.vue'));
 Vue.component('saidacliente', require('./components/SaidaCLiente.vue'));
+Vue.component('estoque', require('./components/Estoque.vue'));
 
 
 

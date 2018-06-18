@@ -22,6 +22,7 @@ import { bus } from '../app';
                 .then(res =>{
                    
                     this.$store.commit('setItem',res.data)
+                    
                     bus.$emit('id', id)
                 });
                 

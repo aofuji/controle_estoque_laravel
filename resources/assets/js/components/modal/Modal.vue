@@ -1,6 +1,6 @@
 <template>
 <div v-bind:id="nome" class="modal fade" tabindex="-1" role="dialog" v-bind:aria-labelledby="nome" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div v-bind:class="'modal-dialog '+ tamanho ">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -16,6 +16,6 @@
 
 <script>
     export default {
-        props:['nome', 'titulo']
+        props:['nome', 'titulo', 'tamanho']
     }
 </script>

@@ -1,8 +1,14 @@
 <template>
 <div class="row">
+    <div class="col-md-12">
         <div class="form form-inline pull-right" style="padding:10px;">
-            <input type="text" class="form-control" v-model="search.tipo" placeholder="Digite">
-            <button class="btn btn-primary" v-on:click="searchEstoque">Procurar</button>
+            <input type="text" class="form-control" v-model="search_history.nome_cliente" placeholder="Digite cliente">
+            <select class="form-control" v-model="search_history.tipo">
+                <option value="" >Todos</option>
+                <option value="Entrada">Entrada</option>
+                <option value="Saida">Saida</option>
+            </select>
+            <button class="btn btn-primary" v-on:click="searchHistorico"><i class="fa fa-search" ></i></button>
             
         </div>
     
@@ -21,16 +27,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in atualiza">  
+                    <tr v-for="item in listaHistorico">  
                         <td>{{item.id}}</td>
                         <td>{{item.tipo}}</td>
                         <td>{{item.qtd}}</td>
-                        <td>{{item.valor_unitario}}</td>
-                        <td>{{item.valor_total}}</td>
+                        <td>R$ {{formatPrice(item.valor_unitario)}}</td>
+                        <td>R$ {{formatPrice(item.valor_total)}}</td>
                         <td>{{item.usuario}}</td>
                         <td>{{item.obs}}</td>
                         <td>{{item.nome}}</td>
-                        <td>{{item.created_at}}</td>
+                        <td>{{item.created_at | moment("DD/MM/YYYY")}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -38,7 +44,7 @@
             
             <vc-pagination  :source="pagination" @navigate="navigate"></vc-pagination>
         </div>
-    
+    </div>
 </div>
 </template>
 
@@ -54,40 +60,44 @@ import { bus } from '../app';
             return{
                 items:[],
                 pagination:{},
-                search:{},
-                idestoque:'',
+                search_history:{},
+                id_estoque:'',
 
             }
         },
         mounted() {
           bus.$on('id', (data)=>{
-              this.idestoque = data;
+              this.id_estoque = data;
           })
+       
         },
         computed: {
-            atualiza: function(){
-                
+            listaHistorico: function(){
                this.pagination = this.$store.state.item
-                return this.items = this.$store.state.item.data
+              return this.items = this.$store.state.item.data
+            
             }
         },
         methods:{
           navigate(page){
               
-              axios.post('estoque/history/'+ this.idestoque +'?page='+page, this.search)
+              axios.post('estoque/history/'+ this.id_estoque +'?page='+page, this.search_history)
               .then(res =>{
                   this.$store.commit('setItem',res.data)
               })
           },
-          searchEstoque(){
+          searchHistorico(){
               
-              axios.post('estoque/history/'+ this.idestoque, this.search)
+              axios.post('estoque/history/'+ this.id_estoque, this.search_history)
               .then(res =>{
-                  
+                 
                   this.$store.commit('setItem',res.data)
               })
           },
-          
+          formatPrice(value) {
+                let val = (value/1).toFixed(2).replace('.', ',')
+                return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+            },
         }
         
     }

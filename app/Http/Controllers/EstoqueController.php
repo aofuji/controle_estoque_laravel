@@ -19,99 +19,67 @@ class EstoqueController extends Controller {
 	private $testeform;
 
 	public function index() {
-		$searchLista =  DB::table('estoque')
-			->select('nome_produto')
-			->orderby('nome_produto', 'asc')
-			->get();
+		return view('estoque.estoque');
+	}
 
-		$lista_categoria = Categoria::all();
+	public function listaEstoque(Request $request){
 
 		$lista = DB::table('estoque')
-			->leftJoin('categorias', 'categorias.id', '=', 'estoque.categoria_id')
-			->select('estoque.*', 'categorias.categoria')
-			->orderby('estoque.id', 'desc')
-			->paginate($this->totalPage);
+		->where(function ($query) use ($request) {
+			if ($request->nome_produto != null) {
+				$query->where('estoque.nome_produto','like','%'. $request['nome_produto'] .'%');
+			}
+			if ($request->qtd_estoque != null) {
+				$query->where('estoque.qtd_estoque', $request['qtd_estoque']);
+			}
+		})->leftJoin('categorias', 'categorias.id', '=', 'estoque.categoria_id')
+		  ->select('estoque.*', 'categorias.categoria')
+		  ->orderby('estoque.id', 'desc')
+		  ->paginate($this->totalPage);
 
-		$contador = count($lista);
-
-		return view('estoque.estoque', compact('lista', 'contador', 'lista_categoria', 'searchLista'));
+			return response()->json($lista, 200);
 	}
 
-	public function searchEstoque(Request $request, Estoque $estoque) {
-		
-		$searchLista =  DB::table('estoque')
-			->select('nome_produto')
-			->orderby('nome_produto', 'asc')
-			->get();
+	public function listaCategoria(){
+		$listaCategoria = Categoria::all(['categoria', 'id']);
 
-		$lista_categoria = Categoria::all();
-
-		$dataForm = $request->except('_token');
-		$lista = $estoque->search($dataForm, $this->totalPage);
-
-		$contador = count($lista);
-		return view('estoque.estoque', compact('lista', 'dataForm', 'contador', 'lista_categoria', 'searchLista'));
-	}
-
-	public function search(Request $request) {
-		dd($request->all());
+		return response()->json($listaCategoria, 200);
 	}
 
 	public function import(Request $request){
 		if($request->hasFile('file')){
             $path = $request->file('file')->getRealPath();
-
+//
             $data = Excel::load($path, function($reader){})->get();
                 if(!empty($data) && $data->count()) {
-                    foreach ($data as $key => $value){
-                        $estoque = new Estoque();
-                        $estoque->codigo_produto = $value->codigo_produto;
-                        $estoque->nome_produto = $value->nome_produto;
-                        $estoque->qtd_estoque = $value->qtd_estoque;
-                        $estoque->valor = $value->valor;
-                        $estoque->data = $value->data;
-                        $estoque->categoria_id = $value->categoria_id;
-                        $estoque->save();
-                    }
-                }
+					
+					if(empty($data[0]->codigo_produto) && empty($data[0]->nome_produto) && empty($data[0]->qtd_estoque) && empty($data[0]->valor) && empty($data[0]->data) && empty($data[0]->categoria_id)){
+						return response()->json(['erro'=>'Não contem colunas corretas']);
+					}else{
+						foreach ($data as $key => $value){				
+							$estoque = new Estoque();
+							$estoque->codigo_produto = $value->codigo_produto;
+							$estoque->nome_produto = $value->nome_produto;
+							$estoque->qtd_estoque = $value->qtd_estoque;
+							$estoque->valor = $value->valor;
+							$estoque->data = $value->data;
+							$estoque->categoria_id = $value->categoria_id;
+							$estoque->save();
+						}
+						return response()->json(['sucess'=>'Arquivo importado com sucesso!'],200);
+					}
+                }else{
+					return response()->json(['erro'=>'Arquivo vazio!'],200);
+				}
 		}
-		return redirect()
-			->back()
-			->with('success', 'importado com sucesso!');
 		
 	}
 
-	public function entradaForm($id) {
-		$item = Estoque::find($id);
-		$historico = DB::table('historicos')
-			->where(function ($query) use ($id) {
-				if (isset($id)) {
-					$query->where('estoque_id', $id);
-				}
-
-				$query->where('tipo', 'Entrada');
-			})->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
-			->select('historicos.*', 'clientes.nome')
-			->orderby('historicos.id', 'desc')
-			->limit(7)
-			->get();
-
-		$contador = count($historico);
-
-		return view('estoque.entradaForm', compact('item', 'historico', 'contador'))->with('entrada','Entrada');
-	}
 
 	public function entrada(Request $request, $id, Estoque $estoque) {
 
 		$dt = Carbon::now();
 		$dt->timezone = 'America/Sao_Paulo';
-
-		$request->validate([
-			'qtd_entrada' => 'required | numeric ',
-		]);
-		// $lista_cliente = Cliente::all();
-		// $dataForm = $request->except('_token');
-		// $lista = $estoque->search($dataForm, $this->totalPage);
 
 		$entrada = Estoque::find($id);
 
@@ -131,39 +99,18 @@ class EstoqueController extends Controller {
 					'estoque_id' => $entrada->id,
 					'created_at' => $dt,
 				]);
+			return response()->json('Entrada Efetuado com sucesso', 201);
+		}else{
+			return response()->json('Erro',500);
 		}
 
-		return redirect()
-			->back()
-			->with('success', 'Entrada efetuado com sucesso!');
-
-		return redirect()
-			->back()
-			->with('error', ['message' => 'Falha ao carregar']);
 	}
 
-	public function saidaForm($id) {
+	public function listaCliente() {
 
-		$lista_cliente = Cliente::all();
-
-		$item = Estoque::find($id);
-		$historico = DB::table('historicos')
-			->where(function ($query) use ($id) {
-				if (isset($id)) {
-					$query->where('estoque_id', $id);
-				}
-
-				$query->where('tipo', 'Saida');
-			})->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
-			->select('historicos.*', 'clientes.nome')
-			->orderby('historicos.id', 'desc')
-			->limit(7)
-			->get();
-
-		$contador = count($historico);
-
-		return view('estoque.saidaForm', compact('item', 'lista_cliente', 'historico', 'contador'))
-		->with('saida', 'saida');
+		$cliente = Cliente::all(['id','nome','rg']);
+		return response()->json($cliente, 200);
+		
 	}
 
 	public function saida(Request $request, $id) {
@@ -188,28 +135,15 @@ class EstoqueController extends Controller {
 					'estoque_id' => $saida->id,
 					'created_at' => $dt
 				]);
-		}
-
-		return redirect()
-			->back()
-			->with('success', 'Saida efetuado com sucesso!');
-
-		return redirect()
-			->back()
-			->with('error', ['message' => 'Falha ao carregar']);
+				return response()->json('Saida Efetuado com sucesso', 201);
+			}else{
+				return response()->json('Erro',500);
+			}
 	}
 
 	public function store(Request $request, Estoque $estoque) {
 		$dt = Carbon::now();
 		$dt->timezone = 'America/Sao_Paulo';
-
-		$request->validate([
-			'nome_produto' => 'required | max:255',
-			'codigo_produto' => 'required| max:255',
-			'categoria_id' => 'required | numeric',
-			'qtd_estoque' => 'required | numeric | max:255',
-			'valor' => 'required  ',
-		]);
 
 		$estoque->codigo_produto = $request->codigo_produto;
 		$estoque->nome_produto = $request->nome_produto;
@@ -220,20 +154,17 @@ class EstoqueController extends Controller {
 
 		$data = $estoque->save();
 
-		if ($data) {
-			return redirect()
-				->back()
-				->with('success', 'Cadastro efetuado com sucesso!');
+		if($data){
+			return response()->json('Cadastro Efetuado com sucesso', 201);
+		}else{
+			return response()->json('Erro',500);
 		}
-
-		return redirect()
-			->back()
-			->with('error', ['message' => 'Falha ao carregar']);
+		
 	}
 
 	public function show($id) {
 		$list = Estoque::find($id);
-		return response()->json($list);
+		return response()->json($list,200);
 	}
 
 	public function historyView($id, Request $request){
@@ -247,92 +178,22 @@ class EstoqueController extends Controller {
 					$query->where('tipo', $request['tipo']);
 				}
 
+				if ($request->nome_cliente != null) {
+					$query->where('clientes.nome','like','%'. $request['nome_cliente'] .'%');
+				}
+
 			})->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
 			->select('historicos.*', 'clientes.nome')
 			->orderby('historicos.id', 'desc')
-			->paginate(5);
+			->paginate(9);
+
+		
 
 			return response()->json($historico,200);
 	}
 
-	
-
-	public function teste($id, Request $request){
-		$retorno = $request->tipo == null? true:false;
-
-		return response()->json($retorno);
-	}
-
-	public function historicoView($id, Request $request) {
-		$idestoque = $id;
-		$historico = DB::table('historicos')
-			->where(function ($query) use ($id, $request) {
-				if (isset($id)) {
-					$query->where('estoque_id', $id);
-				}
-
-				if (isset($request['tipo'])) {
-					$query->where('tipo', $request['tipo']);
-				}
-
-			})->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
-			->select('historicos.*', 'clientes.nome')
-			->orderby('historicos.id', 'desc')
-			->paginate(9);
-
-		$contador = count($historico);
-		$produto = Estoque::find($id);
-
-		return view('estoque.historico', compact('historico', 'contador', 'produto'))
-			->with(['idestoque' => $idestoque])
-			->with('historicoview', 'Historico');
-	}
-
-	public function historicoSearch($id, Request $request) {
-		$request->except('_token');
-
-		$idestoque = $id;
-
-		$historico = DB::table('historicos')
-			->where(function ($query) use ($id, $request) {
-				$request->except('_token');
-				if (isset($id)) {
-					$query->where('estoque_id', $id);
-				}
-
-				if ($request->tipo != null) {
-					$query->where('tipo', $request->tipo);
-				}
-
-			})->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
-			->select('historicos.*', 'clientes.nome')
-			->orderby('historicos.id', 'desc')
-			->paginate(9);
-
-		$contador = count($historico);
-		$produto = Estoque::find($id);
-
-		return view('estoque.historico', compact('historico', 'contador', 'produto'))
-			->with(['idestoque' => $idestoque]);
-	}
-
-	public function edit($id) {
-		$estoque = Estoque::find($id);
-		$categoria = Categoria::all(['categoria', 'id']);
-
-		return view('estoque.editform', compact('estoque', 'categoria'))
-		->with('estoqueedit','estoqueedit');
-	}
-
 	public function update(Request $request, $id) {
-		$request->validate([
-			'nome_produto' => 'required | max:255',
-			'codigo_produto' => 'required| max:255',
-			'categoria_id' => 'required | numeric',
-			'qtd_estoque' => 'required ',
-			'valor' => 'required ',
-		]);
-
+	
 		$estoque = Estoque::find($id);
 		$estoque->codigo_produto = $request->codigo_produto;
 		$estoque->nome_produto = $request->nome_produto;
@@ -341,22 +202,19 @@ class EstoqueController extends Controller {
 		$estoque->valor = str_replace(",", ".", $request->valor);
 
 		$data = $estoque->save();
-		if ($data) {
-			return redirect()
-				->back()
-				->with('success', 'Atualizado com Sucesso!');
+		if($data){
+			return response()->json('Atualizado com sucesso', 201);
+		}else{
+			return response()->json('Erro',500);
 		}
-
-		return redirect()
-			->back()
-			->with('error', ['message' => 'Falha ao atualizar']);
 	}
 
 	public function destroy($id) {
 		$estoque = Estoque::find($id);
 		$data = $estoque->delete();
-		return redirect()
-			->back()
-			->with('success', 'Deletado com Sucesso!');
+		if($data){
+			return response()->json('Deletado com sucesso', 200);
+		}
+		
 	}
 }

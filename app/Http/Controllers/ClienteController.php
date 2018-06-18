@@ -35,26 +35,9 @@ class ClienteController extends Controller {
 
 		foreach ($lista_cliente as $value) {
 			if ($value->rg == $request->rg) {
-				return redirect()
-					->back()
-					->with('error', 'Existe esse RG no sistema');
-
+				return response()->json(['erro'=>'Existe esse RG no sistema, não foi possivel realizar o cadastro!!']);
 			}
 		}
-
-		$request->validate([
-			'nome' => 'required | max:255',
-			'rg' => 'required| numeric ',
-			'cpf' => 'required| numeric ',
-			'endereco' => 'required | max:255',
-			'cidade' => 'required | max:255',
-			'estado' => 'required | max:255',
-			'cep' => 'required| numeric ',
-			'telefone' => 'required| numeric ',
-			'celular' => 'required| numeric ',
-			'email' => 'required| max:255',
-			'data_nascimento' => 'required',
-		]);
 
 		$cliente->nome = $request->nome;
 		$cliente->rg = $request->rg;
@@ -70,15 +53,10 @@ class ClienteController extends Controller {
 
 		$data = $cliente->save();
 		if ($data) {
-			return redirect()
-				->back()
-				->with('success', 'Cadastro de Cliente efetuado com sucesso!');
+			return response()->json(['sucess'=>'Cadastro efetuado com sucesso'],201);
+		}else{
+			return response()->json('Erro',500);
 		}
-
-		return redirect()
-			->back()
-			->with('error', 'Falha ao carregar');
-
 	}
 
 	public function show($id) {

@@ -7,7 +7,10 @@
 
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import "~bootstrap-select/dist/css/bootstrap-select.min.css";
 
+@import "~noty/src/noty.scss";
+@import "~noty/src/themes/mint.scss";
 
 .demo-button button {
     margin-bottom: 5px; }
