@@ -37,21 +37,24 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::prefix('cliente')->group(function () {
 		Route::get('', 'ClienteController@index')->name('cliente');
+		Route::get('lista', 'ClienteController@listaCliente');
+		Route::post('lista', 'ClienteController@listaCliente');
 		Route::post('cadastrar', 'ClienteController@store');
-		Route::get('edit/{id}', 'ClienteController@edit')->name('cliente.edit');
-		Route::post('edit/{id}', 'ClienteController@update')->name('cliente.update');
-		Route::post('delete/{id}', 'ClienteController@destroy')->name('cliente.delete');
-		Route::get('show/{id}', 'ClienteController@show')->name('cliente.show');
-		Route::any('', 'ClienteController@searchCliente')->name('cliente.search');
+		Route::get('show/{id}', 'ClienteController@show');
+		Route::post('edit/{id}', 'ClienteController@update');
+		Route::delete('delete/{id}', 'ClienteController@destroy');
+		
 	});
 
 	Route::prefix('categoria')->group(function () {
 		Route::get('', 'CategoriaController@index')->name('categoria');
-		Route::post('form', 'CategoriaController@store')->name('categoria.store');
+		Route::get('lista', 'CategoriaController@listaCliente');
+		Route::post('lista', 'CategoriaController@listaCliente');
+		Route::post('form', 'CategoriaController@store');
 		Route::post('import', 'CategoriaController@import')->name('categoria.import');
-		Route::get('show/{id}', 'CategoriaController@show')->name('categoria.show');
-		Route::post('edit/{id}', 'CategoriaController@update')->name('categoria.update');
-		Route::post('delete/{id}', 'CategoriaController@destroy')->name('categoria.delete');
+		Route::get('show/{id}', 'CategoriaController@show');
+		Route::post('edit/{id}', 'CategoriaController@update');
+		Route::delete('delete/{id}', 'CategoriaController@destroy');
 	});
 
 	Route::prefix('historico')->group(function () {

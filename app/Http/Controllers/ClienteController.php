@@ -10,20 +10,16 @@ class ClienteController extends Controller {
 	private $totalPage = 7;
 
 	public function index() {
+		return view('cliente.cliente');
+	}
+
+	public function listaCliente(Request $request){
 		$lista = DB::table('clientes')
+		->where('nome','like','%'. $request->nome_cliente .'%')
 			->orderby('id', 'desc')
 			->paginate($this->totalPage);
 
-		$contador = count($lista);
-
-		return view('cliente.cliente', compact('lista', 'contador'));
-	}
-
-	public function searchCliente(Request $request, Cliente $cliente) {
-		$dataForm = $request->except('_token');
-		$lista = $cliente->search($dataForm, $this->totalPage);
-		$contador = count($lista);
-		return view('cliente.cliente', compact('lista', 'dataForm', 'contador'));
+			return response()->json($lista, 200);
 	}
 
 	public function create() {
@@ -64,12 +60,6 @@ class ClienteController extends Controller {
 		return response()->json($list, 200);
 	}
 
-	public function edit($id) {
-		$cliente = Cliente::find($id);
-
-		return view('cliente.editform', compact('cliente'))
-		->with('clienteedit','clienteedit');
-	}
 
 	public function update(Request $request, $id) {
 		$cliente = Cliente::find($id);
@@ -86,23 +76,19 @@ class ClienteController extends Controller {
 		$cliente->data_nascimento = $request->data_nascimento;
 
 		$data = $cliente->save();
-		if ($data) {
-			return redirect()
-				->back()
-				->with('success', 'Atualizado com Sucesso!');
+		if($data){
+			return response()->json('Atualizado com sucesso', 201);
+		}else{
+			return response()->json('Erro',500);
 		}
-
-		return redirect()
-			->back()
-			->with('error', 'Falha ao atualizar');
 	}
 
 	public function destroy($id) {
 		$cliente = Cliente::find($id);
 
 		$data = $cliente->delete();
-		return redirect()
-			->back()
-			->with('success', 'Sucesso ao Deletar');
+		if($data){
+			return response()->json('Deletado com sucesso', 200);
+		}
 	}
 }

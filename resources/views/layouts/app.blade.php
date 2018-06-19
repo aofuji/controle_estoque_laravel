@@ -78,18 +78,8 @@
                                             <h3>Categorias</h3>
                                             @elseif(Request::path() == 'cliente')
                                             <h3>Clientes</h3>
-                                            @elseif(isset($clienteedit))
-                                            <h3>Editar</h3>
                                             @elseif(Request::path() == 'estoque')
                                             <h3>Estoque</h3>
-                                            @elseif(isset($estoqueedit))
-                                            <h3>Editar</h3>
-                                            @elseif(isset($historicoview))
-                                            <h3>Histórico do Produto</h3>
-                                            @elseif(isset($entrada))
-                                            <h3>Entrada</h3>
-                                            @elseif(isset($saida))
-                                            <h3>Saida</h3>
                                             @elseif(Request::path() == 'historico')
                                             <h3>Históricos</h3>
                                             @elseif(Request::path() == 'user')

@@ -15,14 +15,18 @@ class CategoriaController extends Controller
 
     public function index()
     {
-        $lista = DB::table('categorias')
-        ->orderby('id','desc')
-        ->paginate($this->totalPage);
-        $contador = count($lista);
-        return view('categoria.categoria', compact('lista','contador'));
+        return view('categoria.categoria');
     }
 
-  
+    public function listaCliente(Request $request){
+        $lista = DB::table('categorias')
+        ->where('categoria','like', '%'. $request->categoria.'%')
+        ->orderby('id','desc')
+        ->paginate($this->totalPage);
+
+        return response()->json($lista,200);
+    }
+
     public function create()
     {
         //
@@ -35,13 +39,11 @@ class CategoriaController extends Controller
             'categoria'=> $request->categoria
         ]);
 
-        if($data)
-            return redirect() 
-                    ->route('categoria') 
-                    ->with('success',  'Categoria efetuado com sucesso!');
-            return redirect()
-                    ->back()
-                    ->with('error','Falha ao carregar');
+        if ($data) {
+			return response()->json('Cadastro efetuado com sucesso',201);
+		}else{
+			return response()->json('Erro',500);
+		}
     }
 
  
@@ -80,13 +82,11 @@ class CategoriaController extends Controller
         $categoria = Categoria::find($id);
         $categoria->categoria = $request->categoria;
         $data = $categoria->save();
-        if($data)
-            return redirect() 
-                    ->route('categoria')
-                    ->with('success',  'Atualizado com Sucesso!');
-            return redirect()
-                    ->back()
-                    ->with('error',['message' => 'Falha ao atualizar']);
+        if($data){
+			return response()->json('Atualizado com sucesso', 201);
+		}else{
+			return response()->json('Erro',500);
+		}
     }
 
  
@@ -95,8 +95,8 @@ class CategoriaController extends Controller
         $categoria = Categoria::find($id);
 
         $data = $categoria->delete();
-        return redirect()
-            ->back()
-            ->with('success',  'Deletado com sucesso');
+        if($data){
+			return response()->json('Deletado com sucesso', 200);
+		}
     }
 }

@@ -48,14 +48,11 @@ Vue.component('menu-left', require('./components/MenuLeft.vue'));
 Vue.component('modal', require('./components/modal/Modal.vue'));
 Vue.component('tabela-entrada', require('./components/TabelaEntrada.vue'));
 Vue.component('formulario', require('./components/Form.vue'));
-Vue.component('buttonview', require('./components/ButtonView.vue'));
-Vue.component('buttonsaida', require('./components/ButtonSaida.vue'));
 Vue.component('buttonex', require('./components/ButtonEx.vue'));
-Vue.component('formentrada', require('./components/FormEntrada.vue'));
 Vue.component('tabelahistorico', require('./components/TabelaHistorico.vue'));
-Vue.component('teste', require('./components/Teste.vue'));
-Vue.component('saidacliente', require('./components/SaidaCLiente.vue'));
 Vue.component('estoque', require('./components/Estoque.vue'));
+Vue.component('cliente', require('./components/Cliente.vue'));
+Vue.component('categoria', require('./components/Categoria.vue'));
 
 
 

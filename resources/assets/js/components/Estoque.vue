@@ -39,19 +39,18 @@
                             </thead>
                         <tbody>
                             <tr v-for="item in items">
-                                <td>{{item.id}}</td>
-                                <td><a href="#" data-toggle="modal" v-on:click="getHistorico(item.id)" data-target="#historico">{{item.codigo_produto}}</a></td>
-                                <td>{{item.nome_produto}}</td>
-                                <td>{{item.categoria}}</td>
-                                <td>{{item.qtd_estoque}}</td>
-                                <td>R$ {{formatPrice(item.valor)}}</td>
-                                <td>{{item.data | moment("DD/MM/YYYY")}}</td>
-                                <td>
+                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.id}}</td>
+                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''"><a href="#" data-toggle="modal" v-on:click="getHistorico(item.id)" data-target="#historico">{{item.codigo_produto}}</a></td>
+                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.nome_produto}}</td>
+                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.categoria}}</td>
+                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.qtd_estoque}}</td>
+                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">R$ {{formatPrice(item.valor)}}</td>
+                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.data | moment("DD/MM/YYYY")}}</td>
+                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">
                                     <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#entrada" v-on:click="getItem(item.id), clearMessage()"><i class="fas fa-sign-in-alt"></i></button>
-                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#saida"  v-on:click="getItem(item.id), clearMessage()"><i class="fas fa-sign-out-alt"></i></button>
+                                    <button v-show="item.qtd_estoque != 0" class="btn btn-info btn-sm" data-toggle="modal" data-target="#saida"  v-on:click="getItem(item.id), clearMessage()"><i class="fas fa-sign-out-alt"></i></button>
                                     <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" v-on:click="getEdit(item.id)" ><i class="fas fa-edit" aria-hidden="true"></i></button>  
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete" v-on:click="getItem(item.id)" ><i class="fas fa-trash-alt" aria-hidden="true"></i></button>  
-                                    
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete" v-on:click="getItem(item.id)" ><i class="fas fa-trash-alt" aria-hidden="true"></i></button>    
                                 </td>
                             </tr>
                         <tr v-if="loading">
@@ -384,7 +383,7 @@
             </div>
             <div class="form-group">
                 <div v-show="!buttonLoading">
-                            <p><i class="fa fa-spin fa-spinner"></i> Loading...</p>
+                    <p><i class="fa fa-spin fa-spinner"></i> Loading...</p>
                 </div>
                 <button v-show="buttonLoading" class="btn btn-success" ><i class="fas fa-upload" ></i> Importar</button>
                 <button v-show="buttonLoading" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
