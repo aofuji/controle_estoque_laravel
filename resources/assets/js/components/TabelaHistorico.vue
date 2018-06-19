@@ -38,11 +38,16 @@
                         <td>{{item.nome}}</td>
                         <td>{{item.created_at | moment("DD/MM/YYYY")}}</td>
                     </tr>
+                    <tr v-if="listaHistorico == ''">
+                        <th scope="row"></th>
+                        <th scope="row">Nenhum registro</th>
+                        <td colspan="7"></td>
+                    </tr>
                 </tbody>
             </table>
-        <div class="text-center">
+        <div class="text-center" >
             
-            <vc-pagination  :source="pagination" @navigate="navigate"></vc-pagination>
+            <vc-pagination v-show="listaHistorico != ''" :source="pagination" @navigate="navigate"></vc-pagination>
         </div>
     </div>
 </div>

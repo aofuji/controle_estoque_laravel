@@ -6,7 +6,7 @@
                 <div class="panel-heading">
                     <a href="#" data-toggle="modal" v-on:click="clearForm" data-target="#cadastro" ><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
                     &nbsp;
-                    <a href="#" data-toggle="modal" data-target="#import" ><i class="fas fa-upload"></i> Importar</a>
+                    <a href="#" data-toggle="modal" data-target="#import"  ><i class="fas fa-upload"></i> Importar</a>
                     
                     
                     <div class="pull-right ">
@@ -47,7 +47,6 @@
                                 <td>R$ {{formatPrice(item.valor)}}</td>
                                 <td>{{item.data | moment("DD/MM/YYYY")}}</td>
                                 <td>
-                                   
                                     <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#entrada" v-on:click="getItem(item.id), clearMessage()"><i class="fas fa-sign-in-alt"></i></button>
                                     <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#saida"  v-on:click="getItem(item.id), clearMessage()"><i class="fas fa-sign-out-alt"></i></button>
                                     <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" v-on:click="getEdit(item.id)" ><i class="fas fa-edit" aria-hidden="true"></i></button>  
@@ -59,6 +58,11 @@
                             <th scope="row"></th>
                             <th scope="row">Loading...</th>
                             <td colspan="6"></td>
+                        </tr>
+                        <tr v-if="contador == 0">
+                            <th scope="row"></th>
+                            <th scope="row">Nenhum registro</th>
+                            <td colspan="7"></td>
                         </tr>
                         
                         </tbody>
@@ -105,8 +109,11 @@
                     </div>
 
                     <div class="form-group col-md-12">
-                            <button  class="btn btn-success"><i class="fas fa-plus"></i> Cadastrar</button>
-                        <button  class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                        <div v-show="!buttonLoading">
+                            <p><i class="fa fa-spin fa-spinner"></i> Loading...</p>
+                        </div>
+                            <button v-show="buttonLoading"  class="btn btn-success"><i class="fas fa-plus"></i> Cadastrar</button>
+                        <button v-show="buttonLoading" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                        
 
                     </div>
@@ -158,15 +165,17 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-12">
-                    <button  class="btn btn-success "><i class="fas fa-plus"></i> Cadastrar</button>
-                    <button  class="btn btn-danger " data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                    <div v-show="!buttonLoading">
+                            <p><i class="fa fa-spin fa-spinner"></i> Loading...</p>
+                        </div>
+                    <button v-show="buttonLoading" class="btn btn-success "><i class="fas fa-plus"></i> Cadastrar</button>
+                    <button v-show="buttonLoading" class="btn btn-danger " data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                 </div>
             </div>
         </form>
     </modal>
 
     <modal nome="saida" titulo="Saida">
-       
       <form v-on:submit.prevent="addSaida(produto.id)">      
         <div class="row">
             <div class="form-group col-md-12">
@@ -213,8 +222,11 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-success"><i class="fas fa-plus"></i> Cadastrar</button>
-                <button class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                <div v-show="!buttonLoading">
+                    <p><i class="fa fa-spin fa-spinner"></i> Loading...</p>
+                </div>
+                <button v-show="buttonLoading" class="btn btn-success"><i class="fas fa-plus"></i> Cadastrar</button>
+                <button v-show="buttonLoading" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
             </div>
         </div>
      </form>
@@ -254,8 +266,11 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i> Atualizar</button>
-                    <button  class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                    <div v-show="!buttonLoading">
+                        <p><i class="fa fa-spin fa-spinner"></i> Loading...</p>
+                    </div>
+                    <button v-show="buttonLoading" type="submit" class="btn btn-success"><i class="fas fa-edit"></i> Atualizar</button>
+                    <button v-show="buttonLoading" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
                 </div>
             </div>    
         </form>          
@@ -364,16 +379,17 @@
             <div class="row">
                 <div class="form-group col-md-12">
                         <label for="">Importe arquivo com extensão .xlsx</label>
-                        <input type="file" class="form-control" @change="onFileChanged">
+                        <input type="file" class="form-control" @change="onFileChanged" required>
                 </div>
             </div>
-
             <div class="form-group">
-                <button  class="btn btn-success" ><i class="fas fa-upload" ></i> Importar</button>
-                <button  class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                <div v-show="!buttonLoading">
+                            <p><i class="fa fa-spin fa-spinner"></i> Loading...</p>
+                </div>
+                <button v-show="buttonLoading" class="btn btn-success" ><i class="fas fa-upload" ></i> Importar</button>
+                <button v-show="buttonLoading" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
             </div>
         </form>
-        
     </modal>
     </div>
     
@@ -393,7 +409,9 @@ import {VMoney} from 'v-money';
         
         data(){
             return{
+                buttonLoading:true,
                 selectedFile: null,
+                contador:0,
                 items:[],
                 categorias:[],
                 clientes:[],
@@ -436,7 +454,11 @@ import {VMoney} from 'v-money';
                 this.pagination = res.data
                 this.items = res.data.data
             })
-            .finally(() => this.loading = false)
+            .finally(() => {
+                this.loading = false
+                this.contador = this.items.length
+               
+                })
             
             axios.get('estoque/listacategoria')
                 .then(res =>{
@@ -458,6 +480,7 @@ import {VMoney} from 'v-money';
                 
             },
             onUpload() {
+                this.buttonLoading = false;
                 const formData = new FormData()
                 formData.append('file', this.selectedFile, this.selectedFile.name)
                 axios.post('estoque/import', formData)
@@ -482,6 +505,8 @@ import {VMoney} from 'v-money';
                            }).show();
                    }
 
+                }).finally(() =>{
+                    this.buttonLoading = true;
                 })
             },
             Atualiza(){
@@ -518,6 +543,7 @@ import {VMoney} from 'v-money';
             clearMessage(){
                 this.message = '';
             },
+             
             formatPrice(value) {
                 let val = (value/1).toFixed(2).replace('.', ',')
                 return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
@@ -538,7 +564,7 @@ import {VMoney} from 'v-money';
                 })
           },
           addItem(){
-              
+              this.buttonLoading = false;
                axios.post('estoque/cadastrar', this.itemCad)
                .then(res =>{
                    new Noty({
@@ -549,6 +575,8 @@ import {VMoney} from 'v-money';
                        }).show();
                    this.Atualiza();
                    this.clearForm1();
+               }).finally(() => {
+                   this.buttonLoading = true;
                })
           },
           getHistorico(id){
@@ -568,6 +596,7 @@ import {VMoney} from 'v-money';
               })
           },
           getEdit(id){
+            
              axios.get('estoque/show/'+ id)
               .then(res =>{
                 this.edit = res.data
@@ -575,6 +604,7 @@ import {VMoney} from 'v-money';
               })
           },
           addEntrada(id){
+              this.buttonLoading = false;
               axios.post('estoque/entrada/'+id, this.entrada)
               .then(res=>{
                   
@@ -589,8 +619,10 @@ import {VMoney} from 'v-money';
                       text: '<i class="fas fa-check"></i> <strong>Sucesso!</strong><br>' + res.data
                       }).show();
               })
+              .finally(()=>this.buttonLoading = true)
           },
           addSaida(id){
+              this.buttonLoading = false;
               axios.post('estoque/saida/'+id, this.saida)
               .then(res=>{
                   
@@ -605,7 +637,7 @@ import {VMoney} from 'v-money';
                       layout:'topRight', 
                       text: '<i class="fas fa-check"></i> <strong>Sucesso!</strong><br>' + res.data
                       }).show();
-              })
+              }).finally(() => this.buttonLoading = true)
           },
           addCliente(){
               axios.post('cliente/cadastrar', this.cliente )
@@ -632,6 +664,7 @@ import {VMoney} from 'v-money';
               })
           },
           updateEstoque(id){
+              this.buttonLoading = false;
               axios.post('estoque/edit/'+ id, this.edit)
               .then(res=>{
                   
@@ -645,6 +678,8 @@ import {VMoney} from 'v-money';
                       layout:'topRight', 
                       text: '<i class="fas fa-check"></i> <strong>Sucesso! </strong><br>' + res.data
                       }).show();
+              }).finally(()=>{
+                  this.buttonLoading = true;
               })
           },
           deleteEstoque(id){
@@ -652,10 +687,10 @@ import {VMoney} from 'v-money';
               .then(res=>{
                   new Noty({
                       theme: 'bootstrap-v4',
-                      type: 'success', 
+                      type: 'error', 
                       timeout:3000, 
                       layout:'topRight', 
-                      text: '<i class="fas fa-check"></i> <strong>Sucesso! </strong>' + res.data
+                      text: '<i class="fas fa-trash-alt"></i> <strong>Deletado! </strong><br>' + res.data
                       }).show();
                   this.searchEstoque();
                   $('#delete').modal('hide')
