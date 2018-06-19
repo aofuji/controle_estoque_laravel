@@ -8,11 +8,12 @@ use Illuminate\Http\Request;
 class UserController extends Controller {
 
 	public function index() {
+		return view('user.user');
+	}
 
+	public function listaUser(Request $request){
 		$lista = User::all();
-		$contador = count($lista);
-
-		return view('user.user', compact('lista', 'contador'));
+		return response()->json($lista, 200);
 	}
 
 	public function create() {
@@ -27,14 +28,10 @@ class UserController extends Controller {
 
 		$data = $user->save();
 		if ($data) {
-			return redirect()
-				->route('user')
-				->with('success', 'Sucesso ao cadastrar');
+			return response()->json('Cadastro efetuado com sucesso',201);
+		}else{
+			return response()->json('Erro',500);
 		}
-
-		return redirect()
-			->back()
-			->with('error', 'Falha ao carregar');
 	}
 
 	public function show($id) {
@@ -57,14 +54,10 @@ class UserController extends Controller {
 		$user->email = $request->email;
 		$user->nivel_acesso = $request->nivel_acesso;
 		$update = $user->save();
-		if ($update) {
-			return redirect()
-				->back()
-				->with('success', 'Sucesso ao atualizar');
-		} else {
-			return redirect()
-				->back()
-				->with('error', 'Falha ao carregar');
+		if($update){
+			return response()->json('Atualizado com sucesso', 201);
+		}else{
+			return response()->json('Erro',500);
 		}
 
 	}
@@ -73,8 +66,8 @@ class UserController extends Controller {
 		$user = User::find($id);
 
 		$data = $user->delete();
-		return redirect()
-			->back()
-			->with('success', 'Sucesso ao Deletar');
+		if($data){
+			return response()->json('Deletado com sucesso', 200);
+		}
 	}
 }

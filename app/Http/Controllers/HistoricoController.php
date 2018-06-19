@@ -9,28 +9,33 @@ use Illuminate\Support\Facades\DB;
 class HistoricoController extends Controller {
 	private $totalPage = 14;
 	public function index() {
-		//$historico = Historico::all();
+		
+
+		return view('historico.historico');
+	}
+
+	public function listaHistorico(Request $request){
 		$historico = DB::table('historicos')
-			->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
+		->where(function ($query) use ($request) {
+			if ($request->nome_produto != null) {
+				$query->where('estoque.nome_produto','like','%'. $request['nome_produto'] .'%');
+			}
+			if ($request->nome_cliente != null) {
+				$query->where('clientes.nome','like','%'. $request['nome_cliente'] .'%');
+			}
+			if ($request->tipo != null) {
+				$query->where('historicos.tipo', $request['tipo']);
+			}
+		})->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
 			->leftJoin('estoque', 'estoque.id', '=', 'historicos.estoque_id')
 			->select('historicos.*', 'clientes.nome', 'estoque.nome_produto')
 			->orderby('historicos.id', 'desc')
 			->paginate($this->totalPage);
 
-		$contador = count($historico);
-
-		return view('historico.historico', compact('historico'))->with('contador', $contador);
+			return response()->json($historico, 200);
 	}
 
-	public function searchHistorico(Request $request, Historico $historico) {
 
-		$dataForm = $request->except('_token');
-		$historico = $historico->search($dataForm, $this->totalPage);
-
-		$contador = count($historico);
-
-		return view('historico.historico', compact('historico', 'dataForm', 'contador'));
-	}
 
 	public function create() {
 		//

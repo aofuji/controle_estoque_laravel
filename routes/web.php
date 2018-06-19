@@ -59,15 +59,17 @@ Route::middleware(['auth'])->group(function () {
 
 	Route::prefix('historico')->group(function () {
 		Route::get('', 'HistoricoController@index')->name('historico');
-		Route::post('', 'HistoricoController@searchHistorico')->name('historico.search');
-
+		Route::get('lista', 'HistoricoController@listaHistorico');
+		Route::post('lista', 'HistoricoController@listaHistorico');
 	});
 	Route::prefix('user')->group(function () {
-		Route::get('', 'UserController@index')->name('user');
-		Route::post('form', 'UserController@store')->name('user.store');
-		Route::get('show/{id}', 'UserController@show')->name('user.show');
-		Route::post('edit/{id}', 'UserController@update')->name('user.update');
-		Route::post('delete/{id}', 'UserController@destroy')->name('user.delete');
+		Route::get('', 'UserController@index')->name('user');		
+		Route::get('lista', 'UserController@listaUser');		
+		Route::post('lista', 'UserController@listaUser');		
+		Route::post('form', 'UserController@store');
+		Route::get('show/{id}', 'UserController@show');
+		Route::post('edit/{id}', 'UserController@update');
+		Route::delete('delete/{id}', 'UserController@destroy')->name('user.delete');
 
 	});
 	Route::prefix('report')->group(function () {

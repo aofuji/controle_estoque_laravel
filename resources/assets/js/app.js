@@ -53,6 +53,8 @@ Vue.component('tabelahistorico', require('./components/TabelaHistorico.vue'));
 Vue.component('estoque', require('./components/Estoque.vue'));
 Vue.component('cliente', require('./components/Cliente.vue'));
 Vue.component('categoria', require('./components/Categoria.vue'));
+Vue.component('historico', require('./components/Historico.vue'));
+Vue.component('usuario', require('./components/Usuario.vue'));
 
 
 

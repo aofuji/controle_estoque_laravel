@@ -88,22 +88,16 @@
                                             </form>
                                         <div id="navbar-menu">
                                             <ul class="nav navbar-nav navbar-right">
-                                                
                                                 <li class="dropdown">
                                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>{{ Auth::user()->name }}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                                                     <ul class="dropdown-menu">
                                                         <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
                                                         
-                                                        <li>
-                                                            <a href="{{ route('logout') }}"
-                                                                onclick="event.preventDefault();
-                                                                document.getElementById('logout-form').submit();">
-                                                                <i class="lnr lnr-exit"></i>
-                                                                Logout
-                                                            </a>
-                                
-                                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                        <li >
+                                                                
+                                                            <form  action="{{ route('logout') }}" method="POST" >
                                                                 {{ csrf_field() }}
+                                                                <a href=""><i class="lnr lnr-exit"></i>Logout</a>
                                                             </form>
                                                         </li>
                                                     </ul>
