@@ -43,21 +43,14 @@ const store = new Vuex.Store({
 
 export const bus = new Vue();
 
-Vue.component('menu-topo', require('./components/MenuTopo.vue'));
-Vue.component('menu-left', require('./components/MenuLeft.vue'));
+
 Vue.component('modal', require('./components/modal/Modal.vue'));
-Vue.component('tabela-entrada', require('./components/TabelaEntrada.vue'));
-Vue.component('formulario', require('./components/Form.vue'));
-Vue.component('buttonex', require('./components/ButtonEx.vue'));
 Vue.component('tabelahistorico', require('./components/TabelaHistorico.vue'));
 Vue.component('estoque', require('./components/Estoque.vue'));
 Vue.component('cliente', require('./components/Cliente.vue'));
 Vue.component('categoria', require('./components/Categoria.vue'));
 Vue.component('historico', require('./components/Historico.vue'));
 Vue.component('usuario', require('./components/Usuario.vue'));
-
-
-
 
 
 const app = new Vue({
@@ -235,71 +228,7 @@ const app = new Vue({
                 }
             });
         
-        
-            /*-----------------------------------/
-            /* TOASTR NOTIFICATION
-            /*----------------------------------*/
-        
-            if($('#toastr-demo').length > 0) {
-                toastr.options.timeOut = "false";
-                toastr.options.closeButton = true;
-                toastr['info']('Hi there, this is notification demo with HTML support. So, you can add HTML elements like <a href="#">this link</a>');
-        
-                $('.btn-toastr').on('click', function() {
-                    $context = $(this).data('context');
-                    $message = $(this).data('message');
-                    $position = $(this).data('position');
-        
-                    if($context == '') {
-                        $context = 'info';
-                    }
-        
-                    if($position == '') {
-                        $positionClass = 'toast-left-top';
-                    } else {
-                        $positionClass = 'toast-' + $position;
-                    }
-        
-                    toastr.remove();
-                    toastr[$context]($message, '' , { positionClass: $positionClass });
-                });
-        
-                $('#toastr-callback1').on('click', function() {
-                    $message = $(this).data('message');
-        
-                    toastr.options = {
-                        "timeOut": "300",
-                        "onShown": function() { alert('onShown callback'); },
-                        "onHidden": function() { alert('onHidden callback'); }
-                    }
-        
-                    toastr['info']($message);
-                });
-        
-                $('#toastr-callback2').on('click', function() {
-                    $message = $(this).data('message');
-        
-                    toastr.options = {
-                        "timeOut": "10000",
-                        "onclick": function() { alert('onclick callback'); },
-                    }
-        
-                    toastr['info']($message);
-        
-                });
-        
-                $('#toastr-callback3').on('click', function() {
-                    $message = $(this).data('message');
-        
-                    toastr.options = {
-                        "timeOut": "10000",
-                        "closeButton": true,
-                        "onCloseClick": function() { alert('onCloseClick callback'); }
-                    }
-        
-                    toastr['info']($message);
-                });
-            }
+  
         });
     },
       directives: {money: VMoney}

@@ -1,6 +1,19 @@
 <template>
+<div>
     <div class="row">
         <br>
+        <div class="col-lg-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Relatório</h3>
+                </div>
+                <div class="panel-body">
+                    <slot></slot>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row"> 
         <div class="col-lg-12">
             <div class="panel">
                 <div class="panel-heading">
@@ -17,7 +30,6 @@
                 </div>
 
                 <div class="panel-body no-padding">
-                    
                     <table class="table table-striped" >
                             <thead>
                                 <tr>
@@ -30,12 +42,10 @@
                                     <th>Obs</th>   
                                     <th>Cliente</th>   
                                     <th>Estoque</th>   
-                                    <th>Data Criação</th>   
-                                        
+                                    <th>Data Criação</th>     
                                 </tr>
                             </thead>
                             <tbody>
-                            
                                 <tr v-for="item in items"> 
                                     <td>{{item.id}}</td>
                                     <td>{{item.tipo}}</td>
@@ -67,6 +77,7 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>

@@ -174,7 +174,7 @@
         </form>
     </modal>
 
-    <modal nome="saida" titulo="Saida">
+    <modal nome="saida" titulo="Saida" >
       <form v-on:submit.prevent="addSaida(produto.id)">      
         <div class="row">
             <div class="form-group col-md-12">
@@ -218,6 +218,17 @@
                 <label>Saida</label>
             <input type="number" min="1" v-bind:max="produto.qtd_estoque" class="form-control" v-model="saida.qtd_saida" required>
             </div>
+            
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label>Total</label>
+                <div class="form-group input-group">
+                    <span class="input-group-addon">R$</span>
+                    <input type="number" class="form-control" v-bind:value="(saida.qtd_saida * produto.valor) " disabled>
+                </div>
+            </div>
+            
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -424,7 +435,9 @@ import {VMoney} from 'v-money';
                 produto:{},
                 entrada:{},
                 saida:{
-                    cliente:''
+                    cliente:'',
+                    qtd_saida:0
+                    
                 },
                 cliente:{},
                 edit:{

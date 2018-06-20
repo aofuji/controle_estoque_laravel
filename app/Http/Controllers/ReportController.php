@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-    
+    public function index(){
+        return view('report.report');
+    }
     public function historico($id,Request $request)
     {
 
@@ -53,6 +55,10 @@ class ReportController extends Controller
         ->where(function ($query) use ($request) {
             if($request->tipo != null)
                 $query->where('tipo', $request->tipo);
+            if($request->nome_produto != null)
+                $query->where('estoque.nome_produto', $request->nome_produto);
+            if($request->nome_cliente != null)
+                $query->where('clientes.nome', $request->nome_cliente);
                 })->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
                 ->leftJoin('estoque', 'estoque.id', '=', 'historicos.estoque_id')
                   ->select('historicos.*', 'clientes.nome','estoque.nome_produto')
@@ -65,14 +71,20 @@ class ReportController extends Controller
         ->where(function ($query) use ($request) {
             if($request->tipo != null)
                 $query->where('tipo', $request->tipo);
-                })    
+            if($request->nome_produto != null)
+                $query->where('estoque.nome_produto', $request->nome_produto);
+            if($request->nome_cliente != null)
+                $query->where('clientes.nome', $request->nome_cliente);
+                })->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
+                ->leftJoin('estoque', 'estoque.id', '=', 'historicos.estoque_id')
+                  ->select('historicos.*', 'clientes.nome','estoque.nome_produto')    
                 ->sum('valor_total');  
 
         $pdf = PDF::loadView('report.reportHistoryDetail',['historico' => $historico, 
                 'contador'=> $contador,
                 'valor_total'=> $valor_total ]);
-                
-        return $pdf->download('report_' . $request->tipo . '.pdf');
+       return $pdf->stream('report_' . $request->tipo . '.pdf', array("Attachment" => false));         
+        //return $pdf->download('report_' . $request->tipo . '.pdf');
     }
 
     

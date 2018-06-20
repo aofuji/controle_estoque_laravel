@@ -73,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
 
 	});
 	Route::prefix('report')->group(function () {
+		
 		Route::get('historicoall', 'ReportController@historicoall')->name('report.historicoall');
 		Route::get('{id}', 'ReportController@historico')->name('report.historico');
 

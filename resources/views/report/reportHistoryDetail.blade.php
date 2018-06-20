@@ -12,7 +12,7 @@
         <th>Data</th>   
         
         <th>Cliente</th>   
-        <th>Estoque</th>   
+        <th>Produto</th>   
         
     </tr>
 
@@ -39,7 +39,7 @@
 <div class="footer">
     <strong>Total de Registro:</strong>{{$contador}}
     <br>
-    <strong>Valor Total:</strong>R$ {{$valor_total}}
+    <strong>Valor Total:</strong>R$ {{number_format($item->valor_total, 2, ',', '.')}}
 </div>
 <style>
 table {
