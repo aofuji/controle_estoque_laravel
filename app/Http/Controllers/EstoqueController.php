@@ -16,7 +16,6 @@ use Excel;
 
 class EstoqueController extends Controller {
 	private $totalPage = 12;
-	private $testeform;
 
 	public function index() {
 		return view('estoque.estoque');
@@ -53,15 +52,17 @@ class EstoqueController extends Controller {
             $data = Excel::load($path, function($reader){})->get();
                 if(!empty($data) && $data->count()) {
 					
-					if(empty($data[0]->codigo_produto) && empty($data[0]->nome_produto) && empty($data[0]->qtd_estoque) && empty($data[0]->valor) && empty($data[0]->data) && empty($data[0]->categoria_id)){
+					if(empty($data[0]->codigo_produto) && empty($data[0]->nome_produto) && empty($data[0]->qtd_estoque) && empty($data[0]->preco_custo) && empty($data[0]->preco_venda) && empty($data[0]->data) && empty($data[0]->categoria_id)){
 						return response()->json(['erro'=>'Não contem colunas corretas']);
 					}else{
+						
 						foreach ($data as $key => $value){				
 							$estoque = new Estoque();
 							$estoque->codigo_produto = $value->codigo_produto;
 							$estoque->nome_produto = $value->nome_produto;
 							$estoque->qtd_estoque = $value->qtd_estoque;
-							$estoque->valor = $value->valor;
+							$estoque->preco_custo = $value->preco_custo;
+							$estoque->preco_venda = $value->preco_venda;
 							$estoque->data = $value->data;
 							$estoque->categoria_id = $value->categoria_id;
 							$estoque->save();
@@ -91,8 +92,8 @@ class EstoqueController extends Controller {
 			Historico::create(
 				['tipo' => 'Entrada',
 					'qtd' => $request->qtd_entrada,
-					'valor_unitario' => $entrada->valor,
-					'valor_total' => $request->qtd_entrada * $entrada->valor,
+					'valor_unitario' => $entrada->preco_custo,
+					'valor_total' => $request->qtd_entrada * $entrada->preco_custo,
 					'usuario' => Auth::user()->name,
 					'cliente_id' => null,
 					'obs' => 'teste',
@@ -126,14 +127,14 @@ class EstoqueController extends Controller {
 		if ($data) {
 			Historico::create(
 				['tipo' => 'Saida',
-					'qtd' => $request->qtd_saida,
-					'valor_unitario' => $saida->valor,
-					'valor_total' => $request->qtd_saida * $saida->valor,
-					'usuario' => Auth::user()->name,
-					'cliente_id' => $request->cliente,
-					'obs' => 'teste',
-					'estoque_id' => $saida->id,
-					'created_at' => $dt
+				'qtd' => $request->qtd_saida,
+				'valor_unitario' => $saida->preco_venda,
+				'valor_total' => $request->qtd_saida * $saida->preco_venda,
+				'usuario' => Auth::user()->name,
+				'cliente_id' => $request->cliente,
+				'obs' => 'teste',
+				'estoque_id' => $saida->id,
+				'created_at' => $dt
 				]);
 				return response()->json('Saida Efetuado com sucesso', 201);
 			}else{
@@ -150,7 +151,8 @@ class EstoqueController extends Controller {
 		$estoque->categoria_id = $request->categoria_id;
 		$estoque->qtd_estoque = $request->qtd_estoque;
 		$estoque->data = $dt;
-		$estoque->valor = str_replace(",", ".", $request->valor);
+		$estoque->preco_custo = str_replace(",", ".", $request->preco_custo);
+		$estoque->preco_venda = str_replace(",", ".", $request->preco_venda);
 
 		$data = $estoque->save();
 
@@ -199,7 +201,8 @@ class EstoqueController extends Controller {
 		$estoque->nome_produto = $request->nome_produto;
 		$estoque->categoria_id = $request->categoria_id;
 		$estoque->qtd_estoque = $request->qtd_estoque;
-		$estoque->valor = str_replace(",", ".", $request->valor);
+		$estoque->preco_custo = str_replace(",", ".", $request->preco_custo);
+		$estoque->preco_venda = str_replace(",", ".", $request->preco_venda);
 
 		$data = $estoque->save();
 		if($data){

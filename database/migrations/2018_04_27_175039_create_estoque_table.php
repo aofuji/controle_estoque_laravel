@@ -18,7 +18,8 @@ class CreateEstoqueTable extends Migration
             $table->string('codigo_produto');
             $table->string('nome_produto');
             $table->integer('qtd_estoque');
-            $table->decimal('valor');
+            $table->decimal('preco_custo');
+            $table->decimal('preco_venda');
             $table->date('data');
             $table->integer('categoria_id')->unsigned();
             $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');

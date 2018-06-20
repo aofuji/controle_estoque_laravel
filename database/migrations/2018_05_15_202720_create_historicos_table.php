@@ -18,7 +18,7 @@ class CreateHistoricosTable extends Migration
             $table->string('tipo');
             $table->integer('qtd');
             $table->decimal('valor_unitario');
-            $table->decimal('valor_total');
+            $table->decimal('valor_total')->nullable();
             $table->string('usuario');
             $table->string('obs',50)->nullable();
             $table->integer('cliente_id')->nullable()->unsigned();

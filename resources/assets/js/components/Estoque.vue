@@ -32,7 +32,8 @@
                                     <th>Nome Produto</th>
                                     <th>Categoria</th>
                                     <th>Quantidade</th>
-                                    <th>Valor</th>
+                                    <th>Preço Custo</th>
+                                    <th>Preço Venda</th>
                                     <th>Data</th>
                                     <th>Ações</th>
                                 </tr>
@@ -44,11 +45,12 @@
                                 <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.nome_produto}}</td>
                                 <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.categoria}}</td>
                                 <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.qtd_estoque}}</td>
-                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">R$ {{formatPrice(item.valor)}}</td>
+                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">R$ {{formatPrice(item.preco_custo)}}</td>
+                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">R$ {{formatPrice(item.preco_venda)}}</td>
                                 <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.data | moment("DD/MM/YYYY")}}</td>
                                 <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">
-                                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#entrada" v-on:click="getItem(item.id), clearMessage()"><i class="fas fa-sign-in-alt"></i></button>
-                                    <button v-show="item.qtd_estoque != 0" class="btn btn-info btn-sm" data-toggle="modal" data-target="#saida"  v-on:click="getItem(item.id), clearMessage()"><i class="fas fa-sign-out-alt"></i></button>
+                                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#entrada" v-on:click="getItem(item.id)"><i class="fas fa-sign-in-alt"></i></button>
+                                    <button v-show="item.qtd_estoque != 0" class="btn btn-info btn-sm" data-toggle="modal" data-target="#saida"  v-on:click="getItem(item.id)"><i class="fas fa-sign-out-alt"></i></button>
                                     <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" v-on:click="getEdit(item.id)" ><i class="fas fa-edit" aria-hidden="true"></i></button>  
                                     <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete" v-on:click="getItem(item.id)" ><i class="fas fa-trash-alt" aria-hidden="true"></i></button>    
                                 </td>
@@ -94,16 +96,24 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="">Quantidade</label>
                         <input type="text" class="form-control" v-model="itemCad.qtd_estoque" placeholder="Digite quantidade...." required>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="">Valor</label>
+                    <div class="form-group col-md-4">
+                        <label for="">Preço Custo</label>
 
                         <div class="form-group input-group">
                                 <span class="input-group-addon">R$</span>
-                                <input type="text" v-model="itemCad.valor" v-money="money" class="form-control" placeholder="Digite valor...." required>
+                                <input type="text" v-model="itemCad.preco_custo" v-money="money" class="form-control" placeholder="Digite preço custo...." required>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="">Preço Venda</label>
+
+                        <div class="form-group input-group">
+                                <span class="input-group-addon">R$</span>
+                                <input type="text" v-model="itemCad.preco_venda" v-money="money" class="form-control" placeholder="Digite preço venda...." required>
                         </div>
                     </div>
 
@@ -143,15 +153,22 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     <label>Quantidade</label>
                     <input type="text" class="form-control" v-bind:value="produto.qtd_estoque" disabled>
                 </div>
-                <div class="form-group col-md-6">
-                    <label>Valor</label>
+                <div class="form-group col-md-4">
+                    <label>Preço Custo</label>
                     <div class="form-group input-group">
-                            <span class="input-group-addon">R$</span>
-                            <input type="text" v-money="money" class="form-control" v-bind:value="produto.valor" disabled>
+                        <span class="input-group-addon">R$</span>
+                        <input type="text" v-money="money" class="form-control" v-bind:value="produto.preco_custo" disabled>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Preço Venda</label>
+                    <div class="form-group input-group">
+                        <span class="input-group-addon">R$</span>
+                        <input type="text" v-money="money" class="form-control" v-bind:value="produto.preco_venda" disabled>
                     </div>
                 </div>
             </div>
@@ -189,15 +206,22 @@
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label>Quantidade</label>
                 <input type="text" class="form-control" v-bind:value="produto.qtd_estoque" disabled>
             </div>
-            <div class="form-group col-md-6">
-                <label>Valor</label>
+            <div class="form-group col-md-4">
+                <label>Preço Custo</label>
                 <div class="form-group input-group">
                     <span class="input-group-addon">R$</span>
-                    <input type="text" v-money="money" class="form-control" v-bind:value="produto.valor" disabled>
+                    <input type="text" v-money="money" class="form-control" v-bind:value="produto.preco_custo" disabled>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Preço Venda</label>
+                <div class="form-group input-group">
+                    <span class="input-group-addon">R$</span>
+                    <input type="text" v-money="money" class="form-control" v-bind:value="produto.preco_venda" disabled>
                 </div>
             </div>
         </div>
@@ -205,7 +229,7 @@
             <div class=" col-md-8">
                 <label>Cliente</label>
                  <div class="pull-right">
-                    <a href="" data-toggle="modal"  data-target="#cliente" v-on:click="clearMessage"><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
+                    <a href="" data-toggle="modal"  data-target="#cliente"><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
                 </div>
                 
                 <select class="selectpicker form-control" v-model="saida.cliente" data-live-search="true" required>
@@ -225,7 +249,7 @@
                 <label>Total</label>
                 <div class="form-group input-group">
                     <span class="input-group-addon">R$</span>
-                    <input type="number" class="form-control" v-bind:value="(saida.qtd_saida * produto.valor) " disabled>
+                    <input type="number" class="form-control" v-bind:value="(saida.qtd_saida * produto.preco_venda) " disabled>
                 </div>
             </div>
             
@@ -262,15 +286,22 @@
             </div>
         
             <div class="row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     <label for="">Quantidade</label>
                     <input type="text" class="form-control"  v-model="edit.qtd_estoque" required>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="">Valor</label>
+                <div class="form-group col-md-4">
+                    <label for="">Preço custo</label>
                     <div class="form-group input-group">
                             <span class="input-group-addon">R$</span>
-                            <input type="text" name="valor" v-money="money" v-model="edit.valor" class="form-control" placeholder="Digite valor....">
+                            <input type="text" name="valor" v-money="money" v-model="edit.preco_custo" class="form-control" placeholder="Digite valor....">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="">Preço Venda</label>
+                    <div class="form-group input-group">
+                            <span class="input-group-addon">R$</span>
+                            <input type="text" name="valor" v-money="money" v-model="edit.preco_venda" class="form-control" placeholder="Digite valor....">
                     </div>
                 </div>
             </div>
@@ -447,7 +478,6 @@ import {VMoney} from 'v-money';
                     qtd_estoque:'',
                     valor:''
                 },
-                message:'',
                 money: {
                     decimal: ',',
                     thousands: '.',
@@ -497,6 +527,7 @@ import {VMoney} from 'v-money';
                 formData.append('file', this.selectedFile, this.selectedFile.name)
                 axios.post('estoque/import', formData)
                 .then(res=>{
+                    
                     this.searchEstoque();
 
                    if(res.data.sucess){
@@ -538,24 +569,11 @@ import {VMoney} from 'v-money';
                 
                 },
             clearForm(){
-                this.itemCad.codigo_produto = '';
-                this.itemCad.nome_produto = '';
-                this.itemCad.categoria_id = '';
-                this.itemCad.qtd_estoque = '';
-                this.itemCad.valor = '';
-                this.message= '';
+                this.itemCad = {
+                    categoria_id:''
+                }
+                
             },
-            clearForm1(){
-                this.itemCad.codigo_produto = '';
-                this.itemCad.nome_produto = '';
-                this.itemCad.categoria_id = '';
-                this.itemCad.qtd_estoque = '';
-                this.itemCad.valor = '';
-            },
-            clearMessage(){
-                this.message = '';
-            },
-             
             formatPrice(value) {
                 let val = (value/1).toFixed(2).replace('.', ',')
                 return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
@@ -586,7 +604,7 @@ import {VMoney} from 'v-money';
                        text: '<i class="fas fa-check"></i><strong>Sucesso!</strong><br>' + res.data
                        }).show();
                    this.Atualiza();
-                   this.clearForm1();
+                   this.clearForm();
                }).finally(() => {
                    this.buttonLoading = true;
                })

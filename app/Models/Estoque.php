@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Estoque extends Model
 {
-    protected $fillable = ['id','nome_produto','categoria_id','qtd_estoque','valor', 'data_entrada', 'data_saida'];
+    protected $fillable = ['id','nome_produto','categoria_id','qtd_estoque','preco_custo','preco_venda', 'data_entrada', 'data_saida'];
     protected $table = 'estoque';
 
     

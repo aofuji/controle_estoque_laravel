@@ -65,7 +65,9 @@ import { bus } from '../app';
             return{
                 items:[],
                 pagination:{},
-                search_history:{},
+                search_history:{
+                    tipo:''
+                },
                 id_estoque:'',
 
             }

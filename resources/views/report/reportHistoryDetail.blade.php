@@ -39,7 +39,9 @@
 <div class="footer">
     <strong>Total de Registro:</strong>{{$contador}}
     <br>
+    @isset($item->valor_total)
     <strong>Valor Total:</strong>R$ {{number_format($item->valor_total, 2, ',', '.')}}
+    @endisset
 </div>
 <style>
 table {
