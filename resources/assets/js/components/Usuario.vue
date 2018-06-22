@@ -13,7 +13,6 @@
                                         <th>#</th>
                                         <th>Nome</th>
                                         <th>Email</th>
-                                        <th>Nivel</th>
                                         <th>Criado em</th>
                                         <th>Ações</th>
                                     </tr>
@@ -25,7 +24,6 @@
                                     <td>{{item.id}}</td>
                                     <td>{{item.name}}</td>
                                     <td>{{item.email}}</td>
-                                    <td>{{item.nivel_acesso == 1? 'Administrador': 'Atendente'}}</td>
                                     <td>{{item.created_at}}</td>
                                     <td>
                                         <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" v-on:click="getItem(item.id)" ><i class="fas fa-edit" aria-hidden="true"></i></button>  
@@ -59,13 +57,8 @@
                         <input type="email" class="form-control" v-model="user.email" required>
                         <label>Senha</label>
                         <input type="password" class="form-control" v-model="user.password" required>
-                        <label>Nivel</label>
-                        <select class="form-control" v-model="user.nivel_acesso" required="">
-                        <option value="">selecione</option>
-                        <option value="1">Administrador</option>
-                        <option value="2">Atendente</option>
-
-                    </select>
+                        
+                        
                     </div>
                 </div>
                 <br>
@@ -91,12 +84,7 @@
                         <label for="">Email</label>
                         <input type="text" class="form-control"  v-model="item.email">
                     </div>
-                    <div class="form-group col-md-12">
-                        <label>Nivel</label>
-                        <select class="form-control" v-model="item.nivel_acesso" required="">
-                            <option v-for="item in niveis" v-bind:value="item.id">{{item.nome}}</option>
-                        </select>
-                        </div>
+                    
                     <div class="form-group col-md-12">
                         <label for="">Senha</label>
                         <input type="password" class="form-control" v-model="item.password" placeholder="Nova senha">
@@ -150,9 +138,7 @@
                 buttonLoading: true,
                 contador:'',
                 item:{},
-                user:{
-                    nivel_acesso:''
-                },
+                user:{},
                 niveis:[{
                     id:1,
                     nome: 'Administrador'

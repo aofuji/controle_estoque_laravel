@@ -12,7 +12,7 @@ class UserController extends Controller {
 	}
 
 	public function listaUser(Request $request){
-		$lista = User::all();
+		$lista = User::where('id','!=', 3)->get();
 		return response()->json($lista, 200);
 	}
 
@@ -23,7 +23,6 @@ class UserController extends Controller {
 	public function store(Request $request, User $user) {
 		$user->name = $request->name;
 		$user->email = $request->email;
-		$user->nivel_acesso = $request->nivel_acesso;
 		$user->password = bcrypt($request->password);
 
 		$data = $user->save();
@@ -52,7 +51,6 @@ class UserController extends Controller {
 
 		$user->name = $request->name;
 		$user->email = $request->email;
-		$user->nivel_acesso = $request->nivel_acesso;
 		$update = $user->save();
 		if($update){
 			return response()->json('Atualizado com sucesso', 201);

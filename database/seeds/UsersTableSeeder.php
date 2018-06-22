@@ -17,7 +17,6 @@ class UsersTableSeeder extends Seeder {
 			'name' => 'andre',
 			'email' => 'andre@teste.com',
 			'password' => bcrypt('secret'),
-			'nivel_acesso' => 1,
 			'created_at' => $dt,
 			'updated_at' => $dt,
 		]);
@@ -25,7 +24,13 @@ class UsersTableSeeder extends Seeder {
 			'name' => 'user',
 			'email' => 'user@user.com',
 			'password' => bcrypt('secret'),
-			'nivel_acesso' => 2,
+			'created_at' => $dt,
+			'updated_at' => $dt,
+		]);
+		DB::table('users')->insert([
+			'name' => 'admin',
+			'email' => 'admin@admin.com',
+			'password' => bcrypt('secret'),
 			'created_at' => $dt,
 			'updated_at' => $dt,
 		]);

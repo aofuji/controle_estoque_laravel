@@ -36,10 +36,8 @@
                             <li><a href="{{ route('categoria') }}" class="{{ Request::path() == 'categoria' ? 'active' : '' }}"><i class="lnr lnr-tag"></i> <span>Categorias</span></a></li>
                             <li><a href="{{ route('cliente') }}" class="{{ Request::path() == 'cliente' ? 'active' : '' }}"><i class="lnr lnr-user"></i> <span>Clientes</span></a></li>
                             <li><a href="{{ route('estoque') }}" class="{{ Request::path() == 'estoque' ? 'active' : '' }}"><i class="lnr lnr-inbox"></i> <span>Estoque</span></a></li>
-                            <li><a href="{{ route('historico') }}" class="{{ Request::path() == 'historico' ? 'active' : '' }}"><i class="lnr lnr-history"></i> <span>Histórico</span></a></li>                  
-                            @if(Auth::user()->nivel_acesso == 1)
+                            <li><a href="{{ route('historico') }}" class="{{ Request::path() == 'historico' ? 'active' : '' }}"><i class="lnr lnr-history"></i> <span>Histórico</span></a></li>                             
                             <li><a href="{{ route('user') }}" class="{{ Request::path() == 'user' ? 'active' : '' }}"><i class="lnr lnr-users"></i> <span>Usuários</span></a></li>
-                            @endif
                             <li>
                                     <a href="{{ route('logout') }}"
                                         onclick="event.preventDefault();

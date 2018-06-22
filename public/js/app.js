@@ -74824,18 +74824,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -74845,9 +74833,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             buttonLoading: true,
             contador: '',
             item: {},
-            user: {
-                nivel_acesso: ''
-            },
+            user: {},
             niveis: [{
                 id: 1,
                 nome: 'Administrador'
@@ -74972,16 +74958,6 @@ var render = function() {
                       _c("td", [_vm._v(_vm._s(item.name))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(item.email))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          _vm._s(
-                            item.nivel_acesso == 1
-                              ? "Administrador"
-                              : "Atendente"
-                          )
-                        )
-                      ]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(item.created_at))]),
                       _vm._v(" "),
@@ -75148,57 +75124,7 @@ var render = function() {
                       _vm.$set(_vm.user, "password", $event.target.value)
                     }
                   }
-                }),
-                _vm._v(" "),
-                _c("label", [_vm._v("Nivel")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.user.nivel_acesso,
-                        expression: "user.nivel_acesso"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { required: "" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.user,
-                          "nivel_acesso",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("selecione")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "1" } }, [
-                      _vm._v("Administrador")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "2" } }, [
-                      _vm._v("Atendente")
-                    ])
-                  ]
-                )
+                })
               ])
             ]),
             _vm._v(" "),
@@ -75331,50 +75257,6 @@ var render = function() {
                     }
                   }
                 })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group col-md-12" }, [
-                _c("label", [_vm._v("Nivel")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.item.nivel_acesso,
-                        expression: "item.nivel_acesso"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { required: "" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.item,
-                          "nivel_acesso",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  _vm._l(_vm.niveis, function(item) {
-                    return _c("option", { domProps: { value: item.id } }, [
-                      _vm._v(_vm._s(item.nome))
-                    ])
-                  })
-                )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group col-md-12" }, [
@@ -75564,8 +75446,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Nome")]),
         _vm._v(" "),
         _c("th", [_vm._v("Email")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Nivel")]),
         _vm._v(" "),
         _c("th", [_vm._v("Criado em")]),
         _vm._v(" "),
