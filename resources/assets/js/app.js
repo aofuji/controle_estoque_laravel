@@ -51,6 +51,8 @@ Vue.component('cliente', require('./components/Cliente.vue'));
 Vue.component('categoria', require('./components/Categoria.vue'));
 Vue.component('historico', require('./components/Historico.vue'));
 Vue.component('usuario', require('./components/Usuario.vue'));
+Vue.component('role', require('./components/Role.vue'));
+Vue.component('permission', require('./components/Permission.vue'));
 
 
 const app = new Vue({

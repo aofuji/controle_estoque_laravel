@@ -67,11 +67,24 @@ Route::middleware(['auth'])->group(function () {
 		Route::get('lista', 'UserController@listaUser');		
 		Route::post('lista', 'UserController@listaUser');		
 		Route::post('form', 'UserController@store');
+		Route::get('roles', 'UserController@roles');
+		Route::post('updaterole', 'UserController@updateRole');
 		Route::get('show/{id}', 'UserController@show');
+		Route::get('role/{id}', 'UserController@role');
 		Route::post('edit/{id}', 'UserController@update');
 		Route::delete('delete/{id}', 'UserController@destroy')->name('user.delete');
 
 	});
+
+	Route::prefix('permission')->group(function () {
+		Route::get('', 'PermissionController@index')->name('permission');
+	});
+
+	Route::prefix('role')->group(function () {
+		Route::get('', 'RoleController@index')->name('role');
+		Route::get('lista', 'RoleController@lista');
+	});
+
 	Route::prefix('report')->group(function () {
 		
 		Route::get('historicoall', 'ReportController@historicoall')->name('report.historicoall');

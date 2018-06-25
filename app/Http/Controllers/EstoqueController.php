@@ -13,11 +13,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Excel;
+use Gate;
 
 class EstoqueController extends Controller {
 	private $totalPage = 12;
 
 	public function index() {
+		
+    
 		return view('estoque.estoque');
 	}
 

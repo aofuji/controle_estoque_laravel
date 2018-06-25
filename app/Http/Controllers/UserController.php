@@ -3,11 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Gate;
+use App\Models\Permission;
+use App\Models\Role;
+use Illuminate\Support\Facades\DB;
+use App\Models\RoleUser;
 use Illuminate\Http\Request;
 
 class UserController extends Controller {
 
+	private $user;
+	
+    
+    public function __construct(User $user, RoleUser $roleuser)
+    {
+		$this->user = $user;
+		
+        
+        
+    }
+
 	public function index() {
+		
+            
 		return view('user.user');
 	}
 
@@ -40,6 +58,50 @@ class UserController extends Controller {
 
 	public function edit($id) {
 		//
+	}
+
+	public function roles(){
+		$roles = Role::all();
+
+		return response()->json($roles,200);
+	}
+
+	
+
+	public function role($id)
+    {
+        //Recupera o usuário
+        $roles = $this->user->find($id)->roles;
+        
+        //recuperar roles
+       // $roles = $user->roles()->get();
+        
+        return response()->json($roles, 200);
+    }
+
+	public function updateRole(Request $request){
+
+		$role = DB::table('role_user')
+		->where('user_id', $request->user_id)
+		->get();
+		//return response()->json($request->all());
+		if($role->count() == 0){
+			$data = DB::table('role_user')->insert(
+				['user_id' => $request->user_id, 'role_id' => $request->role_id]
+			);
+			if($data)
+				return response()->json('Cargo registrado!',201);
+		}else{
+			$data = DB::table('role_user')
+				->where('user_id', $request->user_id)
+				->update([
+					'role_id' => $request->user_id,
+					'role_id' => $request->role_id
+					]);
+			if($data)
+				return response()->json('Atualizado Cargo!',200);
+		}
+
 	}
 
 	public function update(Request $request, $id) {

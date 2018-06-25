@@ -37,7 +37,17 @@
                             <li><a href="{{ route('cliente') }}" class="{{ Request::path() == 'cliente' ? 'active' : '' }}"><i class="lnr lnr-user"></i> <span>Clientes</span></a></li>
                             <li><a href="{{ route('estoque') }}" class="{{ Request::path() == 'estoque' ? 'active' : '' }}"><i class="lnr lnr-inbox"></i> <span>Estoque</span></a></li>
                             <li><a href="{{ route('historico') }}" class="{{ Request::path() == 'historico' ? 'active' : '' }}"><i class="lnr lnr-history"></i> <span>Histórico</span></a></li>                             
-                            <li><a href="{{ route('user') }}" class="{{ Request::path() == 'user' ? 'active' : '' }}"><i class="lnr lnr-users"></i> <span>Usuários</span></a></li>
+                            
+                            <li>
+                                <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Gerenciamento</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                                <div id="subPages" class="collapse ">
+                                    <ul class="nav">
+                                        <li><a href="{{ route('user') }}" class="{{ Request::path() == 'user' ? 'active' : '' }}">Usuários</a></li>
+                                        <li><a href="{{ route('permission') }}" class="">Permissões</a></li>
+                                        <li><a href="{{ route('role') }}" class="">Cargos</a></li>
+                                    </ul>
+                                </div>
+                            </li>
                             <li>
                                     <a href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
@@ -82,12 +92,16 @@
                                             <h3>Históricos</h3>
                                             @elseif(Request::path() == 'user')
                                             <h3>Usuários</h3>
+                                            @elseif(Request::path() == 'permission')
+                                            <h3>Permissões</h3>
+                                            @elseif(Request::path() == 'role')
+                                            <h3>Cargos</h3>
                                              @endif  
                                             </form>
                                         <div id="navbar-menu">
                                             <ul class="nav navbar-nav navbar-right">
                                                 <li class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>{{ Auth::user()->name }}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-user"></i> <span>{{ Auth::user()->name }}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                                                     <ul class="dropdown-menu">
                                                         <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
                                                         <li >
