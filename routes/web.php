@@ -63,16 +63,16 @@ Route::middleware(['auth'])->group(function () {
 		Route::post('lista', 'HistoricoController@listaHistorico');
 	});
 	Route::prefix('user')->group(function () {
-		Route::get('', 'UserController@index')->name('user');		
-		Route::get('lista', 'UserController@listaUser');		
-		Route::post('lista', 'UserController@listaUser');		
-		Route::post('form', 'UserController@store');
-		Route::get('roles', 'UserController@roles');
-		Route::post('updaterole', 'UserController@updateRole');
-		Route::get('show/{id}', 'UserController@show');
-		Route::get('role/{id}', 'UserController@role');
-		Route::post('edit/{id}', 'UserController@update');
-		Route::delete('delete/{id}', 'UserController@destroy')->name('user.delete');
+		Route::get('', 'UserController@index')->name('user')->middleware('can:page_user');	
+		Route::get('lista', 'UserController@listaUser')->middleware('can:page_user');		
+		Route::post('lista', 'UserController@listaUser')->middleware('can:page_user');		
+		Route::post('form', 'UserController@store')->middleware('can:page_user');
+		Route::get('roles', 'UserController@roles')->middleware('can:page_user');
+		Route::post('updaterole', 'UserController@updateRole')->middleware('can:page_user');
+		Route::get('show/{id}', 'UserController@show')->middleware('can:page_user');
+		Route::get('role/{id}', 'UserController@role')->middleware('can:page_user');
+		Route::post('edit/{id}', 'UserController@update')->middleware('can:page_user');
+		Route::delete('delete/{id}', 'UserController@destroy')->name('user.delete')->middleware('can:page_user');
 
 	});
 
@@ -83,6 +83,12 @@ Route::middleware(['auth'])->group(function () {
 	Route::prefix('role')->group(function () {
 		Route::get('', 'RoleController@index')->name('role');
 		Route::get('lista', 'RoleController@lista');
+		Route::get('permissions', 'RoleController@permissions');
+		Route::post('permission', 'RoleController@store');
+		Route::get('showpermission/{id}', 'RoleController@showPermission');
+		Route::get('permission/{id}', 'RoleController@permission');
+		Route::delete('permission_delete/{id}', 'RoleController@destroy');
+		
 	});
 
 	Route::prefix('report')->group(function () {

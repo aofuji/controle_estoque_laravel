@@ -74909,7 +74909,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('user/role/' + id).then(function (res) {
                 res.data.map(function (res) {
-                    console.log(res);
+
                     _this4.role = res.pivot;
                 });
             });
@@ -75782,11 +75782,91 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            items: []
+            items: [],
+            permission: {
+                permission_id: '',
+                role_id: ''
+            },
+            permissions: [],
+            item_permission: {},
+            list_permission: [],
+            loading: true,
+            message: ''
         };
     },
     mounted: function mounted() {
@@ -75795,6 +75875,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         axios.get('role/lista').then(function (res) {
             _this.items = res.data;
         });
+
+        axios.get('role/permissions').then(function (res) {
+
+            _this.list_permission = res.data;
+        });
+    },
+
+    methods: {
+        getPermission: function getPermission(id) {
+            var _this2 = this;
+
+            this.permission.role_id = id;
+            this.message = false;
+            axios.get('role/permission/' + id).then(function (res) {
+                console.log(res.data);
+                _this2.permissions = res.data;
+            }).finally(function () {
+                _this2.loading = false;
+                if (_this2.permissions == '') {
+                    _this2.message = true;
+                }
+            });
+        },
+        getShowPermission: function getShowPermission(id) {
+            var _this3 = this;
+
+            axios.get('role/showpermission/' + id).then(function (res) {
+                console.log(res.data);
+                _this3.item_permission = res.data[0];
+            });
+        },
+        addPermisison: function addPermisison() {
+            var _this4 = this;
+
+            axios.post('role/permission', this.permission).then(function (res) {
+                new Noty({
+                    theme: 'bootstrap-v4',
+                    type: 'success',
+                    timeout: 3000,
+                    layout: 'topRight',
+                    text: '<i class="fas fa-check"></i> <strong>Sucesso! </strong><br>' + res.data
+                }).show();
+                _this4.getPermission(_this4.permission.role_id);
+            });
+        },
+        deletePermission: function deletePermission(id) {
+            var _this5 = this;
+
+            //pega id da tabela permission_role
+            axios.delete('role/permission_delete/' + id).then(function (res) {
+                //pega id do role para atualizar tabela
+                _this5.getPermission(_this5.permission.role_id);
+                $('#deletePermission').modal('hide');
+                new Noty({
+                    theme: 'bootstrap-v4',
+                    type: 'error',
+                    timeout: 3000,
+                    layout: 'topRight',
+                    text: '<i class="fas fa-trash-alt"></i> <strong>Deletado! </strong><br>' + res.data
+                }).show();
+            });
+        }
     }
 });
 
@@ -75806,20 +75948,203 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("br"),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-12" }, [
-      _c("div", { staticClass: "panel" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "panel-body no-padding" }, [
-          _c("table", { staticClass: "table table-striped" }, [
-            _vm._m(1),
-            _vm._v(" "),
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("br"),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-12" }, [
+        _c("div", { staticClass: "panel" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "panel-body no-padding" }, [
+            _c("table", { staticClass: "table table-striped" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.items, function(item) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(item.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.label))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info btn-sm",
+                          attrs: {
+                            "data-toggle": "modal",
+                            "data-target": "#permission"
+                          },
+                          on: {
+                            click: function($event) {
+                              _vm.getPermission(item.id)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-user-lock" })]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-warning btn-sm",
+                          attrs: {
+                            "data-toggle": "modal",
+                            "data-target": "#edit"
+                          },
+                          on: {
+                            click: function($event) {
+                              _vm.getItem(item.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fas fa-edit",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-sm",
+                          attrs: {
+                            "data-toggle": "modal",
+                            "data-target": "#delete"
+                          },
+                          on: {
+                            click: function($event) {
+                              _vm.getItem(item.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fas fa-trash-alt",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]
+                      )
+                    ])
+                  ])
+                })
+              )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("modal", { attrs: { nome: "permission", titulo: "Permissão" } }, [
+        _c(
+          "form",
+          {
+            staticClass: "form-inline",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                _vm.addPermisison()
+              }
+            }
+          },
+          [
             _c(
-              "tbody",
-              _vm._l(_vm.items, function(item) {
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.permission.permission_id,
+                    expression: "permission.permission_id"
+                  }
+                ],
+                staticClass: "custom-select form-control",
+                attrs: { required: "" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.permission,
+                      "permission_id",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("Nenhum")]),
+                _vm._v(" "),
+                _vm._l(_vm.list_permission, function(item) {
+                  return _c("option", { domProps: { value: item.id } }, [
+                    _vm._v(_vm._s(item.name))
+                  ])
+                })
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.permission.role_id,
+                  expression: "permission.role_id"
+                }
+              ],
+              attrs: { type: "hidden" },
+              domProps: { value: _vm.permission.role_id },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.permission, "role_id", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("button", { staticClass: "form-control btn btn-primary" }, [
+              _c("i", { staticClass: "fas fa-plus" }),
+              _vm._v(" Adicionar")
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("table", { staticClass: "table table-striped" }, [
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v("#")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Permissão")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Descrição")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Ação")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            [
+              _vm._l(_vm.permissions, function(item) {
                 return _c("tr", [
                   _c("td", [_vm._v(_vm._s(item.id))]),
                   _vm._v(" "),
@@ -75831,36 +76156,14 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-warning btn-sm",
-                        attrs: {
-                          "data-toggle": "modal",
-                          "data-target": "#edit"
-                        },
-                        on: {
-                          click: function($event) {
-                            _vm.getItem(item.id)
-                          }
-                        }
-                      },
-                      [
-                        _c("i", {
-                          staticClass: "fas fa-edit",
-                          attrs: { "aria-hidden": "true" }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
                         staticClass: "btn btn-danger btn-sm",
                         attrs: {
                           "data-toggle": "modal",
-                          "data-target": "#delete"
+                          "data-target": "#deletePermission"
                         },
                         on: {
                           click: function($event) {
-                            _vm.getItem(item.id)
+                            _vm.getShowPermission(item.id)
                           }
                         }
                       },
@@ -75873,13 +76176,110 @@ var render = function() {
                     )
                   ])
                 ])
-              })
-            )
-          ])
+              }),
+              _vm._v(" "),
+              _vm.loading
+                ? _c("tr", [
+                    _c("th", { attrs: { scope: "row" } }),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _c("i", { staticClass: "fa fa-spin fa-spinner" }),
+                      _vm._v(" Loading...")
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { colspan: "3" } })
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.message
+                ? _c("tr", [
+                    _c("th", { attrs: { scope: "row" } }),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _vm._v("Nenhum registro")
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { colspan: "7" } })
+                  ])
+                : _vm._e()
+            ],
+            2
+          )
         ])
-      ])
-    ])
-  ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "modal",
+        {
+          attrs: {
+            nome: "deletePermission",
+            titulo: "Deletar Permissão",
+            tamanho: "modal-sm"
+          }
+        },
+        [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  _vm.deletePermission(_vm.item_permission.id)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("h3", [_vm._v("Deseja exluir essa Categoria ?")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("strong", [_vm._v("#ID")]),
+                  _vm._v(
+                    " " + _vm._s(_vm.item_permission.id) + "\n                "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-4" }, [
+                  _c("dl", [
+                    _c("dt", [_vm._v("Permissão")]),
+                    _vm._v(" "),
+                    _c("dd", [_vm._v(_vm._s(_vm.item_permission.name))])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c(
+                  "button",
+                  { staticClass: "btn btn-danger", attrs: { type: "submit" } },
+                  [
+                    _c("i", { staticClass: "fas fa-trash-alt" }),
+                    _vm._v(" Excluir")
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_c("i", { staticClass: "fas fa-ban" }), _vm._v(" Cancelar")]
+                )
+              ])
+            ]
+          )
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -76022,7 +76422,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['lista'],
     mounted: function mounted() {
-        console.log(this.lista);
+
         console.log('Component mounted.');
     }
 });

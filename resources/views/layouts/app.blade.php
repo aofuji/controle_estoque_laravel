@@ -37,7 +37,7 @@
                             <li><a href="{{ route('cliente') }}" class="{{ Request::path() == 'cliente' ? 'active' : '' }}"><i class="lnr lnr-user"></i> <span>Clientes</span></a></li>
                             <li><a href="{{ route('estoque') }}" class="{{ Request::path() == 'estoque' ? 'active' : '' }}"><i class="lnr lnr-inbox"></i> <span>Estoque</span></a></li>
                             <li><a href="{{ route('historico') }}" class="{{ Request::path() == 'historico' ? 'active' : '' }}"><i class="lnr lnr-history"></i> <span>Histórico</span></a></li>                             
-                            
+                            @can('page_user')
                             <li>
                                 <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Gerenciamento</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                                 <div id="subPages" class="collapse ">
@@ -48,6 +48,7 @@
                                     </ul>
                                 </div>
                             </li>
+                            @endcan
                             <li>
                                     <a href="{{ route('logout') }}"
                                         onclick="event.preventDefault();

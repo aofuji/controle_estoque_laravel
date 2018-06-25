@@ -7,7 +7,6 @@ use Gate;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Support\Facades\DB;
-use App\Models\RoleUser;
 use Illuminate\Http\Request;
 
 class UserController extends Controller {
@@ -15,7 +14,7 @@ class UserController extends Controller {
 	private $user;
 	
     
-    public function __construct(User $user, RoleUser $roleuser)
+    public function __construct(User $user)
     {
 		$this->user = $user;
 		
@@ -24,7 +23,6 @@ class UserController extends Controller {
     }
 
 	public function index() {
-		
             
 		return view('user.user');
 	}
@@ -61,7 +59,7 @@ class UserController extends Controller {
 	}
 
 	public function roles(){
-		$roles = Role::all();
+		$roles = Role::where('id','!=', 3)->get();
 
 		return response()->json($roles,200);
 	}
@@ -70,11 +68,10 @@ class UserController extends Controller {
 
 	public function role($id)
     {
-        //Recupera o usuário
+        
         $roles = $this->user->find($id)->roles;
         
-        //recuperar roles
-       // $roles = $user->roles()->get();
+        
         
         return response()->json($roles, 200);
     }
@@ -84,13 +81,15 @@ class UserController extends Controller {
 		$role = DB::table('role_user')
 		->where('user_id', $request->user_id)
 		->get();
-		//return response()->json($request->all());
+
 		if($role->count() == 0){
 			$data = DB::table('role_user')->insert(
 				['user_id' => $request->user_id, 'role_id' => $request->role_id]
 			);
 			if($data)
 				return response()->json('Cargo registrado!',201);
+		}else if($role[0]->user_id == $request->user_id && $role[0]->role_id == $request->role_id) {
+			return response()->json('Não foi Atualizado, esses dados ja se encontra iguais no Sistema!');
 		}else{
 			$data = DB::table('role_user')
 				->where('user_id', $request->user_id)

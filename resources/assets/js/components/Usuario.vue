@@ -211,7 +211,7 @@
                 axios.get('user/role/'+ id)
                 .then(res =>{
                     res.data.map(res=>{
-                        console.log(res)
+                        
                         this.role = res.pivot
                     })                                    
                 });

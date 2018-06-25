@@ -41,7 +41,7 @@
     export default {
         props:['lista'],
         mounted() {
-            console.log(this.lista)
+            
             console.log('Component mounted.')
         }
     }
