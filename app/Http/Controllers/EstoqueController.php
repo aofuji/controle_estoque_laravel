@@ -6,6 +6,7 @@ use App\Models\Categoria;
 use App\Models\Cliente;
 use App\Models\Estoque;
 use App\Models\Historico;
+use App\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,7 +20,6 @@ class EstoqueController extends Controller {
 	private $totalPage = 12;
 
 	public function index() {
-		
     
 		return view('estoque.estoque');
 	}
@@ -34,12 +34,23 @@ class EstoqueController extends Controller {
 			if ($request->qtd_estoque != null) {
 				$query->where('estoque.qtd_estoque', $request['qtd_estoque']);
 			}
+			if ($request->categoria != null) {
+				$query->where('estoque.categoria_id', $request['categoria']);
+			}
+			if ($request->codigo_produto != null) {
+				$query->where('estoque.codigo_produto','like','%'. $request['codigo_produto']. '%');
+			}
 		})->leftJoin('categorias', 'categorias.id', '=', 'estoque.categoria_id')
 		  ->select('estoque.*', 'categorias.categoria')
 		  ->orderby('estoque.id', 'desc')
 		  ->paginate($this->totalPage);
 
 			return response()->json($lista, 200);
+	}
+
+	public function listaProduto(){
+		$listaProduto = Estoque::all(['id','nome_produto']);
+		return response()->json($listaProduto, 200);
 	}
 
 	public function listaCategoria(){
@@ -82,6 +93,9 @@ class EstoqueController extends Controller {
 
 	public function entrada(Request $request, $id, Estoque $estoque) {
 
+		if( Gate::denies('entrada_estoque') ) 
+			return response()->json(['perm'=>'Você nao tem permissão!']);
+
 		$dt = Carbon::now();
 		$dt->timezone = 'America/Sao_Paulo';
 
@@ -103,9 +117,9 @@ class EstoqueController extends Controller {
 					'estoque_id' => $entrada->id,
 					'created_at' => $dt,
 				]);
-			return response()->json('Entrada Efetuado com sucesso', 201);
+			return response()->json(['sucess'=>'Entrada Efetuado com sucesso'], 201);
 		}else{
-			return response()->json('Erro',500);
+			return response()->json(['error'=>'Erro'],500);
 		}
 
 	}
@@ -118,6 +132,8 @@ class EstoqueController extends Controller {
 	}
 
 	public function saida(Request $request, $id) {
+		
+			
 		$dt = Carbon::now();
 		$dt->timezone = 'America/Sao_Paulo';
 
@@ -199,6 +215,9 @@ class EstoqueController extends Controller {
 
 	public function update(Request $request, $id) {
 	
+		if( Gate::denies('edit_estoque') ) 
+			return response()->json(['perm'=>'Você nao tem permissão!']);
+
 		$estoque = Estoque::find($id);
 		$estoque->codigo_produto = $request->codigo_produto;
 		$estoque->nome_produto = $request->nome_produto;
@@ -209,17 +228,23 @@ class EstoqueController extends Controller {
 
 		$data = $estoque->save();
 		if($data){
-			return response()->json('Atualizado com sucesso', 201);
+			return response()->json(['sucess','Atualizado com sucesso'], 201);
 		}else{
-			return response()->json('Erro',500);
+			return response()->json(['error','Erro'],500);
 		}
 	}
 
 	public function destroy($id) {
+		if( Gate::denies('entrada_estoque')) 
+			return response()->json(['perm'=>'Você nao tem permissão!']);
+
 		$estoque = Estoque::find($id);
 		$data = $estoque->delete();
+
 		if($data){
-			return response()->json('Deletado com sucesso', 200);
+			return response()->json(['sucess'=>'Deletado com sucesso'], 200);
+		}else{
+			return response()->json(['error','Erro'],500);
 		}
 		
 	}

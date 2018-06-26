@@ -13,6 +13,11 @@ window.moment = require('moment');
 import Vuex from 'Vuex';
 import {VMoney} from 'v-money'
 
+import Vue from 'vue';
+import Tooltip from 'vue-directive-tooltip';
+import 'vue-directive-tooltip/css/index.css';
+
+Vue.use(Tooltip);
 
 Vue.use(Vuex);
 
@@ -91,9 +96,7 @@ const app = new Vue({
         }
         $(document).ready(function() {
 
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            })
+            
 
            
 

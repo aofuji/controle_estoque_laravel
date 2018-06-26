@@ -4,9 +4,7 @@
         <div class="col-lg-12">
             <div class="panel">
                 <div class="panel-heading">
-                    
-                    <a href="#" data-toggle="modal" data-target="#cadCategoria"><i class="fas fa-plus"></i> Adicionar</a>
-                    
+
                 </div>
                 <div class="panel-body no-padding">
                     <table class="table table-striped">
@@ -24,9 +22,7 @@
                                 <td>{{item.name}}</td>
                                 <td>{{item.label}}</td>
                                 <td>
-                                     <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#permission" v-on:click="getPermission(item.id)" ><i class="fas fa-user-lock"></i></button>
-                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" v-on:click="getItem(item.id)" ><i class="fas fa-edit" aria-hidden="true"></i></button>  
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete" v-on:click="getItem(item.id)" ><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#permission" v-on:click="getPermission(item.id)" ><i class="fas fa-user-lock"></i></button>
                                 </td>
                             </tr>
                             
@@ -143,7 +139,7 @@
                 this.message = false;
                 axios.get('role/permission/' + id)
                 .then(res =>{
-                    console.log(res.data)
+                    
                     this.permissions = res.data;
                    
                 }).finally(()=>{
@@ -156,7 +152,7 @@
             getShowPermission(id){
                 axios.get('role/showpermission/'+ id)
                 .then(res =>{
-                    console.log(res.data)
+                    
                     this.item_permission = res.data[0]
                 })
             },

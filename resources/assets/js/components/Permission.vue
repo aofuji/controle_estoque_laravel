@@ -4,7 +4,7 @@
         <div class="col-lg-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <a href="#" data-toggle="modal" data-target="#cadCategoria"><i class="fas fa-plus"></i> Adicionar</a>
+                    
                     
                 </div>
                 <div class="panel-body no-padding">
@@ -14,7 +14,7 @@
                                 <th>#</th>
                                 <th>Permissões</th>
                                 <th>Descrição</th>
-                                <th>Ações</th>
+                                
                             </tr>
                         </thead>
                         <tbody> 
@@ -22,10 +22,7 @@
                                 <td>{{item.id}}</td>
                                 <td>{{item.name}}</td>
                                 <td>{{item.label}}</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" v-on:click="getItem(item.id)" ><i class="fas fa-edit" aria-hidden="true"></i></button>  
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete" v-on:click="getItem(item.id)" ><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
-                                </td>
+                                
                             </tr>
                             
                         </tbody>
@@ -42,7 +39,7 @@
         props:['lista'],
         mounted() {
             
-            console.log('Component mounted.')
+            
         }
     }
 </script>

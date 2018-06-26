@@ -62,6 +62,7 @@ class ReportController extends Controller
                 })->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
                 ->leftJoin('estoque', 'estoque.id', '=', 'historicos.estoque_id')
                   ->select('historicos.*', 'clientes.nome','estoque.nome_produto')
+                  ->whereBetween('historicos.created_at', array($request->data_inicial, $request->data_final))
                   ->orderby('historicos.id','desc')
                   ->get();
         
@@ -77,13 +78,14 @@ class ReportController extends Controller
                 $query->where('clientes.nome', $request->nome_cliente);
                 })->leftJoin('clientes', 'clientes.id', '=', 'historicos.cliente_id')
                 ->leftJoin('estoque', 'estoque.id', '=', 'historicos.estoque_id')
-                  ->select('historicos.*', 'clientes.nome','estoque.nome_produto')    
+                  ->select('historicos.*', 'clientes.nome','estoque.nome_produto')
+                  ->whereBetween('historicos.created_at', array($request->data_inicial, $request->data_final))    
                 ->sum('valor_total');  
 
         $pdf = PDF::loadView('report.reportHistoryDetail',['historico' => $historico, 
                 'contador'=> $contador,
                 'valor_total'=> $valor_total ]);
-       return $pdf->stream('report_' . $request->tipo . '.pdf', array("Attachment" => false));         
+       return $pdf->stream('report_' . $request->tipo . '.pdf');         
         //return $pdf->download('report_' . $request->tipo . '.pdf');
     }
 

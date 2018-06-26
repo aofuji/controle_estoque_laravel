@@ -24,17 +24,13 @@ class RoleController extends Controller
     }
 
     public function lista(){
-        $roles = $this->role->where('id','!=',3)->get();
+        $roles = $this->role->where('id','!=',3)
+        ->select('id','name')->get();
         return response()->json($roles, 200);
     }
 
     public function permission($id)
     {
-        //Recupera o role
-       // $role = $this->role->find($id);
-        
-        //recuperar permissões
-       // $permission = $role->permissions()->get();
         
         $permission = DB::table('permissions')
         ->where('role_id', $id)

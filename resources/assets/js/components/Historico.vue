@@ -23,6 +23,7 @@
                             <option value="Entrada">Entrada</option>
                             <option value="Saida">Saida</option>
                         </select>
+                        
                         <input type="text" v-model="search.nome_produto" class="form-control" placeholder="Digite nome do produto">
                         <input type="text" v-model="search.nome_cliente" name="nome_cliente" class="form-control" placeholder="Digite o nome cliente">
                         <button class="btn btn-primary " v-on:click="searchHistorico()"><i class="fa fa-search" ></i></button>

@@ -1,5 +1,7 @@
-<template> 
+<template>
+ 
     <div class="row">
+        
         <br>
         <div class="col-lg-12">
             <div class="panel">
@@ -12,12 +14,17 @@
                     <div class="pull-right ">
                         <div class="form form-inline">
 
+                            <select class="custom-select form-control" v-model="search.categoria">
+                                <option value="">Selecione categoria</option>
+                                <option v-for="categoria in categorias" v-bind:value="categoria.id">{{categoria.categoria}}</option>
+                            </select>
+                            <input type="text" v-model="search.codigo_produto" class="form-control" placeholder="Digite codigo produto">
                             <input type="text" list="idOfDatalist"  class="form-control" v-model="search.nome_produto" placeholder="Digite nome do produto"> 
-                            <datalist id="idOfDatalist" >
-                                
-                                <option value="" />
-                                
+
+                            <datalist id="idOfDatalist">
+                                <option v-for="produto in listaProdutos" v-bind:value="produto.nome_produto">{{produto.nome_produto}}</option>
                             </datalist>
+
                             <input type="number" v-model="search.qtd_estoque" class="form-control" placeholder="Digite a quantidade">
                             <button type="submit" class="btn btn-primary form-control" v-on:click="searchEstoque"><i class="fa fa-search" ></i></button>
                         </div>
@@ -47,12 +54,20 @@
                                 <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.qtd_estoque}}</td>
                                 <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">R$ {{formatPrice(item.preco_custo)}}</td>
                                 <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">R$ {{formatPrice(item.preco_venda)}}</td>
-                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.data | moment("DD/MM/YYYY")}}</td>
+                                <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.created_at | moment("DD/MM/YYYY")}}</td>
                                 <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">
-                                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#entrada" v-on:click="getItem(item.id)"><i class="fas fa-sign-in-alt"></i></button>
-                                    <button v-show="item.qtd_estoque != 0" class="btn btn-info btn-sm" data-toggle="modal" data-target="#saida"  v-on:click="getItem(item.id)"><i class="fas fa-sign-out-alt"></i></button>
-                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" v-on:click="getEdit(item.id)" ><i class="fas fa-edit" aria-hidden="true"></i></button>  
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete" v-on:click="getItem(item.id)" ><i class="fas fa-trash-alt" aria-hidden="true"></i></button>    
+                                   <span v-tooltip="'Entrada'">
+                                        <button  class="btn btn-success btn-sm" data-toggle="modal" data-target="#entrada" v-on:click="getItem(item.id)"><i class="fas fa-sign-in-alt"></i></button>
+                                    </span>
+                                    <span v-tooltip="'Saida'">
+                                        <button v-show="item.qtd_estoque != 0" class="btn btn-info btn-sm" data-toggle="modal" data-target="#saida"  v-on:click="getItem(item.id)"><i class="fas fa-sign-out-alt"></i></button>
+                                    </span>
+                                    <span v-tooltip="'Editar'">
+                                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" v-on:click="getEdit(item.id)" ><i class="fas fa-edit" aria-hidden="true"></i></button>  
+                                    </span>
+                                    <span v-tooltip="'Deletar'">
+                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete" v-on:click="getItem(item.id)" ><i class="fas fa-trash-alt" aria-hidden="true"></i></button>    
+                                    </span>
                                 </td>
                             </tr>
                         <tr v-if="loading">
@@ -443,11 +458,12 @@ import { bus } from '../app';
 import VcPagination from './Pagination.vue';
 import {VMoney} from 'v-money';
 
+
+
     export default {
         components:{
-            VcPagination,
+            VcPagination
         },
-        
         data(){
             return{
                 buttonLoading:true,
@@ -456,9 +472,12 @@ import {VMoney} from 'v-money';
                 items:[],
                 categorias:[],
                 clientes:[],
+                listaProdutos:[],
                 loading:true,
                 pagination:{},
-                search:{},
+                search:{
+                    categoria:''
+                },
                 searchCliente:'',
                 itemCad:{
                     categoria_id:''
@@ -491,6 +510,8 @@ import {VMoney} from 'v-money';
             
         },  
         mounted() {
+            
+            
             axios.post('estoque/lista')
             .then(res =>{
                 this.pagination = res.data
@@ -509,14 +530,16 @@ import {VMoney} from 'v-money';
 
             axios.get('estoque/cliente')
                 .then(res=>{
-                    
-                    this.clientes = res.data.reverse()
+                    this.clientes = res.data
+                })
+            
+            axios.get('estoque/listaproduto')
+                .then(res =>{
+                    this.listaProdutos = res.data;
                 })
         },
         methods:{
-            teste(){
-               
-            },
+            
             onFileChanged (event) {
                 this.selectedFile = event.target.files[0]
                 
@@ -564,7 +587,8 @@ import {VMoney} from 'v-money';
             AtualizaCliente(){
                 axios.get('estoque/cliente')
                 .then(res=>{
-                    this.clientes = res.data.reverse()
+                    
+                    this.clientes = res.data
                 })
                 
                 },
@@ -621,6 +645,7 @@ import {VMoney} from 'v-money';
              
              axios.get('estoque/show/'+ id)
               .then(res =>{
+                 
                  this.produto = res.data
                   
               })
@@ -637,17 +662,35 @@ import {VMoney} from 'v-money';
               this.buttonLoading = false;
               axios.post('estoque/entrada/'+id, this.entrada)
               .then(res=>{
-                  
-                  this.entrada.qtd_entrada = '';
-                  this.getItem(id)
-                  this.searchEstoque();
-                  new Noty({
+                  if(res.data.perm){
+                       new Noty({
                       theme: 'bootstrap-v4',
-                      type: 'success', 
+                      type: 'warning', 
                       timeout:3000, 
                       layout:'topRight', 
-                      text: '<i class="fas fa-check"></i> <strong>Sucesso!</strong><br>' + res.data
+                      text: '<i class="fas fa-exclamation-triangle"></i> <strong>Alerta! </strong><br>' + res.data.perm
                       }).show();
+                  }else if(res.data.sucess){
+                       this.entrada.qtd_entrada = '';
+                        this.getItem(id)
+                        this.searchEstoque();
+                        new Noty({
+                            theme: 'bootstrap-v4',
+                            type: 'success', 
+                            timeout:3000, 
+                            layout:'topRight', 
+                            text: '<i class="fas fa-check"></i> <strong>Sucesso!</strong><br>' + res.data
+                            }).show();
+                  }else if(res.data.error){
+                       new Noty({
+                          theme: 'bootstrap-v4',
+                          type: 'warning', 
+                          timeout:3000, 
+                          layout:'topRight', 
+                          text: '<i class="fas fa-exclamation-triangle"></i> <strong>Alerta! </strong><br>' + res.data.error
+                          }).show();
+                  }
+                 
               })
               .finally(()=>this.buttonLoading = true)
           },
@@ -673,6 +716,9 @@ import {VMoney} from 'v-money';
               axios.post('cliente/cadastrar', this.cliente )
               .then(res=>{
                   if(res.data.sucess){
+                      
+                      this.AtualizaCliente();
+                      
                       new Noty({
                           theme: 'bootstrap-v4',
                           type: 'success', 
@@ -680,6 +726,8 @@ import {VMoney} from 'v-money';
                           layout:'topRight', 
                           text: '<i class="fas fa-check"></i> <strong>Sucesso!</strong><br>' + res.data.sucess
                           }).show();
+                          
+                          
                   }else if(res.data.erro){
                       new Noty({
                           theme: 'bootstrap-v4',
@@ -689,25 +737,42 @@ import {VMoney} from 'v-money';
                           text: '<i class="fas fa-exclamation-triangle"></i> <strong>Alerta! </strong><br>' + res.data.erro
                           }).show();
                   }
-                  
-                  this.AtualizaCliente();
+      
               })
           },
           updateEstoque(id){
               this.buttonLoading = false;
               axios.post('estoque/edit/'+ id, this.edit)
               .then(res=>{
-                  
-                 this.getEdit(id);
-                  this.searchEstoque();
-
-                  new Noty({
+ 
+                if(res.data.perm){
+                       new Noty({
                       theme: 'bootstrap-v4',
-                      type: 'success', 
+                      type: 'warning', 
                       timeout:3000, 
                       layout:'topRight', 
-                      text: '<i class="fas fa-check"></i> <strong>Sucesso! </strong><br>' + res.data
+                      text: '<i class="fas fa-exclamation-triangle"></i> <strong>Alerta! </strong><br>' + res.data.perm
                       }).show();
+                  }else if(res.data.sucess){
+                       
+                        this.getItem(id)
+                        this.searchEstoque();
+                        new Noty({
+                            theme: 'bootstrap-v4',
+                            type: 'success', 
+                            timeout:3000, 
+                            layout:'topRight', 
+                            text: '<i class="fas fa-check"></i> <strong>Sucesso!</strong><br>' + res.data
+                            }).show();
+                  }else if(res.data.error){
+                       new Noty({
+                          theme: 'bootstrap-v4',
+                          type: 'warning', 
+                          timeout:3000, 
+                          layout:'topRight', 
+                          text: '<i class="fas fa-exclamation-triangle"></i> <strong>Alerta! </strong><br>' + res.data.error
+                          }).show();
+                  }
               }).finally(()=>{
                   this.buttonLoading = true;
               })
@@ -715,15 +780,35 @@ import {VMoney} from 'v-money';
           deleteEstoque(id){
               axios.delete('estoque/delete/'+ id)
               .then(res=>{
-                  new Noty({
+
+                  if(res.data.perm){
+                       new Noty({
                       theme: 'bootstrap-v4',
-                      type: 'error', 
+                      type: 'warning', 
                       timeout:3000, 
                       layout:'topRight', 
-                      text: '<i class="fas fa-trash-alt"></i> <strong>Deletado! </strong><br>' + res.data
+                      text: '<i class="fas fa-exclamation-triangle"></i> <strong>Alerta! </strong><br>' + res.data.perm
                       }).show();
-                  this.searchEstoque();
-                  $('#delete').modal('hide')
+                      $('#delete').modal('hide')
+                  }else if(res.data.sucess){
+                        this.searchEstoque();
+                        new Noty({
+                            theme: 'bootstrap-v4',
+                            type: 'error', 
+                            timeout:3000, 
+                            layout:'topRight', 
+                            text: '<i class="fas fa-trash-alt"></i> <strong>Deletado! </strong><br>' + res.data
+                            }).show();
+                            $('#delete').modal('hide')
+                  }else if(res.data.error){
+                       new Noty({
+                          theme: 'bootstrap-v4',
+                          type: 'warning', 
+                          timeout:3000, 
+                          layout:'topRight', 
+                          text: '<i class="fas fa-exclamation-triangle"></i> <strong>Alerta! </strong><br>' + res.data.error
+                          }).show();
+                  }
               })
           }
         },

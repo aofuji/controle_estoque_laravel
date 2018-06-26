@@ -19,18 +19,19 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('', 'HomeController@index')->name('home');
 
 	Route::prefix('estoque')->group(function () {
-		Route::get('', 'EstoqueController@index')->name('estoque');	
-		Route::post('lista', 'EstoqueController@listaEstoque');
-		Route::get('listacategoria', 'EstoqueController@listaCategoria');
-		Route::post('cadastrar', 'EstoqueController@store');
-		Route::post('import', 'EstoqueController@import');
-		Route::get('show/{id}', 'EstoqueController@show');
+		Route::get('', 'EstoqueController@index')->name('estoque')->middleware('can:view_estoque');	
+		Route::post('lista', 'EstoqueController@listaEstoque')->middleware('can:view_estoque');
+		Route::get('listacategoria', 'EstoqueController@listaCategoria')->middleware('can:view_estoque');
+		Route::get('listaproduto', 'EstoqueController@listaProduto')->middleware('can:view_estoque');
+		Route::post('cadastrar', 'EstoqueController@store')->middleware('can:add_estoque');
+		Route::post('import', 'EstoqueController@import')->middleware('can:import_estoque');
+		Route::get('show/{id}', 'EstoqueController@show')->middleware('can:view_estoque');
 		Route::post('edit/{id}', 'EstoqueController@update');
-		Route::post('entrada/{id}', 'EstoqueController@entrada');
+		Route::post('entrada/{id}', 'EstoqueController@entrada');	
 		Route::get('cliente', 'EstoqueController@listaCliente');
-		Route::post('saida/{id}', 'EstoqueController@saida');
-		Route::get('history/{id}', 'EstoqueController@historyView');
-		Route::post('history/{id}', 'EstoqueController@historyView');
+		Route::post('saida/{id}', 'EstoqueController@saida')->middleware('can:saida_estoque');
+		Route::get('history/{id}', 'EstoqueController@historyView')->middleware('can:view_estoque');
+		Route::post('history/{id}', 'EstoqueController@historyView')->middleware('can:view_estoque');
 		Route::delete('delete/{id}', 'EstoqueController@destroy');
 		
 	});
@@ -77,25 +78,23 @@ Route::middleware(['auth'])->group(function () {
 	});
 
 	Route::prefix('permission')->group(function () {
-		Route::get('', 'PermissionController@index')->name('permission');
+		Route::get('', 'PermissionController@index')->name('permission')->middleware('can:page_permission');
 	});
 
 	Route::prefix('role')->group(function () {
-		Route::get('', 'RoleController@index')->name('role');
-		Route::get('lista', 'RoleController@lista');
-		Route::get('permissions', 'RoleController@permissions');
-		Route::post('permission', 'RoleController@store');
-		Route::get('showpermission/{id}', 'RoleController@showPermission');
-		Route::get('permission/{id}', 'RoleController@permission');
-		Route::delete('permission_delete/{id}', 'RoleController@destroy');
+		Route::get('', 'RoleController@index')->name('role')->middleware('can:page_role');
+		Route::get('lista', 'RoleController@lista')->middleware('can:page_role');
+		Route::get('permissions', 'RoleController@permissions')->middleware('can:page_role');
+		Route::post('permission', 'RoleController@store')->middleware('can:page_role');
+		Route::get('showpermission/{id}', 'RoleController@showPermission')->middleware('can:page_role');
+		Route::get('permission/{id}', 'RoleController@permission')->middleware('can:page_role');
+		Route::delete('permission_delete/{id}', 'RoleController@destroy')->middleware('can:page_role');
 		
 	});
 
-	Route::prefix('report')->group(function () {
-		
+	Route::prefix('report')->group(function () {	
 		Route::get('historicoall', 'ReportController@historicoall')->name('report.historicoall');
 		Route::get('{id}', 'ReportController@historico')->name('report.historico');
-
 		Route::get('lista/{id}', 'ReportController@lista')->name('report.lista');
 
 	});
