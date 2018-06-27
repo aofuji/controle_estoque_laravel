@@ -6,9 +6,9 @@
         <div class="col-lg-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <a href="#" data-toggle="modal" v-on:click="clearForm" data-target="#cadastro" ><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
+                    <a href="#" v-if="!gate_add" data-toggle="modal" v-on:click="clearForm" data-target="#cadastro" ><i class="fa fa-plus" aria-hidden="true"></i> Adicionar</a>
                     &nbsp;
-                    <a href="#" data-toggle="modal" data-target="#import"  ><i class="fas fa-upload"></i> Importar</a>
+                    <a href="#" v-if="!gate_import" data-toggle="modal" data-target="#import"  ><i class="fas fa-upload"></i> Importar</a>
                     
                     
                     <div class="pull-right ">
@@ -56,16 +56,16 @@
                                 <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">R$ {{formatPrice(item.preco_venda)}}</td>
                                 <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">{{item.created_at | moment("DD/MM/YYYY")}}</td>
                                 <td v-bind:class="item.qtd_estoque == 0? 'bg-row':''">
-                                   <span v-tooltip="'Entrada'">
+                                   <span v-tooltip="'Entrada'" v-if="!gate_entrada">
                                         <button  class="btn btn-success btn-sm" data-toggle="modal" data-target="#entrada" v-on:click="getItem(item.id)"><i class="fas fa-sign-in-alt"></i></button>
                                     </span>
                                     <span v-tooltip="'Saida'">
                                         <button v-show="item.qtd_estoque != 0" class="btn btn-info btn-sm" data-toggle="modal" data-target="#saida"  v-on:click="getItem(item.id)"><i class="fas fa-sign-out-alt"></i></button>
                                     </span>
-                                    <span v-tooltip="'Editar'">
+                                    <span v-tooltip="'Editar'" v-if="!gate_edit">
                                         <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" v-on:click="getEdit(item.id)" ><i class="fas fa-edit" aria-hidden="true"></i></button>  
                                     </span>
-                                    <span v-tooltip="'Deletar'">
+                                    <span v-tooltip="'Deletar'" v-if="!gate_delete">
                                         <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete" v-on:click="getItem(item.id)" ><i class="fas fa-trash-alt" aria-hidden="true"></i></button>    
                                     </span>
                                 </td>
@@ -464,6 +464,7 @@ import {VMoney} from 'v-money';
         components:{
             VcPagination
         },
+        props:['gate_entrada','gate_edit','gate_delete','gate_add','gate_import'],
         data(){
             return{
                 buttonLoading:true,
@@ -744,7 +745,7 @@ import {VMoney} from 'v-money';
               this.buttonLoading = false;
               axios.post('estoque/edit/'+ id, this.edit)
               .then(res=>{
- 
+                  
                 if(res.data.perm){
                        new Noty({
                       theme: 'bootstrap-v4',

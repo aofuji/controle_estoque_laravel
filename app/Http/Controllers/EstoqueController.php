@@ -20,8 +20,12 @@ class EstoqueController extends Controller {
 	private $totalPage = 12;
 
 	public function index() {
-    
-		return view('estoque.estoque');
+	$gate_entrada =	Gate::denies('entrada_estoque');
+	$gate_edit =	Gate::denies('edit_estoque');
+	$gate_delete =	Gate::denies('delete_estoque');
+	$gate_add =	Gate::denies('add_estoque');
+	$gate_import =	Gate::denies('import_estoque');
+		return view('estoque.estoque', compact('gate_entrada', 'gate_edit','gate_delete','gate_add','gate_import'));
 	}
 
 	public function listaEstoque(Request $request){
@@ -228,9 +232,9 @@ class EstoqueController extends Controller {
 
 		$data = $estoque->save();
 		if($data){
-			return response()->json(['sucess','Atualizado com sucesso'], 201);
+			return response()->json(['sucess'=>'Atualizado com sucesso'], 201);
 		}else{
-			return response()->json(['error','Erro'],500);
+			return response()->json(['error'=>'Erro'],500);
 		}
 	}
 
